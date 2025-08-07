@@ -10,4 +10,8 @@ public class RankerAppApplication {
 		SpringApplication.run(RankerAppApplication.class, args);
 	}
 
+	{
+		System.out.println("Hello Ranker Project");
+	}
+
 }
