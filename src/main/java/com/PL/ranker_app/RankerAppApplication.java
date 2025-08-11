@@ -3,6 +3,7 @@ package com.PL.ranker_app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -21,7 +22,7 @@ public class RankerAppApplication {
 	// COMMAND LINE MENU
 	void menu() {
 		Scanner scanner = new Scanner(System.in);
-		String list_string = null;
+		String listString = null;
 		String action = null;
 
 		// Keeper user in menu until they exit by entering 0
@@ -39,15 +40,13 @@ public class RankerAppApplication {
 
 				// Prompt user to enter comma separated list
 				System.out.println("Enter list (ex: item1, item2, ...");
-				list_string = scanner.nextLine();
+				listString = scanner.nextLine();
 
-				System.out.println(list_string);
+				System.out.println("inputted list: " + listString);
 
+				// Parse string into ArrayList
+				String[] itemList = Parser.parse(listString);
 			}
-
-			// Parse string into ArrayList
-
-
 		}
 		while (!action.equals("0"));
 
