@@ -4,6 +4,9 @@ import java.lang.reflect.Array;
 
 public class Parser {
 
+    public Parser() {
+    }
+
     // Parse comma separated input list
     public static String[] parse(String inputtedList) {
 
@@ -23,10 +26,6 @@ public class Parser {
 
         // PARSE
         String[] itemList = inputtedList.split("\\s*,\\s*");  // Regex "\\s*,\\s*" looks for any whitespace around comma
-
-        for (int i=0; i<itemList.length; i++) {
-            System.out.println("item " + i + ": " + itemList[i]);
-        }
 
         return itemList;
     }

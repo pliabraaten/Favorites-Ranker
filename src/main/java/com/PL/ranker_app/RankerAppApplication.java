@@ -42,10 +42,13 @@ public class RankerAppApplication {
 				System.out.println("Enter list (ex: item1, item2, ...");
 				listString = scanner.nextLine();
 
-				System.out.println("inputted list: " + listString);
+//				System.out.println("inputted list: " + listString);
 
-				// Parse string into ArrayList
-				String[] itemList = Parser.parse(listString);
+				// Create ItemList based on user input
+				ItemList itemList = new ItemList(listString);
+
+				itemList.printList();
+
 			}
 		}
 		while (!action.equals("0"));
