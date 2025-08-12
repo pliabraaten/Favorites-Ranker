@@ -1,11 +1,7 @@
 package com.PL.ranker_app;
 
-import java.lang.reflect.Array;
 
 public class Parser {
-
-    public Parser() {
-    }
 
     // Parse comma separated input list
     public static String[] parse(String inputtedList) {
