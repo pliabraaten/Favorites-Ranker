@@ -1,17 +1,19 @@
 package com.PL.ranker_app;
 
+import java.util.Scanner;
+
 public class ItemList {
 
     private final String inputList;
-    private final String[] rankedList;
+    private final String[] parsedList;
     private final int length;
 
     // Constructor
     public ItemList(String inputtedList) {
 
         this.inputList = inputtedList;
-        this.rankedList = Parser.parse(inputList);  // Parse inputted string into elements in this String[] object
-        this.length = rankedList.length;
+        this.parsedList = Parser.parse(inputList);  // Parse inputted string into elements in this String[] object
+        this.length = parsedList.length;
 
     }
 
@@ -24,24 +26,31 @@ public class ItemList {
 
             if (i == length - 1) {
 
-                System.out.print(rankedList[i]);
+                System.out.print(parsedList[i]);
             }
             else {
-                System.out.print(rankedList[i] + ", ");
+                System.out.print(parsedList[i] + ", ");
             }
         }
         System.out.print("\n");
     }
 
-    // FIXME: later update the algorithm to minimize pairing iterations
 
+    // FIXME: later update the algorithm to minimize pairing iterations
     void compareItems() {
+
+        Scanner scr = new Scanner(System.in);
+        String[] result = new String[length];
 
         // Iterate though all pairs
         for (int i=0; i<length; i++) {
             for (int j=0; j<length; j++) {
-                System.out.println(rankedList[i] + ": " + rankedList[j]);
 
+                if (parsedList[i] != parsedList[j]) {
+                    System.out.println(parsedList[i] + ": " + parsedList[j]);
+
+                    result[i] = scr.nextLine();  // Get user input
+                }
 
             }
         }

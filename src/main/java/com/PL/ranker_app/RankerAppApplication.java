@@ -21,6 +21,7 @@ public class RankerAppApplication {
 
 	// COMMAND LINE MENU
 	void menu() {
+
 		Scanner scanner = new Scanner(System.in);
 		String listString = null;
 		String action = null;
