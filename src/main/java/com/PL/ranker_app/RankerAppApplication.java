@@ -53,6 +53,9 @@ public class RankerAppApplication {
 				// Compare
 				itemList.compareItems();
 
+				//
+				itemList.printMatrix();
+
 			}
 		}
 		while (!action.equals("0"));
