@@ -8,10 +8,13 @@ public class ItemList {
     private final String inputList;
     private final String[] parsedList;
     private final int length;
-    private final String[][] resultMatrix;
-    private final String[] rankedList;
+    private final String[] pairwiseWinners;
+
+    private int numberOfPairs = 0;
+    private String[] rankedList;
 
     Scanner scr = new Scanner(System.in);
+
 
     // Constructor
     public ItemList(String inputtedList) {
@@ -19,7 +22,10 @@ public class ItemList {
         this.inputList = inputtedList;
         this.parsedList = Parser.parse(inputList);  // Parse inputted string into elements in this String[] object
         this.length = parsedList.length;
-        this.resultMatrix = new String[length][length];
+
+        this.numberOfPairs = (length * (length - 1)) / 2;  // Counting pairs formula: n(n-1) / 2
+
+        this.pairwiseWinners = new String[numberOfPairs];
         this.rankedList = new String[length];
     }
 
@@ -44,16 +50,14 @@ public class ItemList {
 
 
     // Print results Matrix
-    void printMatrix() {
+    void printWinners() {
 
-        System.out.println("Result Matrix: ");
+        System.out.println("Winner List: ");
 
         // Iterate though all pairs to create Matrix
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
+        for (int i=0; i < numberOfPairs; i++) {
 
-                System.out.println(resultMatrix[i][j]);
-            }
+            System.out.println(pairwiseWinners[i]);
         }
     }
 
@@ -62,20 +66,19 @@ public class ItemList {
     void compareItems() {
 
         int elementTracker = 0;  // This increments to avoid combinations in iteration (ex: avoid 1,0 after 0,1)
+        int pairCounter = 0;  // Tracks which element is put into pairwiseWinners list
 
         // Iterate though all pairs
         for (int i=0; i<length; i++) {
             for (int j=elementTracker; j<length; j++) {
 
-                if (Objects.equals(parsedList[i], parsedList[j])) {  // Comparison of same item is not considered
-
-                    resultMatrix[i][j] = "X";
-                }
-                else {
+                if (!Objects.equals(parsedList[i], parsedList[j])) {  // Comparison of same item is not considered
 
                     System.out.println(parsedList[i] + ": " + parsedList[j]);
 
-                    resultMatrix[i][j] = scr.nextLine();   // Add user input to matrix
+                    pairwiseWinners[pairCounter] = scr.nextLine();   // Add user input to matrix
+
+                    pairCounter++;
                 }
             }
 
