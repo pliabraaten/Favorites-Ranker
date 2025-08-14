@@ -26,7 +26,7 @@ public class ItemList {
         this.numberOfPairs = (length * (length - 1)) / 2;  // Counting pairs formula: n(n-1) / 2
 
         this.pairwiseWinners = new String[numberOfPairs];
-        this.rankedList = new String[length];
+        this.rankedList = parsedList;  // TODO: CHECK IF THIS NEEDS A COPY OR CLONE OR IF IT DOESN'T AFFECT parsedList
     }
 
 
@@ -90,11 +90,14 @@ public class ItemList {
     // Rank items based on results
     void rankItems() {
 
-        // Loop through results
+        // Loop through total items
         for (int i=0; i<length; i++) {
-            for (int j=0; j < length; j++) {
 
+            // For each element in parsedList
 
+            // Count that element frequency in winnerList
+
+            // Sort rankedList by that frequency
 
 
             }
