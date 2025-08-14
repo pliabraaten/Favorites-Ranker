@@ -3,6 +3,7 @@ package com.PL.ranker_app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -51,9 +52,10 @@ public class RankerAppApplication {
 
 				// Compare
 				itemList.compareItems();
+//				ArrayList<String> rankedList = BinaryInsertionSort.compareItems(String[] itemList.parsedList);
 
-				//
-				itemList.printWinners();
+				// Print output
+				itemList.printRankedList();
 
 			}
 		}
