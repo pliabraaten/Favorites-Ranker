@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ItemList {
 
     private final String inputList;
-    public final String[] parsedList;
+    public static String[] parsedList = new String[0];
     private final int numberOfItems;
     private final String[] pairwiseWinners;
 
@@ -52,14 +52,14 @@ public class ItemList {
 
         for (int i = 0; i< numberOfItems; i++) {
 
-            System.out.println(i+1 + ": " + BinaryInsertionSort.rankedList.get(i));  // Print ranked position and item
+            System.out.println(i+1 + ": " + BinaryInsertionSort.rankedList[i]);  // Print ranked position and item
         }
     }
 
 
     void compareItems() {
 
-        BinaryInsertionSort.compareItems(parsedList);
+        BinaryInsertionSort.rank();
 
     }
 
