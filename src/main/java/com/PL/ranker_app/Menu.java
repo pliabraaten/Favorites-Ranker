@@ -39,7 +39,6 @@ public class Menu {
 
                 // Compare
                 itemList.compareItems();
-//				ArrayList<String> rankedList = BinaryInsertionSort.compareItems(String[] itemList.parsedList);
 
                 // Print output
                 itemList.printRankedList();

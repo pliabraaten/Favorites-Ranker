@@ -7,11 +7,12 @@ public class ItemList {
     private final String inputList;
     public static String[] parsedList = new String[0];
     private final int numberOfItems;
-    private final String[] pairwiseWinners;
+    public String[] rankedList = new String[0];
 
     private int numberOfPairs = 0;
 
     Scanner scr = new Scanner(System.in);
+
 
     // Constructor
     public ItemList(String inputtedList) {
@@ -21,8 +22,6 @@ public class ItemList {
         this.numberOfItems = parsedList.length;
 
         this.numberOfPairs = (numberOfItems * (numberOfItems - 1)) / 2;  // Counting pairs formula: n(n-1) / 2
-
-        this.pairwiseWinners = new String[numberOfPairs];
     }
 
 
@@ -52,16 +51,17 @@ public class ItemList {
 
         for (int i = 0; i< numberOfItems; i++) {
 
-            System.out.println(i+1 + ": " + BinaryInsertionSort.rankedList[i]);  // Print ranked position and item
+            System.out.println(i+1 + ": " + rankedList[i]);  // Print ranked position and item
         }
     }
 
 
     void compareItems() {
 
-        BinaryInsertionSort.rank();
+        rankedList = BinaryInsertionSort.rank(parsedList);
 
     }
+
 
 //    // FIXME: optimize this -> Big O(N^2)
 //    void compareItems() {

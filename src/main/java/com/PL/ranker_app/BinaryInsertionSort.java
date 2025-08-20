@@ -9,18 +9,12 @@ import static com.PL.ranker_app.ItemList.parsedList;
 
 public class BinaryInsertionSort {
 
-    public static String[] rankedList;
-    public static int itemCount = parsedList.length;
-
-
-    public BinaryInsertionSort(String[] parsedList) {
-
-        rankedList = parsedList;
-    }
-
 
     // Rank list by prompting user with pairwise comparisons and use Binary Insertion Sort
-    public static String[] rank() {
+    public static String[] rank(String[] parsedList) {
+
+        String[] rankedList = parsedList;
+        int itemCount = parsedList.length;
 
         Scanner scr = new Scanner(System.in);
 
@@ -30,58 +24,54 @@ public class BinaryInsertionSort {
         int L = 0;  // Track left index
         int R = 0;  // For calculating the middle
         int M = 0;
+        String selectedItem;
 
 
         // FIXME: concerns with the Arrow's impossibility theorem: A > B, B > C, but C > A is possible in preferences
         // BINARY INSERTION SORT
-            // https://en.wikipedia.org/wiki/Insertion_sort#Variants
-            // O (log N)
+        // https://en.wikipedia.org/wiki/Insertion_sort#Variants
+        // Time Complexity: The algorithm as a whole still has a running worst-case running time of O(n2) because of the series of swaps required for each insertion.
+        // https://www.geeksforgeeks.org/dsa/binary-insertion-sort/
 
         // Take element
-        for (int i=0; i < itemCount; i++) {  // For every element in the rankedList
+        for (int i = 1; i < itemCount; i++) {  // For every element in the rankedList; skipping first item (already sorted)
 
-            if (i == 0) {  // If first, then it is considered sorted
+            // Sorted portion of the array
+            int j = 0;
+            L = 0;
+            R = i - 1;
+            selectedItem = rankedList[i];
 
-                continue;
-            }
-            else {
+            // Binary Search: Find location to be inserted
+            while (L <= R) {  // Repeat until no more middles
 
-                // Find middle element in the sorted (left) side of the array
-                    // Sorted portion is L to i-1
-                L = 0;
-                R = i - 1;
-                M = findMiddle(R, L, M);
+                M = (R - L) / 2;  // Find middle element in the sorted (left) side of the array
 
                 // Prompt user to compared nextItem (i) to middle item
-                winner = compareItems(i, M, scr);
+                winner = pairwisePrompt(i, M, scr, rankedList);
 
-                // If nextItem wins, segment and find next middle
-                    // L stays, R <- old middle
-                if (winner.equals(rankedList[i])) {
+                // If selected item is ranked higher than middle
+                if (winner.equals(selectedItem)) {  // If selected element wins
 
-                    R = M;  // Move middle
-                    M = findMiddle(R, L, M);  // Find next middle
-
-                    // Prompt user to compared nextItem (i) to middle item
-                    winner = compareItems(i, M, scr);
-
-                } else if (winner.equals(rankedList[M])) {  // If nextItem loses, segment and find next middle
-
-                    // R stays, L <- old middle
-                    L = M;
-                    M = findMiddle(R, L, M);
-
-                    winner = compareItems(i, M, scr);
-
+                    R = M - 1;  // L stays, R <- old middle
                 }
+                else if (winner.equals(rankedList[M])) {  // If nextItem loses, segment and find next middle
 
-
-
-                // Repeat until no more middles FIXME: what conditional?
-
-                // Insert new item into position FIXME: how?
-
+                    L = M + 1;  // Move middle
+                }
             }
+
+            // Insert new item into position (R = L = insert index)
+            while (j >= R) {
+
+                j = i - 1;  // Index of selectedItem
+
+                rankedList[j + 1] = rankedList[j];  // Set
+                j--;
+            }
+            rankedList[j + 1] = selectedItem;
+
+
 
         }
 
@@ -90,23 +80,11 @@ public class BinaryInsertionSort {
     }
 
 
-    static int findMiddle(int L, int R, int M) {
 
-        // L is farthest left, R is farthest right in sorted portion
-        M = (R - L) / 2;
-
-        System.out.println("L: " + L);
-        System.out.println("R: " + R);
-        System.out.println("M: " + M);
-
-        return M;
-    }
-
-
-    static String compareItems(int i, int M, Scanner scr) {
+    static String pairwisePrompt(int i, int M, Scanner scr, String[] rankedList) {
 
         // Prompt user to compared nextItem (i) to middle item
-        System.out.println(rankedList[i] + "vs " + rankedList[M]);
+        System.out.println(rankedList[i] + " vs " + rankedList[M]);
         String winner = scr.nextLine();
 
         return winner;
