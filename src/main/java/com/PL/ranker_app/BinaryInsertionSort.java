@@ -35,6 +35,7 @@ public class BinaryInsertionSort {
 
         // Take element
         for (int i = 1; i < itemCount; i++) {  // For every element in the rankedList; skipping first item (already sorted)
+                // FIXME: update such that i starts at 0 and then skips the first element
 
             // Sorted portion of the array
             int j = 0;
@@ -42,43 +43,38 @@ public class BinaryInsertionSort {
             R = i - 1;
             selectedItem = rankedList[i];
 
-            // Binary Search: Find location to be inserted
-            while (L <= R) {  // Repeat until no more middles
+            // Prompt the user with pairwise comparisons via a binary sort comparison method to determine where each element ranks in the list
+            int insertPosition = binarySearch(i, L, R, rankedList, selectedItem, scr);
 
-                M = (R - L) / 2;  // Find middle element in the sorted (left) side of the array
-
-                // Prompt user to compared nextItem (i) to middle item
-                winner = pairwisePrompt(i, M, scr, rankedList);
-
-                // If selected item is ranked higher than middle
-                if (winner.equals(selectedItem)) {  // If selected element wins
-
-                    R = M - 1;  // L stays, R <- old middle
-                }
-                else if (winner.equals(rankedList[M])) {  // If nextItem loses, segment and find next middle
-
-                    L = M + 1;  // Move middle
-                }
-            }
-
-            // Insert new item into position (R = L = insert index)
-            while (j >= R) {
-
-                j = i - 1;  // Index of selectedItem
-
-                rankedList[j + 1] = rankedList[j];  // Set
-                j--;
-            }
-            rankedList[j + 1] = selectedItem;
-
-
+            // Move the element to the ranked value position in the array
+            insertionSort(j, insertPosition, i, rankedList, selectedItem);
 
         }
-
 
         return rankedList;
     }
 
+
+    // Binary Search: Find location to be inserted
+    static int binarySearch(int i, int L, int R, String[] rankedList, String selectedItem, Scanner scr) {
+        while (L <= R) {  // Repeat until no more middles
+
+            int M = (R - L) / 2;  // Find middle element in the sorted (left) side of the array
+
+            // Prompt user to compared nextItem (i) to middle item
+            String winner = pairwisePrompt(i, M, scr, rankedList);
+
+            // If selected item is ranked higher than middle
+            if (winner.equals(selectedItem)) {  // If selected element wins
+
+                R = M - 1;  // L stays, R <- old middle
+            } else if (winner.equals(rankedList[M])) {  // If nextItem loses, segment and find next middle
+
+                L = M + 1;  // Move middle
+            }
+        }
+        return L;
+    }
 
 
     static String pairwisePrompt(int i, int M, Scanner scr, String[] rankedList) {
@@ -88,6 +84,19 @@ public class BinaryInsertionSort {
         String winner = scr.nextLine();
 
         return winner;
+    }
+
+
+    // Insert new item into position (R = L = insert index)
+    static void insertionSort(int j, int insertPosition, int i, String[] rankedList, String selectedItem) {
+        while (j > insertPosition) {
+
+            j = i - 1;  // Index of selectedItem
+
+            rankedList[j + 1] = rankedList[j];  // Set
+            j--;
+        }
+        rankedList[j + 1] = selectedItem;
     }
 
 

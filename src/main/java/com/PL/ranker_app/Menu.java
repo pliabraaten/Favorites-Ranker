@@ -35,7 +35,7 @@ public class Menu {
                 // Create ItemList based on user input
                 ItemList itemList = new ItemList(listString);
 
-                itemList.printList();
+//                itemList.printList();
 
                 // Compare
                 itemList.compareItems();
