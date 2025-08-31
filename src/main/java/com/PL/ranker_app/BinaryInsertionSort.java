@@ -29,9 +29,16 @@ public class BinaryInsertionSort {
 
         // FIXME: concerns with the Arrow's impossibility theorem: A > B, B > C, but C > A is possible in preferences
         // BINARY INSERTION SORT
+
         // https://en.wikipedia.org/wiki/Insertion_sort#Variants
         // Time Complexity: The algorithm as a whole still has a running worst-case running time of O(n2) because of the series of swaps required for each insertion.
+        // Binary insertion sort employs a binary search to determine the correct location to insert new elements, and therefore performs ⌈log2 n⌉ comparisons in the worst case.
+            // When each element in the array is searched for and inserted this is O(n log n).[7]
+            // The algorithm as a whole still has a running time of O(n2) on average because of the series of swaps required for each insertion.[7]
+
         // https://www.geeksforgeeks.org/dsa/binary-insertion-sort/
+
+
 
         // Take element
         for (int i = 1; i < itemCount; i++) {  // For every element in the rankedList; skipping first item (already sorted)
