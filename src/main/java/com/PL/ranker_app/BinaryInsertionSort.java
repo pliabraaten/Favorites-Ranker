@@ -38,10 +38,10 @@ public class BinaryInsertionSort {
                 // FIXME: update such that i starts at 0 and then skips the first element
 
             // Sorted portion of the array
-            int j = 0;
             L = 0;
             R = i - 1;
             selectedItem = rankedList[i];
+            int j = i - 1;  // i is the index of selectedItem, j is prior
 
             // Prompt the user with pairwise comparisons via a binary sort comparison method to determine where each element ranks in the list
             int insertPosition = binarySearch(i, L, R, rankedList, selectedItem, scr);
@@ -57,9 +57,9 @@ public class BinaryInsertionSort {
 
     // Binary Search: Find location to be inserted
     static int binarySearch(int i, int L, int R, String[] rankedList, String selectedItem, Scanner scr) {
-        while (L <= R) {  // Repeat until no more middles
+        while (L <= R  && R >= 0) {  // Repeat until no more middles
 
-            int M = (R - L) / 2;  // Find middle element in the sorted (left) side of the array
+            int M = L + (R - L) / 2;  // Find middle element in the sorted (left) side of the array
 
             // Prompt user to compared nextItem (i) to middle item
             String winner = pairwisePrompt(i, M, scr, rankedList);
@@ -68,6 +68,7 @@ public class BinaryInsertionSort {
             if (winner.equals(selectedItem)) {  // If selected element wins
 
                 R = M - 1;  // L stays, R <- old middle
+
             } else if (winner.equals(rankedList[M])) {  // If nextItem loses, segment and find next middle
 
                 L = M + 1;  // Move middle
@@ -87,19 +88,19 @@ public class BinaryInsertionSort {
     }
 
 
-    // Insert new item into position (R = L = insert index)
+    // Insert new item into position (R = L = insert index) by swapping elements
     static void insertionSort(int j, int insertPosition, int i, String[] rankedList, String selectedItem) {
-        while (j > insertPosition) {
+        while (j >= insertPosition) {
 
-            j = i - 1;  // Index of selectedItem
+            rankedList[j + 1] = rankedList[j];  // Move element one place to the right (j starts as element immediately to the left of selectedItem)
+                // Put prior element at the index of element to its right
 
-            rankedList[j + 1] = rankedList[j];  // Set
-            j--;
+            j--;  // Move to the next element to the left
+
         }
+        // Keep moving elements to the right 1 until at insertPosition, then put value of selectedItem there
         rankedList[j + 1] = selectedItem;
     }
-
-
 
 }
 
