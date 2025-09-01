@@ -26,33 +26,3 @@ public class Parser {
         return itemList;
     }
 }
-
-
-
-// MANUAL PARSING ATTEMPT -> NEEDED TO ADD CONSIDERATION FOR LAST ITEM WITHOUT COMMA
-//
-//    public static String[] manualParse(String inputtedList) {
-//
-//        System.out.println("item #: " + itemCount);
-//
-//        int itemStart = 0;  // Tracks index of items in list
-//        int itemEnd = 0;
-//
-//        // Parse through string breaking out items between commas
-//        while (itemList.size() < itemCount) {
-//            // pizza, corn
-//            // 012345678910
-//            itemEnd = inputtedList.indexOf(",");
-//
-//            String item = inputtedList.substring(itemStart, itemEnd);
-//
-//            // add strip whitespace
-//
-//            itemList.add(item);  //grab that position, add prior position to that position as new string
-//
-//            System.out.println("item: " + item);
-//
-//            inputtedList = inputtedList.substring(itemEnd + 2, length);  // Update list to be from comma on
-//
-//            itemStart = itemEnd;  // update prior position and look for next comma
-//        }

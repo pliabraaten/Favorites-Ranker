@@ -32,23 +32,22 @@ public class Menu {
 
 //				System.out.println("inputted list: " + listString);
 
-                // Create ItemList based on user input
+                // Create ItemList based on user input (parsed in constructor)
                 ItemList itemList = new ItemList(listString);
 
 //                itemList.printList();
 
-                // Compare
+                // Run pairwise comparisons
                 itemList.compareItems();
 
-                // Print output
+                // Print items ranked in order of preference
                 itemList.printRankedList();
 
             }
         }
-        while (!action.equals("0"));
+        while (!action.equals("0"));  // Stay in menu until user enters 0
 
         // If 0 action, exit program
         System.exit(0);
-
     }
 }

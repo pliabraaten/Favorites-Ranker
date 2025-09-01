@@ -2,11 +2,6 @@ package com.PL.ranker_app;
 
 import java.util.Scanner;
 
-import static com.PL.ranker_app.ItemList.parsedList;
-
-
-
-
 public class BinaryInsertionSort {
 
 
@@ -18,16 +13,12 @@ public class BinaryInsertionSort {
 
         Scanner scr = new Scanner(System.in);
 
-        String winner;
-        String loser;
-
         int L = 0;  // Track left index
         int R = 0;  // For calculating the middle
-        int M = 0;
-        String selectedItem;
-
+        String selectedItem;  // Value of element being ranked
 
         // FIXME: concerns with the Arrow's impossibility theorem: A > B, B > C, but C > A is possible in preferences
+
         // BINARY INSERTION SORT
 
         // https://en.wikipedia.org/wiki/Insertion_sort#Variants
@@ -45,17 +36,16 @@ public class BinaryInsertionSort {
                 // FIXME: update such that i starts at 0 and then skips the first element
 
             // Sorted portion of the array
-            L = 0;
-            R = i - 1;
-            selectedItem = rankedList[i];
-            int j = i - 1;  // i is the index of selectedItem, j is prior
+            L = 0;  // Left
+            R = i - 1;  // Right
+            selectedItem = rankedList[i];  // Value of element being ranked
+            int j = i - 1;  // i is the index of selectedItem, j is prior element
 
-            // Prompt the user with pairwise comparisons via a binary sort comparison method to determine where each element ranks in the list
+            // Find rank position with pairwise comparisons via a binary sort comparison method
             int insertPosition = binarySearch(i, L, R, rankedList, selectedItem, scr);
 
             // Move the element to the ranked value position in the array
             insertionSort(j, insertPosition, i, rankedList, selectedItem);
-
         }
 
         return rankedList;
@@ -64,21 +54,22 @@ public class BinaryInsertionSort {
 
     // Binary Search: Find location to be inserted
     static int binarySearch(int i, int L, int R, String[] rankedList, String selectedItem, Scanner scr) {
-        while (L <= R  && R >= 0) {  // Repeat until no more middles
+        while (L <= R  && R >= 0) {  // Repeat until no more middle value
 
             int M = L + (R - L) / 2;  // Find middle element in the sorted (left) side of the array
 
-            // Prompt user to compared nextItem (i) to middle item
+            // Prompt user to compare nextItem (i) to middle item (M)
             String winner = pairwisePrompt(i, M, scr, rankedList);
 
             // If selected item is ranked higher than middle
-            if (winner.equals(selectedItem)) {  // If selected element wins
+            if (winner.equals(selectedItem)) {
 
-                R = M - 1;  // L stays, R <- old middle
+                R = M - 1;  // L stays, R <- old middle; continue on left side of sorted
+            }
+            // If selected items is ranked lower than middle
+            else if (winner.equals(rankedList[M])) {
 
-            } else if (winner.equals(rankedList[M])) {  // If nextItem loses, segment and find next middle
-
-                L = M + 1;  // Move middle
+                L = M + 1;  // Move left to middle and continue search on right side of sorted
             }
         }
         return L;
@@ -110,90 +101,3 @@ public class BinaryInsertionSort {
     }
 
 }
-
-
-        // OLD ATTEMPT AT SORTING THEN INSERTING INTO DIFFERENT ARRAY
-//        int L = 0;  // Left index
-//        int R = itemCount - 1;  // Right index
-//
-//        // For first comparison, just compare first two items
-//        for (int i=0; i<itemCount; i++) {
-//
-//            // Handle first comparison
-//            if (i==0) {
-//
-//                do {
-//                    System.out.println(parsedList[i] + " vs " + parsedList[i + 1]);
-//
-//                    winner = scr.nextLine();
-//
-//                    if (Objects.equals(winner, parsedList[i])) {
-//                        loser = parsedList[i+1];
-//                    }
-//                    else {
-//                        loser = parsedList[i];
-//                    }
-//                }
-//                while (!winner.equals(parsedList[i]) && !winner.equals(parsedList[i+1]));
-//
-//                // Put ranked items into ArrayList in order
-//                rankedList.add(winner);  // Add since arraylist is empty and set only works if it is non-empty
-//                rankedList.add(loser);
-//
-//                i++;  // Skip 2nd item since it was sorted in the first comparison
-//            }
-//            else {  // All other comparisons
-//
-//
-//                int middle = (L - R) / 2;  // Middle index
-//
-//                // Take next item from parsed list
-//                String currentItem = parsedList[i];
-//
-//                // Compare it to middle item in ranked list
-//                System.out.println(currentItem + " vs " + rankedList.get(middle));
-//
-//                winner = scr.nextLine();
-//
-//
-//                insert();
-//
-//
-//
-//            }
-//        }
-//
-////        ItemList.rankedList;
-//
-//
-//        // From parsed list, compare that item to elements in ArrayList via binary insertion
-//
-//    return rankedList;
-//    }
-//
-//
-//    static void insert() {
-//
-//        // take next element from parsed list
-//        // current = next element
-//
-//
-
-        // find middle of ranked list
-
-        // compared current to middle with user feedback
-
-        // if user says current > than middle, find next middle to the left
-
-            // repeat
-
-        // if user says current is < than middle, find next middle to the right
-
-            // repeat
-
-        // once there is nothing to the right/left of the last "middle"
-
-        // add current to the arrayList
-
-
-
