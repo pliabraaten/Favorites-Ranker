@@ -78,9 +78,13 @@ public class BinaryInsertionSort {
 
     static String pairwisePrompt(int i, int M, Scanner scr, String[] rankedList) {
 
-        // Prompt user to compared nextItem (i) to middle item
-        System.out.println(rankedList[i] + " vs " + rankedList[M]);
-        String winner = scr.nextLine();
+        String winner;
+
+        do {
+            // Prompt user to compared nextItem (i) to middle item
+            System.out.println(rankedList[i] + " vs " + rankedList[M]);
+            winner = scr.nextLine();
+        } while (!winner.equals(rankedList[i]) && !winner.equals(rankedList[M]));  // Keep prompting until response is valid
 
         return winner;
     }
