@@ -1,6 +1,8 @@
 package com.PL.ranker_app;
 
 
+import java.util.Arrays;
+
 public class Parser {
 
     // Parse comma separated input list
@@ -22,6 +24,10 @@ public class Parser {
 
         // PARSE
         String[] itemList = inputtedList.split("\\s*,\\s*");  // Regex "\\s*,\\s*" looks for any whitespace around comma
+
+        itemList = Arrays.stream(itemList)  // Converts array into Stream for processing
+                .filter(s -> (s != null && !s.isEmpty()))  // Filters Stream to only include elements that are not null or empty
+                .toArray(String[]::new);  // Returns filtered stream as new array
 
         return itemList;
     }
