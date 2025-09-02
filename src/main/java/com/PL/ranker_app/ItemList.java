@@ -1,15 +1,11 @@
 package com.PL.ranker_app;
 
-import java.util.Scanner;
-
 public class ItemList {
 
     private final String inputList;
     public static String[] parsedList = new String[0];
     private final int numberOfItems;
     public String[] rankedList = new String[0];
-
-    Scanner scr = new Scanner(System.in);
 
 
     // Constructor
