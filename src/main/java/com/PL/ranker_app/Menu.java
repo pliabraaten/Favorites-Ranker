@@ -10,15 +10,23 @@ public class Menu {
 
         Scanner scanner = new Scanner(System.in);
         String listString = null;
-
+        ItemList itemList = null;
         String action = null;
 
         // Keeper user in menu until they exit by entering 0
         do {
-            System.out.println("Welcome to the Ranker Project\n"
-                    + "Type 1 to enter list of items to be ranked\n"
-                    + "Type 0 to exit program"
-            );
+
+            if (itemList == null) {  // If no list has been entered yet
+                System.out.println("Welcome to the Ranker Project\n"
+                        + "Type 1 to enter list of items to be ranked\n"
+                        + "Type 0 to exit program");
+            }
+            else {
+                System.out.println("Welcome to the Ranker Project\n"
+                        + "Type 2 to view the ranked list of items\n"
+                        + "Type 3 to add items to the list and then rank\n"
+                        + "Type 0 to exit program");
+            }
 
             // Retrieve action input from user
             action = scanner.nextLine();
@@ -33,7 +41,7 @@ public class Menu {
 //				System.out.println("inputted list: " + listString);
 
                 // Create ItemList based on user input (parsed in constructor)
-                ItemList itemList = new ItemList(listString);
+                itemList = new ItemList(listString);
 
 //                itemList.printList();
 
@@ -44,6 +52,19 @@ public class Menu {
                 itemList.printRankedList();
 
             }
+
+            // If 2 print ranked list
+            if (action.equals("2")) {
+
+                itemList.printRankedList();
+            }
+
+            // If 3, take additional items, parse, then insert them into ranked list
+            if (action.equals("3")) {
+
+                System.out.println("FEATURE PENDING");
+            }
+
         }
         while (!action.equals("0"));  // Stay in menu until user enters 0
 
