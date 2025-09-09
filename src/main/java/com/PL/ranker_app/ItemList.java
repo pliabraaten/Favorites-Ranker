@@ -6,7 +6,7 @@ public class ItemList {
 
     private final String inputList;
     private ArrayList<String> parsedList = new ArrayList<>();
-    private final int numberOfItems;
+    private int numberOfItems;
     private ArrayList<String> rankedList = new ArrayList<>();
 
 
@@ -20,6 +20,8 @@ public class ItemList {
 
 
     void printInputList() {
+
+        numberOfItems = parsedList.size();
 
         System.out.print("Input list: ");
 
@@ -61,6 +63,17 @@ public class ItemList {
     // Add additional items to the list to be ranked
     void addItems(String newInput) {
 
+        // Parse added inputs into an ArrayList
+        ArrayList<String> addedItems = Parser.parse(newInput);
+        int numberAdded = addedItems.size();
+
+        // Add additional ArrayList elements to the ParsedList
+        for (int i=0; i<numberAdded; i++) {
+
+            parsedList.add(addedItems.get(i));
+        }
+
+//        printInputList();
 
     }
 }

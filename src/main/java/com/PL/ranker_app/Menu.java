@@ -1,5 +1,6 @@
 package com.PL.ranker_app;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -61,19 +62,26 @@ public class Menu {
             }
 
 
-//            // If 3, take additional items, parse, then insert them into ranked list
-//            if (action.equals("3") && itemList != null) {  // Make sure the user already created initial list
-//
-//                // Prompt user to enter MORE comma separated list
-//                System.out.println("Enter additional items to be added to the list (ex: item1, item2, ...");
-//                String newInput = scanner.nextLine();
-//
-//                // Parse input and then add to parsed list
-//                String[] addedItems = Parser.parse(newInput);
-//                int numberAdded = addedItems.length;
-//
+            // If 3, take additional items, parse, then insert them into ranked list
+            if (action.equals("3") && itemList != null) {  // Make sure the user already created initial list
+
+                // Prompt user to enter MORE comma separated list
+                System.out.println("Enter additional items to be added to the list (ex: item1, item2, ...");
+                String newInput = scanner.nextLine();
+
+                // Add newInput to the ParsedList
+                itemList.addItems(newInput);
+
+
+
+
+
+
+
+
+
 //                // Add new items into parsed list
-//                int numberSorted = itemList.getRankedList().length;
+//                int numberSorted = itemList.
 //                String[] rankedList = itemList.getRankedList();
 //
 //                String[] rankedAndAdded = new String[numberSorted + numberAdded];
@@ -102,10 +110,10 @@ public class Menu {
 //
 //                // Run pairwise comparisons
 //                itemList.compareItems(numberSorted);
-////
-////                // Print items ranked in order of preference
-////                itemList.printRankedList();
-//            }
+//
+//                // Print items ranked in order of preference
+//                itemList.printRankedList();
+            }
 
         }
         while (!action.equals("0"));  // Stay in menu until user enters 0

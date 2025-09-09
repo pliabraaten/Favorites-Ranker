@@ -9,7 +9,7 @@ public class BinaryInsertionSort {
     // Rank list by prompting user with pairwise comparisons and use Binary Insertion Sort
     public static ArrayList<String> rank(ArrayList<String> parsedList, int numberSorted) {
 
-        ArrayList<String> rankedList = parsedList;
+        ArrayList<String> rankedList = parsedList;  // TODO: allow new parsedList to be added to rankedList (maybe put initializer in class and then here new rankedList = old rankedList and parsedList)
         int itemCount = parsedList.size();
 
         Scanner scr = new Scanner(System.in);
