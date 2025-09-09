@@ -1,12 +1,13 @@
 package com.PL.ranker_app;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Parser {
 
     // Parse comma separated input list
-    public static String[] parse(String inputtedList) {
+    public static ArrayList<String> parse(String inputtedList) {
 
         // Obtain number of items in user list
         int length = inputtedList.length();
@@ -22,13 +23,17 @@ public class Parser {
             }
         }
 
-        // PARSE
+        // PARSE into smaller strings
         String[] itemList = inputtedList.split("\\s*,\\s*");  // Regex "\\s*,\\s*" looks for any whitespace around comma
 
-        itemList = Arrays.stream(itemList)  // Converts array into Stream for processing
-                .filter(s -> (s != null && !s.isEmpty()))  // Filters Stream to only include elements that are not null or empty
-                .toArray(String[]::new);  // Returns filtered stream as new array
+        // Convert String[] into ArrayList
+        ArrayList<String> itemArrayList = new ArrayList<String>(Arrays.asList(itemList));
 
-        return itemList;
+
+//        itemList = Arrays.stream(itemList)  // Converts array into Stream for processing
+//                .filter(s -> (s != null && !s.isEmpty()))  // Filters Stream to only include elements that are not null or empty
+//                .toArray(String[]::new);  // Returns filtered stream as new array
+
+        return itemArrayList;
     }
 }

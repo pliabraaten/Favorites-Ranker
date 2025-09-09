@@ -1,11 +1,13 @@
 package com.PL.ranker_app;
 
+import java.util.ArrayList;
+
 public class ItemList {
 
     private final String inputList;
-    public static String[] parsedList = new String[0];
+    private ArrayList<String> parsedList = new ArrayList<>();
     private final int numberOfItems;
-    public String[] rankedList = new String[0];
+    private ArrayList<String> rankedList = new ArrayList<>();
 
 
     // Constructor
@@ -13,7 +15,7 @@ public class ItemList {
 
         this.inputList = inputtedList;
         this.parsedList = Parser.parse(inputList);  // Parse inputted string into elements in this String[] object
-        this.numberOfItems = parsedList.length;
+        this.numberOfItems = parsedList.size();
     }
 
 
@@ -26,11 +28,11 @@ public class ItemList {
             // If the last element, don't add a comma
             if (i == numberOfItems - 1) {
 
-                System.out.print(parsedList[i]);
+                System.out.print(parsedList.get(i));
             }
             // For every element sans last, add a comma after
             else {
-                System.out.print(parsedList[i] + ", ");
+                System.out.print(parsedList.get(i) + ", ");
             }
         }
         System.out.print("\n");
@@ -43,15 +45,22 @@ public class ItemList {
 
         for (int i = 0; i < numberOfItems; i++) {
 
-            System.out.println(i + 1 + ": " + rankedList[i]);  // Print ranked position and item per line
+            System.out.println(i + 1 + ": " + rankedList.get(i));  // Print ranked position and item per line
         }
     }
 
 
     // Run the pairwise comparison prompts using binary search and reorder list according to rank
-    void compareItems() {
+    void compareItems(int numberSorted) {
 
-        rankedList = BinaryInsertionSort.rank(parsedList);
+        rankedList = BinaryInsertionSort.rank(parsedList, numberSorted);
+
+    }
+
+
+    // Add additional items to the list to be ranked
+    void addItems(String newInput) {
+
 
     }
 }

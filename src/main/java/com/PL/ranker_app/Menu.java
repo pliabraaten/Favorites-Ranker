@@ -32,7 +32,7 @@ public class Menu {
             action = scanner.nextLine();
 
             // If 1 save input as string
-            if (action.equals("1")) {
+            if (action.equals("1") && itemList == null) {
 
                 // Prompt user to enter comma separated list
                 System.out.println("Enter list (ex: item1, item2, ...");
@@ -46,24 +46,66 @@ public class Menu {
 //                itemList.printList();
 
                 // Run pairwise comparisons
-                itemList.compareItems();
+                itemList.compareItems(0);
 
                 // Print items ranked in order of preference
                 itemList.printRankedList();
 
             }
 
+
             // If 2 print ranked list
-            if (action.equals("2")) {
+            if (action.equals("2") && itemList != null) {  // Make sure the user already created initial list
 
                 itemList.printRankedList();
             }
 
-            // If 3, take additional items, parse, then insert them into ranked list
-            if (action.equals("3")) {
 
-                System.out.println("FEATURE PENDING");
-            }
+//            // If 3, take additional items, parse, then insert them into ranked list
+//            if (action.equals("3") && itemList != null) {  // Make sure the user already created initial list
+//
+//                // Prompt user to enter MORE comma separated list
+//                System.out.println("Enter additional items to be added to the list (ex: item1, item2, ...");
+//                String newInput = scanner.nextLine();
+//
+//                // Parse input and then add to parsed list
+//                String[] addedItems = Parser.parse(newInput);
+//                int numberAdded = addedItems.length;
+//
+//                // Add new items into parsed list
+//                int numberSorted = itemList.getRankedList().length;
+//                String[] rankedList = itemList.getRankedList();
+//
+//                String[] rankedAndAdded = new String[numberSorted + numberAdded];
+//
+//                for (int i = 0; i < numberSorted; i++) {
+//
+//                    rankedAndAdded[i] = rankedList[i];
+//                }
+//                for (int i =0; i < numberAdded; i++) {
+//
+//                    rankedAndAdded[numberSorted + i] = addedItems[i];
+//                }
+//
+//                for (int i=0; i < numberSorted+numberAdded; i++) {
+//
+//                    System.out.println(rankedAndAdded[i]);
+//                }
+//
+//                itemList.setParsedList(rankedAndAdded);
+//
+//                // RANKING LOGIC WORKS WITH ADDED ITEMS (ONLY RANKS AND INSERTS NEW)
+//                // TODO: update parsed and ranked list in the itemList object to include the new items
+//                    // Change the String[] to arraylist that has add() method?
+//
+//                itemList.printInputList();
+//
+//                // Run pairwise comparisons
+//                itemList.compareItems(numberSorted);
+////
+////                // Print items ranked in order of preference
+////                itemList.printRankedList();
+//            }
 
         }
         while (!action.equals("0"));  // Stay in menu until user enters 0
