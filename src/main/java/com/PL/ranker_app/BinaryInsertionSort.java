@@ -33,20 +33,22 @@ public class BinaryInsertionSort {
         String selectedItem;  // Value of element being ranked
 
         // Take element
-        for (int i = numberSorted + 1; i < itemCount; i++) {  // For every element in the rankedList; skipping first item (already sorted)
-                // FIXME: update such that i starts at 0 and then skips the first element
+        for (int i = numberSorted; i < itemCount; i++) {  // For every element in the rankedList;
 
-            // Sorted portion of the array
-            L = 0;  // Left
-            R = i - 1;  // Right
-            selectedItem = rankedList.get(i);  // Value of element being ranked
-            int j = i - 1;  // i is the index of selectedItem, j is prior element
+            if (i > 0) {  // Skip first item (already sorted)
 
-            // Find rank position with pairwise comparisons via a binary sort comparison method
-            int insertPosition = binarySearch(i, L, R, rankedList, selectedItem, scr);
+                // Sorted portion of the array
+                L = 0;  // Left
+                R = i - 1;  // Right
+                selectedItem = rankedList.get(i);  // Value of element being ranked
+                int j = i - 1;  // i is the index of selectedItem, j is prior element
 
-            // Move the element to the ranked value position in the array
-            insertionSort(j, insertPosition, i, rankedList, selectedItem);
+                // Find rank position with pairwise comparisons via a binary sort comparison method
+                int insertPosition = binarySearch(i, L, R, rankedList, selectedItem, scr);
+
+                // Move the element to the ranked value position in the array
+                insertionSort(j, insertPosition, i, rankedList, selectedItem);
+            }
         }
 
         return rankedList;
