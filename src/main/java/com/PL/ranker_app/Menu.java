@@ -69,50 +69,10 @@ public class Menu {
                 System.out.println("Enter additional items to be added to the list (ex: item1, item2, ...");
                 String newInput = scanner.nextLine();
 
-                // Add newInput to the ParsedList
+                // Run method to add newInput to the ParsedList
                 itemList.addItems(newInput);
 
 
-
-
-
-
-
-
-
-//                // Add new items into parsed list
-//                int numberSorted = itemList.
-//                String[] rankedList = itemList.getRankedList();
-//
-//                String[] rankedAndAdded = new String[numberSorted + numberAdded];
-//
-//                for (int i = 0; i < numberSorted; i++) {
-//
-//                    rankedAndAdded[i] = rankedList[i];
-//                }
-//                for (int i =0; i < numberAdded; i++) {
-//
-//                    rankedAndAdded[numberSorted + i] = addedItems[i];
-//                }
-//
-//                for (int i=0; i < numberSorted+numberAdded; i++) {
-//
-//                    System.out.println(rankedAndAdded[i]);
-//                }
-//
-//                itemList.setParsedList(rankedAndAdded);
-//
-//                // RANKING LOGIC WORKS WITH ADDED ITEMS (ONLY RANKS AND INSERTS NEW)
-//                // TODO: update parsed and ranked list in the itemList object to include the new items
-//                    // Change the String[] to arraylist that has add() method?
-//
-//                itemList.printInputList();
-//
-//                // Run pairwise comparisons
-//                itemList.compareItems(numberSorted);
-//
-//                // Print items ranked in order of preference
-//                itemList.printRankedList();
             }
 
         }

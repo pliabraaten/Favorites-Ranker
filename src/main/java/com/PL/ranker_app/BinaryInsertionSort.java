@@ -9,15 +9,6 @@ public class BinaryInsertionSort {
     // Rank list by prompting user with pairwise comparisons and use Binary Insertion Sort
     public static ArrayList<String> rank(ArrayList<String> parsedList, int numberSorted) {
 
-        ArrayList<String> rankedList = parsedList;  // TODO: allow new parsedList to be added to rankedList (maybe put initializer in class and then here new rankedList = old rankedList and parsedList)
-        int itemCount = parsedList.size();
-
-        Scanner scr = new Scanner(System.in);
-
-        int L = 0;  // Track left index
-        int R = 0;  // For calculating the middle
-        String selectedItem;  // Value of element being ranked
-
         // FIXME: concerns with the Arrow's impossibility theorem: A > B, B > C, but C > A is possible in preferences
 
         // BINARY INSERTION SORT
@@ -25,12 +16,21 @@ public class BinaryInsertionSort {
         // https://en.wikipedia.org/wiki/Insertion_sort#Variants
         // Time Complexity: The algorithm as a whole still has a running worst-case running time of O(n2) because of the series of swaps required for each insertion.
         // Binary insertion sort employs a binary search to determine the correct location to insert new elements, and therefore performs ⌈log2 n⌉ comparisons in the worst case.
-            // When each element in the array is searched for and inserted this is O(n log n).[7]
-            // The algorithm as a whole still has a running time of O(n2) on average because of the series of swaps required for each insertion.[7]
+        // When each element in the array is searched for and inserted this is O(n log n).[7]
+        // The algorithm as a whole still has a running time of O(n2) on average because of the series of swaps required for each insertion.[7]
 
         // https://www.geeksforgeeks.org/dsa/binary-insertion-sort/
 
 
+        // Create local rankedList using all parsed elements
+        ArrayList<String> rankedList = new ArrayList<>(parsedList);  // parsedList includes original and added items
+        int itemCount = parsedList.size();
+
+        Scanner scr = new Scanner(System.in);
+
+        int L = 0;  // Track left index
+        int R = 0;  // For calculating the middle
+        String selectedItem;  // Value of element being ranked
 
         // Take element
         for (int i = numberSorted + 1; i < itemCount; i++) {  // For every element in the rankedList; skipping first item (already sorted)
