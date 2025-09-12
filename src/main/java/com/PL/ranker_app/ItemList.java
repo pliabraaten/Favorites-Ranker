@@ -63,11 +63,6 @@ public class ItemList {
             parsedList.add(addedItems.get(i));
         }
 
-        // FIXME: RANKED LIST IS UPDATING TO MATCH PARSED LIST IMMEDIATELY
-        // RANKED LIST NEEDS TO = PARSED LIST ONLY WHEN RANK() IS RUN AND ONLY UNTIL FIRST COMPARISON IS DONE
-        // ARE RANKED AND PARSED LINKED SOMEWHERE OR POINTING TO THE SAME PLACE?
-
-
         numberOfItems += numberAdded;
 
 //        printInputList();
@@ -75,5 +70,12 @@ public class ItemList {
 
         compareItems(rankedList.size(), addedItems);  // Input number of elements already sorted to skip re-ranking them
 
+    }
+
+
+    // Remove item from ranked list
+    void removeItem(String newInput) {
+
+        rankedList.remove(newInput);
     }
 }
