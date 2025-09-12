@@ -43,14 +43,13 @@ public class ItemList {
 
 
     // Run the pairwise comparison prompts using binary search and reorder list according to rank
-    void compareItems(int numberSorted) {
+    void compareItems(int numberSorted, ArrayList<String> addedItems) {
 
-        rankedList = BinaryInsertionSort.rank(parsedList, numberSorted);  // Update rankedList
+        rankedList = BinaryInsertionSort.rank(parsedList, numberSorted, rankedList, addedItems);  // Update rankedList
 
     }
 
-
-
+    
     // Add additional items to the list to be ranked
     void addItems(String newInput) {
 
@@ -71,10 +70,10 @@ public class ItemList {
 
         numberOfItems += numberAdded;
 
-        printInputList();
-        printRankedList();
+//        printInputList();
+//        printRankedList();
 
-        compareItems(rankedList.size());  // Input number of elements already sorted to skip re-ranking them
+        compareItems(rankedList.size(), addedItems);  // Input number of elements already sorted to skip re-ranking them
 
     }
 }

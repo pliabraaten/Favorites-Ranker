@@ -7,7 +7,7 @@ public class BinaryInsertionSort {
 
 
     // Rank list by prompting user with pairwise comparisons and use Binary Insertion Sort
-    public static ArrayList<String> rank(ArrayList<String> parsedList, int numberSorted) {
+    public static ArrayList<String> rank(ArrayList<String> parsedList, int numberSorted, ArrayList<String> origRankedList, ArrayList<String> addedItems) {
 
         // FIXME: concerns with the Arrow's impossibility theorem: A > B, B > C, but C > A is possible in preferences
 
@@ -22,9 +22,21 @@ public class BinaryInsertionSort {
         // https://www.geeksforgeeks.org/dsa/binary-insertion-sort/
 
 
-        // Create local rankedList using all parsed elements
-        ArrayList<String> rankedList = new ArrayList<>(parsedList);  // parsedList includes original and added items
-        int itemCount = parsedList.size();
+        // Initialize local rankedList
+        ArrayList<String> rankedList = new ArrayList<>();
+
+        //  If first time user is entering input, used initial parsed input list
+        if (addedItems == null) {
+
+            rankedList.addAll(parsedList);
+        }
+        else {  // If there are new items added by user, add them to the original ranked list
+
+            rankedList.addAll(origRankedList);  // Current ranked list
+            rankedList.addAll(addedItems);  // New items
+        }
+
+        int itemCount = rankedList.size();
 
         Scanner scr = new Scanner(System.in);
 

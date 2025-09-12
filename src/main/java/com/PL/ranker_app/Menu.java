@@ -47,7 +47,7 @@ public class Menu {
 //                itemList.printList();
 
                 // Run pairwise comparisons
-                itemList.compareItems(0);
+                itemList.compareItems(0, null);
 
                 // Print items ranked in order of preference
                 itemList.printRankedList();
