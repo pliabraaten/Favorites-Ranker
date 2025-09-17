@@ -7,16 +7,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RankerAppApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		SpringApplication.run(RankerAppApplication.class, args);
 	}
-	{
-		// START CLI MENU
-		Menu menu = new Menu();
-		menu.startMenu();
 
-
-	}
+//	{
+//		// START CLI MENU
+//		Menu menu = new Menu();
+//		menu.startMenu();
+//
+//
+//	}
 
 
 }
