@@ -1,4 +1,4 @@
-package com.PL.ranker_app;
+package com.PL.ranker_app.service;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,5 +1,6 @@
 package com.PL.ranker_app;
 
+import com.PL.ranker_app.domain.Menu;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,13 +12,13 @@ public class RankerAppApplication {
 		SpringApplication.run(RankerAppApplication.class, args);
 	}
 
-//	{
-//		// START CLI MENU
-//		Menu menu = new Menu();
-//		menu.startMenu();
-//
-//
-//	}
+	{
+		// START CLI MENU
+		Menu menu = new Menu();
+		menu.startMenu();
+
+
+	}
 
 
 }

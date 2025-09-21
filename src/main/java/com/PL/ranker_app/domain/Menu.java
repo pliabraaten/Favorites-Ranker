@@ -1,13 +1,13 @@
-package com.PL.ranker_app;
+package com.PL.ranker_app.domain;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
 
+// TODO: REPLACE THE MENU ACTION INPUTS WITH BUTTONS AND THE MOVE THE LOGIC TO THE CONTROLLER
 
     // COMMAND LINE MENU
-    void startMenu() {
+    public void startMenu() {
 
         Scanner scanner = new Scanner(System.in);
         String listString = null;

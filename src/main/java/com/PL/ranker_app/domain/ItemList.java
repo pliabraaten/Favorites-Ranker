@@ -1,6 +1,10 @@
-package com.PL.ranker_app;
+package com.PL.ranker_app.domain;
+
+import com.PL.ranker_app.service.BinaryInsertionSort;
+import com.PL.ranker_app.service.Parser;
 
 import java.util.ArrayList;
+
 
 public class ItemList {
 
