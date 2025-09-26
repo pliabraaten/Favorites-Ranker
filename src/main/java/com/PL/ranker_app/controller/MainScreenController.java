@@ -17,59 +17,55 @@ import java.util.List;
 @Controller
 public class MainScreenController {
 
-//    // inject via application.properties
-//    @Value("${welcome.message}")
-//    private String message;
-//
-//    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-
-
     @GetMapping("/")
     public String main(Model model) {
 
-//        model.addAttribute("inputList");
-//        model.addAttribute("tasks", tasks);
+        model.addAttribute("features", Arrays.asList(
+                "pizza",
+                "corn",
+                "tortilla"
+        ));
 
         return "main";
     }
 
 
-    // INPUT TEXT STRING OF ITEMS TO BE RANKED
-    @PostMapping("/createInputList")
-    public String createInputList(@ModelAttribute("itemList") ItemList itemList, Model model){
-
-        // CREATE ITEMLIST OBJECT
-        model.addAttribute("itemList", itemList);
-
-        // PARSE INTO ARRAY
-
-        // PRINT ARRAY
-
-        return "main";}
+//    // INPUT TEXT STRING OF ITEMS TO BE RANKED
+//    @PostMapping("/createInputList")
+//    public String createInputList(@ModelAttribute("itemList") ItemList itemList, Model model){
+//
+//        // CREATE ITEMLIST OBJECT
+//        model.addAttribute("itemList", itemList);
+//
+//        // PARSE INTO ARRAY
+//
+//        // PRINT ARRAY
+//
+//        return "main";}
 
 
     // ADD NEW ITEM TO THE LIST
-    @PostMapping("/addItems")  //FIXME: CAN I HAVE MULTIPLE POSTMAPPINGS ON THE MAIN?
-    //FIXME: THIS IS LOGIC STILL ON THE MAIN SCREEN; IS THERE WHERE I DISTINGUISH BY THE ACTION ELEMENT?
-    public String addItems(){
+//    @PostMapping("/addItems")  //FIXME: CAN I HAVE MULTIPLE POSTMAPPINGS ON THE MAIN?
+//    //FIXME: THIS IS LOGIC STILL ON THE MAIN SCREEN; IS THERE WHERE I DISTINGUISH BY THE ACTION ELEMENT?
+//    public String addItems(){
 
         // PARSE
 
         // ADD TO EXISTING LIST
 
         // PRINT UPDATED ARRAY
-    }
+//    }
 
 
     // DELETE AN ITEM
-    @PostMapping()
+//    @PostMapping()
 
         // ADD BUTTONS TO ALL THE LIST ITEMS?
         // USER CLICKS DELETE BUTTON NEXT TO ITEMS TO BE REMOVED?
 
 
     // BIG BUTTON: RANK
-    @PostMapping()
+//    @PostMapping()
 
         // REDIRECT USER TO NEW PAGE FOR PAIRWISE COMPARISIONS
 

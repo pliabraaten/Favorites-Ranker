@@ -13,9 +13,9 @@ public class RankerAppApplication {
 	}
 
 	{
-		// START CLI MENU
-		Menu menu = new Menu();
-		menu.startMenu();
+//		// START CLI MENU
+//		Menu menu = new Menu();
+//		menu.startMenu();
 
 
 	}
