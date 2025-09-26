@@ -22,9 +22,8 @@
             <hr>
             <h2>Enter Items to be Ranked</h2>
 
-                <form>
-<!--                    action="#" th:action="@{/createInputList}" th:object="${itemList}" method="GET">-->
-                    <input type="text" name="inputList" placeholder="Item 1, Item 2, Item 3..." size="50" />
+                <form action="#" th:action="@{/createInputList}" th:object="${itemList}" method="GET">
+                    <input type="text" th:field="*{inputList}" name="inputList" placeholder="Item 1, Item 2, Item 3..." size="50" />
 
                     <input type="submit" value="Add Items" />
                 </form>
