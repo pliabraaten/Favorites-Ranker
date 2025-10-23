@@ -1,0 +1,15 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RankerWebApp {
+
+    public static void main(String[] args) { SpringApplication.run(RankerWebApp.class,args); }
+
+//    @RequestMapping("/home")
+//    public String index() {
+//
+//
+//    }
+
+}
