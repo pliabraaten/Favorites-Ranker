@@ -16,10 +16,7 @@ public class RankedList {
     @JoinColumn(name = "user_id")  // Explicitly name the column
     private User user;
 
-    private String itemName;  // TODO: add ability for user to have multiple lists
-    private int position;
-
+    private String listName;
     private boolean isRanked;
-
 
 }
