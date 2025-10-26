@@ -11,8 +11,8 @@ public class Item {
     private Long itemId;
 
     @ManyToOne  // RankedList contains multiple items
-    @JoinColumn(name = "rankedList_id")  // Explicitly name the column
-    private RankedList rankedList;
+    @JoinColumn(name = "FavoritesList_id")  // Explicitly name the column
+    private FavoritesList FavoritesList;
 
     private String itemName;
     private int position;
