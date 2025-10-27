@@ -5,12 +5,14 @@ import com.ranker.web.models.FavoritesList;
 import com.ranker.web.repository.FavoritesListRepository;
 import com.ranker.web.services.FavoritesListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 // Implements actions defined in the Service
+@Service
 public class FavoritesListImpl implements FavoritesListService {
 
     private FavoritesListRepository favoritesListRepository;
@@ -39,7 +41,7 @@ public class FavoritesListImpl implements FavoritesListService {
         return FavoritesListDTO.builder()
                 .favoritesListId(list.getFavoritesListId())
                 .listName(list.getListName())
-                .username(list.getUser().getUsername())
+//                .username(list.getUser().getUsername())  // FIXME
                 .isRanked(list.isRanked())
                 .build();
     }

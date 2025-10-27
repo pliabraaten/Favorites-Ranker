@@ -1,9 +1,9 @@
 package com.ranker.web.repository;
 
 import com.ranker.web.models.FavoritesList;
-import org.apache.catalina.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.ranker.web.models.User;
 import java.util.Optional;
 
 
