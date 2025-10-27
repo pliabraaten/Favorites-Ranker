@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 
+// Queries the database
 public interface FavoritesListRepository extends JpaRepository<FavoritesList, Long> {
 
     // Custom Queries

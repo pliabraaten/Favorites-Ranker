@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+// Implements actions defined in the Service
 public class FavoritesListImpl implements FavoritesListService {
 
     private FavoritesListRepository favoritesListRepository;
@@ -21,7 +22,7 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     @Override
-    public List<Object> findAllLists() {
+    public List<FavoritesListDTO> findAllLists() {
 
         List<FavoritesList> lists = favoritesListRepository.findAll();  // Put all the lists into a List<>
 
@@ -33,12 +34,12 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     // MAPPER -> convert lists into list DTOs
-    private Object mapToFavoritesListDTO(FavoritesList list) {
+    private FavoritesListDTO mapToFavoritesListDTO(FavoritesList list) {
 
         return FavoritesListDTO.builder()
                 .favoritesListId(list.getFavoritesListId())
                 .listName(list.getListName())
-                .user(list.getUser())
+                .username(list.getUser().getUsername())
                 .isRanked(list.isRanked())
                 .build();
     }

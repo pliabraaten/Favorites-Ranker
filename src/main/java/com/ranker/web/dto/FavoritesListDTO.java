@@ -6,12 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 
 
+// Sends data to controller/view without exposing the database entity
 @Data
 @Builder
 public class FavoritesListDTO {
 
     private Long favoritesListId;
-    private User user;
+    private String username;
     private String listName;
     private boolean isRanked;
 
