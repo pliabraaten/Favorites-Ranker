@@ -1,7 +1,5 @@
 package com.ranker.web.dto;
 
-
-import com.ranker.web.models.User;
 import lombok.Builder;
 import lombok.Data;
 

@@ -3,12 +3,26 @@
 
 -- Prepopulate the db tables for testing
 -- USE ALL CAPS FOR TABLES FOR SQL STATEMENTS
-INSERT INTO APP_USER (user_id, username) VALUES (1, 'Tim');
 
-INSERT INTO FAVORITES_LIST (favorites_list_id, user_id, list_name, is_ranked) VALUES (1, 1, 'Favorite Foods', false);
+INSERT INTO APP_USER (username)  -- Populate table with Tim only if a Tim record doesn't already exist
+    SELECT 'Tim'
+    WHERE NOT EXISTS (SELECT * FROM APP_USER);
 
-INSERT INTO ITEM (item_id, favorites_list_id, item_name, position) VALUES (1, 1, 'pizza', 1);
-INSERT INTO ITEM (item_id, favorites_list_id, item_name, position) VALUES (2, 1, 'corn', 2);
-INSERT INTO ITEM (item_id, favorites_list_id, item_name, position) VALUES (3, 1, 'tortillas', 3);
+INSERT INTO FAVORITES_LIST (user_id, list_name, is_ranked)
+    SELECT 1, 'Favorite Foods', false
+    WHERE NOT EXISTS (SELECT * FROM FAVORITES_LIST);
+
+
+INSERT INTO ITEM (favorites_list_id, item_name, position)
+    SELECT 1, 'pizza', 1
+    WHERE NOT EXISTS (SELECT * FROM ITEM);
+
+INSERT INTO ITEM (favorites_list_id, item_name, position)
+    SELECT 1, 'corn', 2
+    WHERE NOT EXISTS (SELECT * FROM ITEM);
+
+INSERT INTO ITEM (favorites_list_id, item_name, position)
+    SELECT 1, 'tortillas', 3
+    WHERE NOT EXISTS (SELECT * FROM ITEM);
 
 

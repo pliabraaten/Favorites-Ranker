@@ -22,7 +22,7 @@ public class FavoritesListController {
     }
 
 
-    @GetMapping("/lists")
+    @GetMapping("/")
     public String listLists(Model model) {
         List<FavoritesListDTO> lists = favoritesListService.findAllLists();
 
