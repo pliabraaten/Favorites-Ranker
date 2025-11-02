@@ -24,6 +24,6 @@ public class FavoritesList {
     private User user;
 
     private String listName;
-    private boolean isRanked;
+    private boolean isRanked = false;
 
 }

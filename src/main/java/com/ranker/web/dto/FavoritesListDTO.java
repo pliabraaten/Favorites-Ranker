@@ -10,8 +10,6 @@ import lombok.Data;
 public class FavoritesListDTO {
 
     private Long favoritesListId;
-    private String username;
     private String listName;
-    private boolean isRanked;
 
 }

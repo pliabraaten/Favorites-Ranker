@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<!--Reference layout from template-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>List Create</title>
+</head>
+
+<!-- Template Downloaded from Bootstrap-->
+
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <!-- INJECT LAYOUT FRAGMENT-->
+    <section layout:fragment="body" class="py-5">
+
+        <!--CREATE LIST FORM-->
+        <div class="container">
+
+            <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
+            <form role="form"
+                  method="post"
+                  th:action="@{/new}"
+                  th:object="${list}">
+
+                <div class="form-group mb-3">
+                    <label for="title">List Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="title"
+                           th:field="*{listName}"
+                           placeholder="Favorite Restaurants">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

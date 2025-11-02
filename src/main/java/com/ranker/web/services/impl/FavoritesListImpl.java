@@ -28,22 +28,50 @@ public class FavoritesListImpl implements FavoritesListService {
 
         List<FavoritesList> lists = favoritesListRepository.findAll();  // Put all the lists into a List<>
 
-        // Convert each list into a DTO
+        // Fetch lists from DB and convert them into a DTO
         return lists.stream()
                 .map(this::mapToFavoritesListDTO)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public FavoritesListDTO saveList(FavoritesListDTO listDTO) {
 
-    // MAPPER -> convert lists into list DTOs
+        // Converts the DTO to a DB entity
+        FavoritesList listEntity = mapToListEntity(listDTO);  // Mapper method below: DTO -> Entity
+
+        listEntity.setRanked(false); // Internal flag, default to false when saved
+
+        // Save the entity
+        FavoritesList savedEntity = favoritesListRepository.save(listEntity);    // JPA automatically provides .save()
+
+        // Convert entity back to DTO and return
+        return mapToFavoritesListDTO(savedEntity);
+    }
+
+
+    // MAPPER -> convert DB list entities into list DTOs
     private FavoritesListDTO mapToFavoritesListDTO(FavoritesList list) {
 
-        return FavoritesListDTO.builder()
+        FavoritesListDTO listDTO = FavoritesListDTO.builder()
                 .favoritesListId(list.getFavoritesListId())
                 .listName(list.getListName())
 //                .username(list.getUser().getUsername())  // FIXME
-                .isRanked(list.isRanked())
                 .build();
+
+        return listDTO;
+    }
+
+
+    // MAPPER -> converted DTOs into entities for the DB
+    private FavoritesList mapToListEntity(FavoritesListDTO listDTO) {
+
+        FavoritesList listEntity = FavoritesList.builder()
+                .listName(listDTO.getListName())
+//                .username(listDTO.getUser().getUsername())  // FIXME
+                .build();
+
+        return listEntity;
     }
 
 }
