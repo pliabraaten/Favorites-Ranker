@@ -4,9 +4,11 @@ package com.ranker.web.controllers;
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.services.FavoritesListService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +51,13 @@ public class FavoritesListController {
 
     // CREATE NEW LIST WITH POST METHOD
     @PostMapping("/new")
-    public String saveList(@ModelAttribute("list") FavoritesListDTO listDTO) {  //
+    public String saveList(@Valid @ModelAttribute("list") FavoritesListDTO listDTO, BindingResult result, Model model) {  // TODO: ADD EXPLANATION ON BINDING RESULT
+
+
+        if(result.hasErrors()) {  // Return to page if there is an error creating the list
+            model.addAttribute("list", listDTO);  // Re-render the form with previously inputted values
+            return "lists-create";  // No redirect here in order to re-render the form
+        }
 
         // Save new list via the service instance and then go back to home page
         favoritesListService.saveList(listDTO);
@@ -69,7 +77,13 @@ public class FavoritesListController {
 
     // SAVE CHANGES TO LIST
     @PostMapping("/{favoritesListId}/edit")  // URL has to match @PathVariable below
-    public String updateList(@PathVariable("favoritesListId") Long listId, @ModelAttribute("list") FavoritesListDTO listDTO) {  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
+    public String updateList(@PathVariable("favoritesListId") Long listId,
+                             @Valid @ModelAttribute("list") FavoritesListDTO listDTO,  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
+                             BindingResult result) {  // If validation on the FavoritesListDTO is not met
+
+        if(result.hasErrors()) {  // Return to page if there is an error editing the list
+            return "lists-edit";  // Re-render NOT a redirect reload with existing values
+        }
 
         listDTO.setFavoritesListId(listId);  //
 

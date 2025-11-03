@@ -38,6 +38,9 @@
                            id="title"
                            th:field="*{listName}"
                            placeholder="Top Restaurants">
+
+                    <!--IF VALIDATION ERROR ON LISTNAME (NULL), SHOW MESSAGE-->
+                    <p th:if="${#fields.hasErrors('listName')}" class="text-danger" th:errors="*{listName}"></p>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save Changes</button>

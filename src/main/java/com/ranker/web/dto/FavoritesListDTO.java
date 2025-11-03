@@ -1,5 +1,6 @@
 package com.ranker.web.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,6 +11,8 @@ import lombok.Data;
 public class FavoritesListDTO {
 
     private Long favoritesListId;
+
+    @NotEmpty(message = "List name should not be empty")  // Input validation
     private String listName;
 
 }
