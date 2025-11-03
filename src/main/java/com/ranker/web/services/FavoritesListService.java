@@ -14,4 +14,10 @@ public interface FavoritesListService {
 
     // Controller works with DTO for encapsulation/security
     FavoritesListDTO saveList(FavoritesListDTO listDTO);
+
+    FavoritesListDTO findListById(long listId);
+
+    void updateList(FavoritesListDTO listDTO);
+
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -53,6 +54,32 @@ public class FavoritesListController {
         // Save new list via the service instance and then go back to home page
         favoritesListService.saveList(listDTO);
         return "redirect:/";
-
     }
+
+    // OPEN LIST EDIT FORM FOR SPECIFIC LIST
+    @GetMapping("/{favoritesListId}/edit")
+    public String editListForm(@PathVariable("favoritesListId") long favoritesListId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
+
+        FavoritesListDTO listDTO = favoritesListService.findListById(favoritesListId);  // Pull list via services and set it to DTO
+
+        model.addAttribute("list", listDTO);  // To edit, first pull the entity->DTO
+
+        return "lists-edit";
+    }
+
+    // SAVE CHANGES TO LIST
+    @PostMapping("/{favoritesListId}/edit")  // URL has to match @PathVariable below
+    public String updateList(@PathVariable("favoritesListId") Long listId, @ModelAttribute("list") FavoritesListDTO listDTO) {  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
+
+        listDTO.setFavoritesListId(listId);  //
+
+        favoritesListService.updateList(listDTO);
+
+        return "redirect:/";
+    }
+
+
+
+
+
 }

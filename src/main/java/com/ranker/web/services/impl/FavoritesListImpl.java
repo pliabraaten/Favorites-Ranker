@@ -49,6 +49,24 @@ public class FavoritesListImpl implements FavoritesListService {
         return mapToFavoritesListDTO(savedEntity);
     }
 
+    @Override
+    public FavoritesListDTO findListById(long listId) {
+
+        // Pull list ID from DB via Repository
+        FavoritesList listEntity = favoritesListRepository.findById(listId).get();
+
+        // Map entity to DTO and return
+        return mapToFavoritesListDTO(listEntity);
+    }
+
+    @Override
+    public void updateList(FavoritesListDTO listDTO) {
+
+        FavoritesList listEntity = mapToListEntity(listDTO);
+
+        favoritesListRepository.save(listEntity);
+    }
+
 
     // MAPPER -> convert DB list entities into list DTOs
     private FavoritesListDTO mapToFavoritesListDTO(FavoritesList list) {
@@ -67,6 +85,7 @@ public class FavoritesListImpl implements FavoritesListService {
     private FavoritesList mapToListEntity(FavoritesListDTO listDTO) {
 
         FavoritesList listEntity = FavoritesList.builder()
+                .favoritesListId(listDTO.getFavoritesListId())
                 .listName(listDTO.getListName())
 //                .username(listDTO.getUser().getUsername())  // FIXME
                 .build();

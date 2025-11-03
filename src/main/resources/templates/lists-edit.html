@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<!--Reference layout from template-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>List Edit</title>
+</head>
+
+<!-- Template Downloaded from Bootstrap-->
+
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <!-- INJECT LAYOUT FRAGMENT-->
+    <section layout:fragment="body" class="py-5">
+
+        <!--CREATE LIST FORM-->
+        <div class="container">
+
+            <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
+            <form role="form"
+                  method="post"
+                  th:action="@{/{listId}/edit(listId=${list.favoritesListId})}"
+                  th:object="${list}">
+
+                <!-- PUT ID IN JSON SO IT IS SENT THROUGH TO THE CONTROLLER -->
+                <input type="hidden" th:field="*{favoritesListId}">
+
+                <div class="form-group mb-3">
+                    <label for="title">List Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="title"
+                           th:field="*{listName}"
+                           placeholder="Top Restaurants">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -30,10 +30,11 @@
         <div class="text-center mb-5">
           <h1 class="fw-bolder">Your Ranked Lists</h1>
         </div>
-        <div class="row gx-5">
+        <div class="row gx-5 mb-2">
           <div th:each="list :${lists}" class="lead fw-normal text-muted mb-0">
-            <div class="position-relative mb-5">
+            <div class="position-relative mb-3">
               <h3 class="text-center mb-5" th:text=${list.listName}></h3>
+              <a class="btn btn-primary" th:href="@{/{listId}/edit(listId=${list.favoritesListId})}">Edit</a>
             </div>
           </div>
         </div>
