@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -25,5 +27,8 @@ public class FavoritesList {
 
     private String listName;
     private boolean isRanked = false;
+
+    @OneToMany(mappedBy = "favoritesList", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Item> items;
 
 }

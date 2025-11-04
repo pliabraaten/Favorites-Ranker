@@ -19,5 +19,5 @@ public interface FavoritesListService {
 
     void updateList(FavoritesListDTO listDTO);
 
-
+    void delete(long listId);
 }

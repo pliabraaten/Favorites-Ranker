@@ -67,6 +67,12 @@ public class FavoritesListImpl implements FavoritesListService {
         favoritesListRepository.save(listEntity);
     }
 
+    @Override
+    public void delete(long listId) {
+
+        favoritesListRepository.deleteById(listId);
+    }
+
 
     // MAPPER -> convert DB list entities into list DTOs
     private FavoritesListDTO mapToFavoritesListDTO(FavoritesList list) {

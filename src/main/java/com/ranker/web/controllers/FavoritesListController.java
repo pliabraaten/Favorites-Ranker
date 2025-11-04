@@ -105,5 +105,14 @@ public class FavoritesListController {
     }
 
 
+    // DELETE EXISTING LIST
+    @GetMapping("/{favoritesListId}/delete")
+    public String deleteList(@PathVariable("favoritesListId") long listId) {
+
+        favoritesListService.delete(listId);
+
+        return "redirect:/";
+    }
+
 
 }

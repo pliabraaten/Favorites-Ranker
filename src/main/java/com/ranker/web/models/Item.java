@@ -12,7 +12,7 @@ public class Item {
 
     @ManyToOne  // RankedList contains multiple items
     @JoinColumn(name = "FavoritesList_id")  // Explicitly name the column
-    private FavoritesList FavoritesList;
+    private FavoritesList favoritesList;
 
     private String itemName;
     private int position;
