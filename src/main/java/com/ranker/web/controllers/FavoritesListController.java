@@ -93,6 +93,16 @@ public class FavoritesListController {
     }
 
 
+    // LOAD DETAILS FOR SELECTED LIST
+    @GetMapping("/{favoritesListId}")
+    public String listDetail(@PathVariable("favoritesListId") long listId, Model model) {
+
+        FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list from DB
+
+        model.addAttribute("list", listDTO);  // Pass data to webpage by binding it to model
+
+        return "lists-detail";
+    }
 
 
 
