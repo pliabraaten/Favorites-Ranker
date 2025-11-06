@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long> {  // Long is the foreign key type
 
     // Custom Queries
     Optional<FavoritesList> findByPosition(int position);
