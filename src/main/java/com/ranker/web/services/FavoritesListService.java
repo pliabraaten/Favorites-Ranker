@@ -20,4 +20,8 @@ public interface FavoritesListService {
     void updateList(FavoritesListDTO listDTO);
 
     void delete(long listId);
+
+    List<FavoritesListDTO> searchLists(String query);
 }
+
+

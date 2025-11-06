@@ -5,7 +5,9 @@ import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,6 +16,7 @@ public interface FavoritesListRepository extends JpaRepository<FavoritesList, Lo
 
     // Custom Queries
     Optional<FavoritesList> findByListName(String listName);
-    Optional<FavoritesList> findByUser(User user);
+    @Query("SELECT f FROM FavoritesList f WHERE f.listName LIKE CONCAT('%', :query, '%')")
+    List<FavoritesList> searchLists(String query);
 
 }

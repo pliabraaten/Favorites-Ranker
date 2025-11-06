@@ -31,6 +31,14 @@
           <h1 class="fw-bolder">Your Ranked Lists</h1>
         </div>
         <div class="row gx-5 mb-2">
+
+          <!-- SEARCH BAR -->
+          <div>
+            <form th:action="@{/search}" class="form-inline my-2 my-lg-0 mb-3">
+              <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search Your Lists" aria-label="Search">
+            </form>
+          </div>
+
           <div th:each="list :${lists}" class="lead fw-normal text-muted mb-0">
             <div class="position-relative mb-3">
               <h3 class="text-center mb-5" th:text=${list.listName}></h3>

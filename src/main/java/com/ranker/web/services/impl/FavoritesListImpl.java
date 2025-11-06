@@ -73,6 +73,14 @@ public class FavoritesListImpl implements FavoritesListService {
         favoritesListRepository.deleteById(listId);
     }
 
+    @Override
+    public List<FavoritesListDTO> searchLists(String query) {
+
+        List<FavoritesList> lists = favoritesListRepository.searchLists(query);
+
+        return lists.stream().map(favoritesList -> mapToFavoritesListDTO(favoritesList)).collect(Collectors.toList());
+    }
+
 
     // MAPPER -> convert DB list entities into list DTOs
     private FavoritesListDTO mapToFavoritesListDTO(FavoritesList list) {
