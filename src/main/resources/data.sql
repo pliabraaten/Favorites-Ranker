@@ -13,15 +13,15 @@ INSERT INTO FAVORITES_LIST (user_id, list_name, is_ranked)
     WHERE NOT EXISTS (SELECT * FROM FAVORITES_LIST);
 
 
-INSERT INTO ITEM (favorites_list_id, item_name, position)
+INSERT INTO ITEM (favorites_list_id, name, position)
     SELECT 1, 'pizza', 1
     WHERE NOT EXISTS (SELECT * FROM ITEM);
 
-INSERT INTO ITEM (favorites_list_id, item_name, position)
+INSERT INTO ITEM (favorites_list_id, name, position)
     SELECT 1, 'corn', 2
     WHERE NOT EXISTS (SELECT * FROM ITEM);
 
-INSERT INTO ITEM (favorites_list_id, item_name, position)
+INSERT INTO ITEM (favorites_list_id, name, position)
     SELECT 1, 'tortillas', 3
     WHERE NOT EXISTS (SELECT * FROM ITEM);
 

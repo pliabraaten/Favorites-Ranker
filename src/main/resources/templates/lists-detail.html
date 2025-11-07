@@ -39,6 +39,7 @@
                             <h2 class="card-title">Featured Post Title</h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
                             <a class="btn btn-primary" th:href="@{/{listId}/delete(listId=${list.favoritesListId})}">Delete</a>
+                            <a class="btn btn-primary" th:href="@{/items/{listId}/new(listId=${list.favoritesListId})}">Add Item</a>
                         </div>
                     </div>
                     <!-- Nested row for non-featured blog posts-->
