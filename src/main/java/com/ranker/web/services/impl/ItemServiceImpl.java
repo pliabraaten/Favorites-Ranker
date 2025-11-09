@@ -10,6 +10,8 @@ import com.ranker.web.repository.ItemRepository;
 import com.ranker.web.services.ItemService;
 import org.springframework.stereotype.Service;
 
+import static com.ranker.web.mappers.ItemMapper.mapToItem;
+
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -38,14 +40,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-    // MAPPER -> converted DTOs into entities for the DB
-    private Item mapToItem(ItemDTO itemDTO) {
 
-        return Item.builder()
-                .id(itemDTO.getId())
-                .name(itemDTO.getName())
-                .position(itemDTO.getPosition())
-                .favoritesList(itemDTO.getFavoritesList())
-                .build();
-    }
+
 }

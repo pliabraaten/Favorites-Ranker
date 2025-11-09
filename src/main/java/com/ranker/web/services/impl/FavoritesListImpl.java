@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ranker.web.mappers.FavoritesListMapper.mapToFavoritesListDTO;
+import static com.ranker.web.mappers.FavoritesListMapper.mapToListEntity;
+
 
 // Implements actions defined in the Service
 @Service
@@ -30,7 +33,7 @@ public class FavoritesListImpl implements FavoritesListService {
 
         // Fetch lists from DB and convert them into a DTO
         return lists.stream()
-                .map(this::mapToFavoritesListDTO)
+                .map(favoritesList -> mapToFavoritesListDTO(favoritesList))
                 .collect(Collectors.toList());
     }
 
@@ -81,30 +84,5 @@ public class FavoritesListImpl implements FavoritesListService {
         return lists.stream().map(favoritesList -> mapToFavoritesListDTO(favoritesList)).collect(Collectors.toList());
     }
 
-
-    // MAPPER -> convert DB list entities into list DTOs
-    private FavoritesListDTO mapToFavoritesListDTO(FavoritesList list) {
-
-        FavoritesListDTO listDTO = FavoritesListDTO.builder()
-                .favoritesListId(list.getFavoritesListId())
-                .listName(list.getListName())
-//                .username(list.getUser().getUsername())  // FIXME
-                .build();
-
-        return listDTO;
-    }
-
-
-    // MAPPER -> converted DTOs into entities for the DB
-    private FavoritesList mapToListEntity(FavoritesListDTO listDTO) {
-
-        FavoritesList listEntity = FavoritesList.builder()
-                .favoritesListId(listDTO.getFavoritesListId())
-                .listName(listDTO.getListName())
-//                .username(listDTO.getUser().getUsername())  // FIXME
-                .build();
-
-        return listEntity;
-    }
 
 }
