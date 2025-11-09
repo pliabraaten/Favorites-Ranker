@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+// TODO: REORGANIZE THESE MAPPINGS
 @Controller
 public class FavoritesListController {
 
@@ -37,6 +38,15 @@ public class FavoritesListController {
     }
 
 
+    // SHOW ALL LISTS
+    @GetMapping("/lists")
+    public String showAllLists(Model model) {
+
+        List<FavoritesListDTO> lists = favoritesListService.findAllLists();
+
+    }
+
+
     // DISPLAY FORM NEW LIST
     @GetMapping("/new")
     public String createListForm(Model model) {
@@ -50,7 +60,6 @@ public class FavoritesListController {
     @PostMapping("/new")
     public String saveList(@Valid @ModelAttribute("list") FavoritesListDTO listDTO, BindingResult result, Model model) {  // TODO: ADD EXPLANATION ON BINDING RESULT
 
-
         if(result.hasErrors()) {  // Return to page if there is an error creating the list
             model.addAttribute("list", listDTO);  // Re-render the form with previously inputted values
             return "lists-create";  // No redirect here in order to re-render the form
@@ -58,6 +67,7 @@ public class FavoritesListController {
 
         // Save new list via the service instance and then go back to home page
         favoritesListService.saveList(listDTO);
+
         return "redirect:/";
     }
 

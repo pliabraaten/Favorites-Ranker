@@ -10,7 +10,7 @@ import com.ranker.web.repository.ItemRepository;
 import com.ranker.web.services.ItemService;
 import org.springframework.stereotype.Service;
 
-import static com.ranker.web.mappers.ItemMapper.mapToItem;
+import static com.ranker.web.mappers.ItemMapper.mapToItemEntity;
 
 
 @Service
@@ -33,7 +33,7 @@ public class ItemServiceImpl implements ItemService {
 
         FavoritesList foundList = listRepository.findById(listId).get();  // Find list id
 
-        Item item = mapToItem(itemDTO);  // Map DTO to entity
+        Item item = mapToItemEntity(itemDTO);  // Map DTO to entity
         item.setFavoritesList(foundList);  // Set list object to the list found by ID
 
         itemRepository.save(item);
