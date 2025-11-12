@@ -10,6 +10,9 @@ import com.ranker.web.repository.ItemRepository;
 import com.ranker.web.services.ItemService;
 import org.springframework.stereotype.Service;
 
+import static com.ranker.web.mappers.FavoritesListMapper.mapToFavoritesListDTO;
+import static com.ranker.web.mappers.FavoritesListMapper.mapToListEntity;
+import static com.ranker.web.mappers.ItemMapper.mapToItemDTO;
 import static com.ranker.web.mappers.ItemMapper.mapToItemEntity;
 
 
@@ -38,6 +41,27 @@ public class ItemServiceImpl implements ItemService {
 
         itemRepository.save(item);
     }
+
+
+    // Find a specific item in a list
+    @Override
+    public ItemDTO findItemById(long itemId) {
+
+        // Pull item ID from DB via Repository
+        Item itemEntity = itemRepository.findById(itemId).get();
+
+        // Map entity to DTO and return
+        return mapToItemDTO(itemEntity);
+    }
+
+    @Override
+    public void updateItem(ItemDTO itemDTO) {
+
+        Item itemEntity = mapToItemEntity(itemDTO);
+
+        itemRepository.save(itemEntity);
+    }
+
 
 
 

@@ -78,9 +78,10 @@ public class FavoritesListController {
     @PostMapping("/{favoritesListId}/edit")  // URL has to match @PathVariable below
     public String updateList(@PathVariable("favoritesListId") Long listId,
                              @Valid @ModelAttribute("list") FavoritesListDTO listDTO,  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
-                             BindingResult result) {  // If validation on the FavoritesListDTO is not met
+                             BindingResult result, Model model) {  // If validation on the FavoritesListDTO is not met
 
         if(result.hasErrors()) {  // Return to page if there is an error editing the list
+            model.addAttribute("list", listDTO);
             return "lists-edit";  // Re-render NOT a redirect reload with existing values
         }
 
