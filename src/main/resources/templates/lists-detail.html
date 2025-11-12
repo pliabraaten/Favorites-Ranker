@@ -22,7 +22,7 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder th:text=${list.listName}"></h1>
+                    <h1 class="fw-bolder" th:text=${list.listName}></h1>
                     <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
                 </div>
             </div>
@@ -36,10 +36,10 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="small text-muted">January 1, 2023</div>
-                            <h2 class="card-title">Featured Post Title</h2>
+                            <h2 class="card-title" th:text=${list.listName}></h2>
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" th:href="@{/{listId}/delete(listId=${list.favoritesListId})}">Delete</a>
                             <a class="btn btn-primary" th:href="@{/items/{listId}/new(listId=${list.favoritesListId})}">Add Item</a>
+                            <a class="btn btn-primary btn-danger" th:href="@{/{listId}/delete(listId=${list.favoritesListId})}">Delete</a>
                         </div>
                     </div>
                     <!-- SHOW LISTS -->
@@ -51,6 +51,11 @@
                                 <div class="card-body">
                                     <h2 th:text="${item.name}" class="card-title h4"></h2>
                                     <a class="btn btn-primary" th:href="@{/items/{itemId}/edit(itemId=${item.id})}">Edit</a>
+
+                                    <!-- DELETE DATA VIA FORMS (<a href> can only be used for GET and POST) -->
+                                    <form th:action="@{/items/{itemId}/delete(itemId=${item.id})}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
