@@ -24,7 +24,7 @@ public class FavoritesList {
 
     @ManyToOne  // A user can have many lists
     @JoinColumn(name = "user_id")  // Explicitly name the column
-    private User user;
+    private UserEntity user;
 
     private String listName;
     private boolean isRanked = false;
