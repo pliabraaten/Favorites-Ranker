@@ -46,7 +46,7 @@ public class ItemController {
 
         itemService.saveItem(listId, itemDTO);
 
-        return "redirect:/" + listId;  // Send user back to details html for this list
+        return "redirect:/lists/" + listId;  // Send user back to details html for this list
     }
 
 
@@ -81,7 +81,7 @@ public class ItemController {
 
         itemService.updateItem(itemDTO);
 
-        return "redirect:/" + existingItem.getFavoritesList().getFavoritesListId();
+        return "redirect:/lists/" + existingItem.getFavoritesList().getFavoritesListId();
     }
 
     // FIXME: ALLOW USER TO EDIT/DELETE ALL LIST ITEMS ON ONE PAGE RATHER THAN CLICKING INTO THE ITEM EDIT PAGE EACH TIME
@@ -94,7 +94,7 @@ public class ItemController {
 
         itemService.deleteItem(itemId);
 
-        return "redirect:/" + listId;
+        return "redirect:/lists/" + listId;
     }
 
 

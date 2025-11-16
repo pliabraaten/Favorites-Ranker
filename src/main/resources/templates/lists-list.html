@@ -22,12 +22,12 @@
       <section class="py-5 bg-light">
         <div class="container px-5 my-5">
 
-          <div th:if="{param.success}" class="alert alert-sucess">
+          <div th:if="${param.success}" class="alert alert-success">
             You are registered successfully!
           </div>
 
           <h4 class="display-4 fw-bolder mb-4">Get Help Ranking Your Favorite Things</h4>
-          <a class="btn btn-lg btn-primary" href="/new">Start Ranking</a>
+          <a class="btn btn-lg btn-primary" href="/lists/new">Start Ranking</a>
         </div>
       </section>
 
@@ -39,7 +39,7 @@
 
           <!-- SEARCH BAR -->
           <div>
-            <form th:action="@{/search}" class="form-inline my-2 my-lg-0 mb-3">
+            <form th:action="@{lists/search}" class="form-inline my-2 my-lg-0 mb-3">
               <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search Your Lists" aria-label="Search">
             </form>
           </div>
@@ -47,8 +47,8 @@
           <div th:each="list :${lists}" class="lead fw-normal text-muted mb-0">
             <div class="position-relative mb-3">
               <h3 class="text-center mb-5" th:text=${list.listName}></h3>
-              <a class="btn btn-primary" th:href="@{/{listId}(listId=${list.favoritesListId})}">View</a>
-              <a class="btn btn-primary" th:href="@{/{listId}/edit(listId=${list.favoritesListId})}">Edit</a>
+              <a class="btn btn-primary" th:href="@{/lists/{listId}(listId=${list.favoritesListId})}">View</a>
+              <a class="btn btn-primary" th:href="@{/lists/{listId}/edit(listId=${list.favoritesListId})}">Edit</a>
             </div>
           </div>
         </div>

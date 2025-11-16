@@ -49,7 +49,7 @@ public class FavoritesListImpl implements FavoritesListService {
         FavoritesList savedEntity = favoritesListRepository.save(listEntity);    // JPA automatically provides .save()
 
         // Convert entity back to DTO and return
-        return mapToFavoritesListDTO(savedEntity);
+        return listDTO;   // error when using mapToFavoritesListDTO(savedEntity) -> because no items are saved at this time
     }
 
     @Override

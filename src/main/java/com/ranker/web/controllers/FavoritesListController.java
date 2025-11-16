@@ -28,7 +28,7 @@ public class FavoritesListController {
 
     //fixme: ADD SEPARATE HOMEPAGE, AND PUT LISTS-LIST AS /LISTS ENDPOINT
     // HOME PAGE
-    @GetMapping("/")
+    @GetMapping("/lists")
     public String listLists(Model model) {
 
         List<FavoritesListDTO> lists = favoritesListService.findAllLists();
@@ -40,7 +40,7 @@ public class FavoritesListController {
 
 
     // DISPLAY FORM NEW LIST
-    @GetMapping("/new")
+    @GetMapping("/lists/new")
     public String createListForm(Model model) {
 
         FavoritesList newlist = new FavoritesList();  // Create new list
@@ -49,7 +49,7 @@ public class FavoritesListController {
     }
 
     // CREATE NEW LIST WITH POST METHOD
-    @PostMapping("/new")
+    @PostMapping("/lists/new")
     public String saveList(@Valid @ModelAttribute("list") FavoritesListDTO listDTO, BindingResult result, Model model) {  // TODO: ADD EXPLANATION ON BINDING RESULT
 
         if(result.hasErrors()) {  // Return to page if there is an error creating the list
@@ -60,11 +60,11 @@ public class FavoritesListController {
         // Save new list via the service instance and then go back to home page
         favoritesListService.saveList(listDTO);
 
-        return "redirect:/";
+        return "redirect:/lists";
     }
 
     // OPEN LIST EDIT FORM FOR SPECIFIC LIST
-    @GetMapping("/{favoritesListId}/edit")
+    @GetMapping("/lists/{favoritesListId}/edit")
     public String editListForm(@PathVariable("favoritesListId") long favoritesListId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
 
         FavoritesListDTO listDTO = favoritesListService.findListById(favoritesListId);  // Pull list via services and set it to DTO
@@ -75,7 +75,7 @@ public class FavoritesListController {
     }
 
     // SAVE CHANGES TO LIST
-    @PostMapping("/{favoritesListId}/edit")  // URL has to match @PathVariable below
+    @PostMapping("/lists/{favoritesListId}/edit")  // URL has to match @PathVariable below
     public String updateList(@PathVariable("favoritesListId") Long listId,
                              @Valid @ModelAttribute("list") FavoritesListDTO listDTO,  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
                              BindingResult result, Model model) {  // If validation on the FavoritesListDTO is not met
@@ -89,12 +89,12 @@ public class FavoritesListController {
 
         favoritesListService.updateList(listDTO);
 
-        return "redirect:/";
+        return "redirect:/lists";
     }
 
 
     // LOAD DETAILS FOR SELECTED LIST
-    @GetMapping("/{favoritesListId}")
+    @GetMapping("/lists/{favoritesListId}")
     public String listDetail(@PathVariable("favoritesListId") long listId, Model model) {
 
         FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list from DB
@@ -106,17 +106,17 @@ public class FavoritesListController {
 
 
     // DELETE EXISTING LIST
-    @GetMapping("/{favoritesListId}/delete")
+    @GetMapping("/lists/{favoritesListId}/delete")
     public String deleteList(@PathVariable("favoritesListId") long listId) {
 
         favoritesListService.delete(listId);
 
-        return "redirect:/";
+        return "redirect:/lists";
     }
 
 
     // TODO: ADD EXPLANATIONS HERE
-    @GetMapping("/search")
+    @GetMapping("/lists/search")
     public String searchList(@RequestParam(value = "query") String query, Model model) {
 
         List<FavoritesListDTO> lists = favoritesListService.searchLists(query);

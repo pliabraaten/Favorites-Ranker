@@ -57,6 +57,6 @@ public class AuthController {
 
         // Save if new user
         userService.saveUser(user);
-        return "redirect:/?success";
+        return "redirect:/lists?success";
     }
 }

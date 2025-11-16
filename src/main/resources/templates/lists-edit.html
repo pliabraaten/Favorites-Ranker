@@ -25,7 +25,7 @@
             <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
             <form role="form"
                   method="post"
-                  th:action="@{/{listId}/edit(listId=${list.favoritesListId})}"
+                  th:action="@{/lists/{listId}/edit(listId=${list.favoritesListId})}"
                   th:object="${list}">
 
                 <!-- PUT ID IN JSON SO IT IS SENT THROUGH TO THE CONTROLLER -->
