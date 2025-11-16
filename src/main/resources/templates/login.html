@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<!--Reference layout from template-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <!-- TODO: RESTYLE THIS -->
+    <style>
+        .main {
+            padding: 0px 10px;
+        }
+
+        @media screen and (max-width: 450px) {
+            .login-form{
+                margin-top: 10%;
+            }
+            .register-form{
+                margin-top: 10%;
+            }
+        }
+        @media screen and (min-width: 768px){
+            .main{
+                margin-left: 30%;
+            }
+
+            .sidenav{
+                width: 40%;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+
+<!-- Template Downloaded from Bootstrap-->
+
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <!-- INJECT LAYOUT FRAGMENT-->
+    <section layout:fragment="body">
+
+        <div class="main">
+            <div class="col-md-6 col-sm-12">
+
+                <div th:if="${param.error}" class="alert alert-danger">
+                    Invalid username and password.
+                </div>
+
+                <div th:if="${param.logout}" class="alert alert-primary">
+                    You have been logged out.
+                </div>
+
+
+                <div class="login-form">
+                    <form method="post" role="form" th:action="@{/login}">
+                        <div class="form-group">
+                            <label>Username</label>
+
+                            <!-- ID and Name is necessary for Spring Security -->
+                            <input
+                                    id="username"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Username"
+                                    name="username">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input
+                                    id="password"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Password"
+                                    name="password">
+                        </div>
+
+                        <!-- Value is necessary for Spring Security -->
+                        <button type="submit" value="Log in" class="btn btn-black">Login</button>
+                        <button th:href="@{/register}" type="submit" class="btn btn-secondary">Make an account!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

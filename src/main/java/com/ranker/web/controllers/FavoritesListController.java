@@ -28,6 +28,18 @@ public class FavoritesListController {
 
     //fixme: ADD SEPARATE HOMEPAGE, AND PUT LISTS-LIST AS /LISTS ENDPOINT
     // HOME PAGE
+    @GetMapping("/")
+    public String home(Model model) {
+
+        List<FavoritesListDTO> lists = favoritesListService.findAllLists();
+
+        model.addAttribute("lists", lists);
+
+        return "lists-list";
+    }
+
+
+
     @GetMapping("/lists")
     public String listLists(Model model) {
 

@@ -40,14 +40,14 @@ public class AuthController {
         // If no email address, then check the field, then check if empty
         if(existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()) {
 
-            result.rejectValue("email", "There is already a user with this email/username");
+            return "redirect:/register?fail";
         }
 
         // Check if username is already used
         UserEntity existingUserUsername = userService.findByUsername(user.getUsername());
         if(existingUserUsername != null && existingUserUsername.getUsername() != null && !existingUserUsername.getUsername().isEmpty()) {
 
-            result.rejectValue("email", "There is already a user with this email/username");
+            return "redirect:/register?fail";
         }
 
         if(result.hasErrors()) {
@@ -58,5 +58,12 @@ public class AuthController {
         // Save if new user
         userService.saveUser(user);
         return "redirect:/lists?success";
+    }
+
+
+    @GetMapping("/login")
+    public String loginPage() {
+
+        return "login";
     }
 }
