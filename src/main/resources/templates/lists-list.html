@@ -21,6 +21,11 @@
 
       <section class="py-5 bg-light">
         <div class="container px-5 my-5">
+
+          <div th:if="{param.success}" class="alert alert-sucess">
+            You are registered successfully!
+          </div>
+
           <h4 class="display-4 fw-bolder mb-4">Get Help Ranking Your Favorite Things</h4>
           <a class="btn btn-lg btn-primary" href="/new">Start Ranking</a>
         </div>

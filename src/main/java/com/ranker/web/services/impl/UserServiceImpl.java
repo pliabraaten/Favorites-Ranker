@@ -6,8 +6,10 @@ import com.ranker.web.models.UserEntity;
 import com.ranker.web.repository.UserRepository;
 import com.ranker.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
@@ -26,5 +28,17 @@ public class UserServiceImpl implements UserService {
         user.setUsername(registrationDTO.getUsername());
         user.setEmail(registrationDTO.getEmail());
         user.setPassword(registrationDTO.getPassword());
+    }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserEntity findByUsername(String username) {
+
+        return userRepository.findByUsername(username);
     }
 }
