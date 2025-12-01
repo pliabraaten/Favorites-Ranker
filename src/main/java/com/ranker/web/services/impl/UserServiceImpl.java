@@ -6,6 +6,7 @@ import com.ranker.web.models.UserEntity;
 import com.ranker.web.repository.UserRepository;
 import com.ranker.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -13,10 +14,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -27,8 +31,12 @@ public class UserServiceImpl implements UserService {
         UserEntity user = new UserEntity();
         user.setUsername(registrationDTO.getUsername());
         user.setEmail(registrationDTO.getEmail());
-        user.setPassword(registrationDTO.getPassword());
+
+        user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));  // Encrypts user password
+
+        userRepository.save(user);  // Save to DB
     }
+
 
     @Override
     public UserEntity findByEmail(String email) {
