@@ -27,10 +27,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(RegistrationDTO registrationDTO) {
 
+        // Normalize email/username
+        String email = registrationDTO.getEmail().toLowerCase();
+        String username = registrationDTO.getUsername().trim();
+
+        // ------------- ONLY TRIGGERS IF CONTROLLER MISSES CHECK ------------------
+        // ---- users not created through UI, Race Conditions, future controller changes -----
+        // -- "Validation must be enforced on every layer that receives untrusted input" --
+        // Check if username/email already exists
+        if(userRepository.findByUsername(username) != null) {
+            throw new IllegalArgumentException("User already exists");
+        }
+        if(userRepository.findByEmail(email) != null) {
+            throw new IllegalArgumentException("User already exists");
+        }
+        // ------------- ---------------------------------------- ------------------
+
         // Create user with info from registration DTO
         UserEntity user = new UserEntity();
-        user.setUsername(registrationDTO.getUsername());
-        user.setEmail(registrationDTO.getEmail());
+        user.setUsername(username);
+        user.setEmail(email);
 
         user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));  // Encrypts user password
 

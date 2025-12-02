@@ -23,7 +23,7 @@ public class FavoritesList {
     private Long favoritesListId;
 
     @ManyToOne  // A user can have many lists
-    @JoinColumn(name = "user_id")  // Explicitly name the column
+    @JoinColumn(name = "user_id", nullable = false)  // Explicitly name the column
     private UserEntity user;
 
     private String listName;

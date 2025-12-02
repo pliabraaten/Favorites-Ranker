@@ -34,7 +34,13 @@ public class SecurityConfig {
     // https://docs.spring.io/spring-security/reference/migration-7/configuration.html
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf(csrf -> csrf.disable())
+        http
+            .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable())
+            )
+
+            .csrf(csrf -> csrf.disable())
+
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
                             "/login",
@@ -42,7 +48,8 @@ public class SecurityConfig {
                             "/lists",
                             "/register/**",
                             "/css/**",
-                            "/js/**"
+                            "/js/**",
+                            "/h2-console/**"  // to access the DB
                     ).permitAll()
                     .anyRequest().authenticated()
             )
