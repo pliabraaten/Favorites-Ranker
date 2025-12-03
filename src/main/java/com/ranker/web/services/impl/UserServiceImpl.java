@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
         // ------------- ONLY TRIGGERS IF CONTROLLER MISSES CHECK ------------------
         // ---- users not created through UI, Race Conditions, future controller changes -----
         // -- "Validation must be enforced on every layer that receives untrusted input" --
-        // Check if username/email already exists
         if(userRepository.findByUsername(username) != null) {
             throw new IllegalArgumentException("User already exists");
         }

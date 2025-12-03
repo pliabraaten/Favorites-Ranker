@@ -19,7 +19,7 @@ public class FavoritesListMapper {
                 .favoritesListId(list.getFavoritesListId())
                 .listName(list.getListName())
                 .items(list.getItems().stream().map((item) -> mapToItemDTO(item)).collect(Collectors.toList()))
-//                .username(list.getUser().getUsername())  // FIXME
+                .user(list.getUser())
                 .build();
 
         return listDTO;
@@ -32,7 +32,7 @@ public class FavoritesListMapper {
         FavoritesList listEntity = FavoritesList.builder()
                 .favoritesListId(listDTO.getFavoritesListId())
                 .listName(listDTO.getListName())
-//                .username(listDTO.getUser().getUsername())  // FIXME
+//                .user(listDTO.getUser())
                 .build();
 
         return listEntity;

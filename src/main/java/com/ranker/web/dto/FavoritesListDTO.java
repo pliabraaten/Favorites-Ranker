@@ -1,6 +1,7 @@
 package com.ranker.web.dto;
 
 import com.ranker.web.models.Item;
+import com.ranker.web.models.UserEntity;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class FavoritesListDTO {
 
     @NotEmpty(message = "List name should not be empty")  // Input validation
     private String listName;
+
+    private UserEntity user;
 
     private List<ItemDTO> items;
 }

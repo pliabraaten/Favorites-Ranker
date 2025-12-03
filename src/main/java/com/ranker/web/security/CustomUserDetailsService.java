@@ -31,9 +31,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity user = userRepository.findFirstByUsername(username);
 
         if(user != null) {  // If there is a user
-            // Spring Security -> User
-            User authUser = new User(
-                    user.getEmail(),
+
+            User authUser = new User(  // Spring Security User
+                    user.getUsername(),
                     user.getPassword(),
                     Collections.singletonList(
                             new SimpleGrantedAuthority("ROLE_USER")  // minimal authority

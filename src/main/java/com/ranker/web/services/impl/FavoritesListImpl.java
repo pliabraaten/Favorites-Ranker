@@ -2,7 +2,11 @@ package com.ranker.web.services.impl;
 
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.models.FavoritesList;
+import com.ranker.web.models.UserEntity;
 import com.ranker.web.repository.FavoritesListRepository;
+import com.ranker.web.repository.UserRepository;
+//import com.ranker.web.security.SecurityUtil;
+import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.services.FavoritesListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +23,13 @@ import static com.ranker.web.mappers.FavoritesListMapper.mapToListEntity;
 public class FavoritesListImpl implements FavoritesListService {
 
     private FavoritesListRepository favoritesListRepository;
+    private UserRepository userRepository;
+
 
     @Autowired
-    public FavoritesListImpl(FavoritesListRepository favoritesListRepository) {
+    public FavoritesListImpl(FavoritesListRepository favoritesListRepository, UserRepository userRepository) {
         this.favoritesListRepository = favoritesListRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -37,13 +44,20 @@ public class FavoritesListImpl implements FavoritesListService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public FavoritesListDTO saveList(FavoritesListDTO listDTO) {
 
+        // Get logged-in user from session
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
+
         // Converts the DTO to a DB entity
         FavoritesList listEntity = mapToListEntity(listDTO);  // Mapper method below: DTO -> Entity
-
         listEntity.setRanked(false); // Internal flag, default to false when saved
+
+        // Tie user to the list
+        listEntity.setUser(user);
 
         // Save the entity
         FavoritesList savedEntity = favoritesListRepository.save(listEntity);    // JPA automatically provides .save()
@@ -51,6 +65,7 @@ public class FavoritesListImpl implements FavoritesListService {
         // Convert entity back to DTO and return
         return listDTO;   // error when using mapToFavoritesListDTO(savedEntity) -> because no items are saved at this time
     }
+
 
     @Override
     public FavoritesListDTO findListById(long listId) {
@@ -62,13 +77,22 @@ public class FavoritesListImpl implements FavoritesListService {
         return mapToFavoritesListDTO(listEntity);
     }
 
+
     @Override
     public void updateList(FavoritesListDTO listDTO) {
 
-        FavoritesList listEntity = mapToListEntity(listDTO);
+        // Get logged-in user from session
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
+
+        FavoritesList listEntity = mapToListEntity(listDTO);  // Convert DTO to DB entity
+
+        // Preserve the original user of the list
+        listEntity.setUser(user);
 
         favoritesListRepository.save(listEntity);
     }
+
 
     @Override
     public void delete(long listId) {

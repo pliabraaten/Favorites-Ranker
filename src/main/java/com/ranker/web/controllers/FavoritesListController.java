@@ -6,6 +6,8 @@ import com.ranker.web.models.FavoritesList;
 import com.ranker.web.services.FavoritesListService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,14 +62,21 @@ public class FavoritesListController {
         return "lists-create";
     }
 
+
+    // TODO: UNDERSTAND ALL THE AUTHENTICATION PROCESS HERE AND ON UPDATELIST
     // CREATE NEW LIST WITH POST METHOD
     @PostMapping("/lists/new")
-    public String saveList(@Valid @ModelAttribute("list") FavoritesListDTO listDTO, BindingResult result, Model model) {  // TODO: ADD EXPLANATION ON BINDING RESULT
+    public String saveList(@AuthenticationPrincipal UserDetails userDetails,
+                           @Valid @ModelAttribute("list") FavoritesListDTO listDTO,
+                           BindingResult result,
+                           Model model) {  // TODO: ADD EXPLANATION ON BINDING RESULT
 
         if(result.hasErrors()) {  // Return to page if there is an error creating the list
             model.addAttribute("list", listDTO);  // Re-render the form with previously inputted values
             return "lists-create";  // No redirect here in order to re-render the form
         }
+
+        String username = userDetails.getUsername();  // Obtain the logged-in username
 
         // Save new list via the service instance and then go back to home page
         favoritesListService.saveList(listDTO);
