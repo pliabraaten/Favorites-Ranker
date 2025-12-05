@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+
       layout:decorate="~{layout}">
 <!--Reference layout from template-->
 
@@ -19,13 +20,21 @@
     <!-- INJECT LAYOUT FRAGMENT-->
     <section layout:fragment="body" class="py-5">
 
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder" th:text="${list.listName}"></h1>
+                </div>
+            </div>
+        </header>
+
         <!--CREATE ITEM FORM-->
         <div class="container">
 
             <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
             <form role="form"
                   method="post"
-                  th:action="@{/items/{listId}(listId=${listId})}"
+                  th:action="@{/items/{listId}(listId=${list.favoritesListId})}"
                   th:object="${item}">
 
                 <div class="form-group mb-3">

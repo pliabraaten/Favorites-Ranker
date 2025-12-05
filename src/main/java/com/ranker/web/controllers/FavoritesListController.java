@@ -40,7 +40,7 @@ public class FavoritesListController {
     @GetMapping("/")
     public String home(Model model) {
 
-        List<FavoritesListDTO> lists = favoritesListService.findAllLists();
+        List<FavoritesListDTO> lists = favoritesListService.findUserLists();
 
         model.addAttribute("lists", lists);
 
@@ -54,14 +54,14 @@ public class FavoritesListController {
 
         UserEntity user = new UserEntity();  // *** Create user for controlling access
 
-        List<FavoritesListDTO> lists = favoritesListService.findAllLists();
-
         String username = SecurityUtil.getSessionUser();  // *** Get logged-in user
         if (username != null) {  // *** If user is logged in
             user = userService.findByUsername(username);
             model.addAttribute("user", user);
         }
         model.addAttribute("user", user);  // ***
+
+        List<FavoritesListDTO> lists = favoritesListService.findUserLists();
 
         model.addAttribute("lists", lists);
 

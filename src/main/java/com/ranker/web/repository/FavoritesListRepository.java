@@ -18,6 +18,5 @@ public interface FavoritesListRepository extends JpaRepository<FavoritesList, Lo
     @Query("SELECT f FROM FavoritesList f WHERE f.listName LIKE CONCAT('%', :query, '%')")
     List<FavoritesList> searchLists(String query);
 
-
     List<FavoritesList> findByUserId(Long userId);
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.ranker.web.mappers.FavoritesListMapper.mapToFavoritesListDTO;
@@ -34,7 +35,7 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     @Override
-    public List<FavoritesListDTO> findAllLists() {
+    public List<FavoritesListDTO> findUserLists() {
 
         // Get logged-in user from session
         String username = SecurityUtil.getSessionUser();
@@ -111,6 +112,13 @@ public class FavoritesListImpl implements FavoritesListService {
 
         return lists.stream().map(favoritesList -> mapToFavoritesListDTO(favoritesList)).collect(Collectors.toList());
     }
+
+
+//    @Override
+//    public Optional<FavoritesList> getListById(Long listId) {  // Optional<> is needed in case no list with that id is found
+//
+//        return favoritesListRepository.findById(listId);
+//    }
 
 
 }

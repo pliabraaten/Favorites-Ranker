@@ -5,9 +5,8 @@ import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
+import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,15 +15,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Optional;
+
 
 @Controller
 public class ItemController {
 
     private ItemService itemService;
+    private FavoritesListService favoritesListService;
 
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, FavoritesListService favoritesListService) {
+
         this.itemService = itemService;
+        this.favoritesListService = favoritesListService;
     }
 
 
@@ -34,7 +38,9 @@ public class ItemController {
 
         Item item = new Item();
 
-        model.addAttribute("listId", listId);
+        FavoritesListDTO list = favoritesListService.findListById(listId);
+
+        model.addAttribute("list", list);
         model.addAttribute("item", item);
 
         return "items-create";

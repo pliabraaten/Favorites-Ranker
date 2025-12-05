@@ -5,12 +5,13 @@ import com.ranker.web.models.FavoritesList;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface FavoritesListService {
 
     // Defines which actions can happen
-    List<FavoritesListDTO> findAllLists();
+    List<FavoritesListDTO> findUserLists();
 
     // Controller works with DTO for encapsulation/security
     FavoritesListDTO saveList(FavoritesListDTO listDTO);
@@ -22,6 +23,8 @@ public interface FavoritesListService {
     void delete(long listId);
 
     List<FavoritesListDTO> searchLists(String query);
+
+//    Optional<FavoritesList> getListById(Long );
 }
 
 
