@@ -3,10 +3,14 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.models.FavoritesList;
+import com.ranker.web.models.UserEntity;
+import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.services.FavoritesListService;
+import com.ranker.web.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +25,13 @@ import java.util.List;
 public class FavoritesListController {
 
     private FavoritesListService favoritesListService;
+    private UserService userService; // ***
+
 
     @Autowired
-    public FavoritesListController(FavoritesListService favoritesListService) {
+    public FavoritesListController(FavoritesListService favoritesListService, UserService userService) {
         this.favoritesListService = favoritesListService;
+        this.userService = userService;  // ***
     }
 
 
@@ -45,7 +52,16 @@ public class FavoritesListController {
     @GetMapping("/lists")
     public String listLists(Model model) {
 
+        UserEntity user = new UserEntity();  // *** Create user for controlling access
+
         List<FavoritesListDTO> lists = favoritesListService.findAllLists();
+
+        String username = SecurityUtil.getSessionUser();  // *** Get logged-in user
+        if (username != null) {  // *** If user is logged in
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);  // ***
 
         model.addAttribute("lists", lists);
 

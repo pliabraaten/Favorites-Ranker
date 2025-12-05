@@ -1,9 +1,12 @@
 <!DOCTYPE html>
+
+<!-- TODO: IS THIS NEEDED HERE SINCE IT IS ON THE LAYOUT? -->
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
+      <!--Reference layout from template-->
 
 <head>
   <meta charset="UTF-8">
@@ -32,9 +35,18 @@
       </section>
 
       <div class="container px-5 my-5">
-        <div class="text-center mb-5">
-          <h1 class="fw-bolder">Your Ranked Lists</h1>
-        </div>
+
+        <!-- USER SPECIFIC DATA -->
+<!--        <div sec:authentication="username">Hello, </div>-->
+
+        <!-- FIXME: TO GREET USER -->
+<!--        <div th:text="${#authentication.principal.username}"></div>-->
+
+<!--        <div sec:authorize="hasRole('ROLE_USER')"-->
+<!--             class="text-center mb-5">-->
+<!--          <h1 class="fw-bolder">Your Ranked Lists</h1>-->
+<!--        </div>-->
+
         <div class="row gx-5 mb-2">
 
           <!-- SEARCH BAR -->
