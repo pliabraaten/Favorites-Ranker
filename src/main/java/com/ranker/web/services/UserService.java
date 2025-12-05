@@ -12,4 +12,7 @@ public interface UserService {
     UserEntity findByEmail(@NotEmpty String email);
 
     UserEntity findByUsername(@NotEmpty String username);
+
+    // FIXME: DO I NEED TO FIND ALL USERS??
+//    List<RegistrationDTO> findAllUsers();
 }
