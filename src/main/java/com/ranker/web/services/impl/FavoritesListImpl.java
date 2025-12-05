@@ -36,7 +36,11 @@ public class FavoritesListImpl implements FavoritesListService {
     @Override
     public List<FavoritesListDTO> findAllLists() {
 
-        List<FavoritesList> lists = favoritesListRepository.findAll();  // Put all the lists into a List<>
+        // Get logged-in user from session
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
+
+        List<FavoritesList> lists = favoritesListRepository.findByUserId(user.getId());  // Put all the lists into a List<>
 
         // Fetch lists from DB and convert them into a DTO
         return lists.stream()

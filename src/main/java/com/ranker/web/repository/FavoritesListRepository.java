@@ -2,6 +2,7 @@ package com.ranker.web.repository;
 
 
 import com.ranker.web.models.FavoritesList;
+import com.ranker.web.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,4 +18,6 @@ public interface FavoritesListRepository extends JpaRepository<FavoritesList, Lo
     @Query("SELECT f FROM FavoritesList f WHERE f.listName LIKE CONCAT('%', :query, '%')")
     List<FavoritesList> searchLists(String query);
 
+
+    List<FavoritesList> findByUserId(Long userId);
 }

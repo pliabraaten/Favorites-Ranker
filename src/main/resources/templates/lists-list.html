@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<!-- TODO: IS THIS NEEDED HERE SINCE IT IS ON THE LAYOUT? -->
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
 
       layout:decorate="~{layout}">
       <!--Reference layout from template-->
@@ -29,23 +29,17 @@
             You are registered successfully!
           </div>
 
-          <h4 class="display-4 fw-bolder mb-4">Get Help Ranking Your Favorite Things</h4>
-          <a class="btn btn-lg btn-primary" href="/lists/new">Start Ranking</a>
+          <!-- USER SPECIFIC DATA -->
+          <h4 class="display-4 fw-bolder mb-4"><span th:text="${#authentication.name}"></span>, Get Started Ranking Your Favorite Things!</h4>
+          <a class="btn btn-lg btn-primary" href="/lists/new">Create List and Rank</a>
         </div>
       </section>
 
       <div class="container px-5 my-5">
 
-        <!-- USER SPECIFIC DATA -->
-<!--        <div sec:authentication="username">Hello, </div>-->
-
-        <!-- FIXME: TO GREET USER -->
-<!--        <div th:text="${#authentication.principal.username}"></div>-->
-
-<!--        <div sec:authorize="hasRole('ROLE_USER')"-->
-<!--             class="text-center mb-5">-->
-<!--          <h1 class="fw-bolder">Your Ranked Lists</h1>-->
-<!--        </div>-->
+        <div class="text-center mb-5">
+          <h1 class="fw-bolder"><span th:text="${#authentication.name}"></span>'s Ranked Lists</h1>
+        </div>
 
         <div class="row gx-5 mb-2">
 
