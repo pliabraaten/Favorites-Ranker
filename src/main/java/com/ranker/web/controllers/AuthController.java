@@ -3,13 +3,10 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.RegistrationDTO;
 import com.ranker.web.models.UserEntity;
+import com.ranker.web.services.AuthService;
 import com.ranker.web.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,16 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthController {
 
     private UserService userService;
+    private AuthService authService;
 
 
-    // Allows auto-login directly after registering
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
+
 
     @GetMapping("/register")
     public String getRegisterForm(Model model) {
@@ -46,7 +41,8 @@ public class AuthController {
     @PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user") RegistrationDTO registrationDTO,
                            BindingResult result,
-                           Model model) {
+                           Model model,
+                           HttpServletRequest request) {
 
         UserEntity existingUserEmail = userService.findByEmail(registrationDTO.getEmail()); // Try to find existing user first
 
@@ -71,19 +67,9 @@ public class AuthController {
         // Save new user
         userService.saveUser(registrationDTO);
 
-
         // AUTO-LOGIN: new user directly after registering
-        // Get username and password from the registering user
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(
-                    registrationDTO.getUsername(),
-                    registrationDTO.getPassword()
-                );
-
-        // Give Spring Security username/password to build authenticated object
-        Authentication authentication = authenticationManager.authenticate(authToken);
-        // Puts authentication into session
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Get username and password from the registering user to pass into authentication
+        authService.authenticateUserAndSetSession(registrationDTO.getUsername(), registrationDTO.getPassword(), request);
 
 
         // Redirect registered user as authenticated
