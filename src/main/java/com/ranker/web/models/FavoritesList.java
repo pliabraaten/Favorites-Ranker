@@ -30,6 +30,7 @@ public class FavoritesList {
     private boolean isRanked = false;
 
     @OneToMany(mappedBy = "favoritesList", cascade = CascadeType.REMOVE)
+    @OrderBy("position ASC")
     private List<Item> items = new ArrayList<>();
 
 }
