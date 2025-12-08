@@ -29,7 +29,9 @@
                   th:object="${item}">
 
                 <div class="form-group mb-3">
-                    <label for="title">List Name</label>
+
+                    <label for="title">Ranked Position: <span th:text="*{position}"></span></label>
+
                     <input type="text"
                            class="form-control"
                            id="title"
@@ -40,7 +42,7 @@
                     <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Rename</button>
             </form>
         </div>
     </section>
