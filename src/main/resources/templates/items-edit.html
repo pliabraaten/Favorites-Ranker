@@ -23,26 +23,22 @@
         <div class="container">
 
             <!--ON POST ACTION GO TO THE /edit ENDPOINT -->
-            <form role="form"
-                  method="post"
-                  th:action="@{/items/{itemId}/edit(itemId=${item.id})}"
-                  th:object="${item}">
-
+            <form role="form" method="post" th:action="@{/items/{itemId}/edit(itemId=${item.id})}" th:object="${item}">
                 <div class="form-group mb-3">
-
                     <label for="title">Ranked Position: <span th:text="*{position}"></span></label>
-
-                    <input type="text"
-                           class="form-control"
-                           id="title"
-                           th:field="*{name}"
-                           placeholder="item placeholder">
+                    <input type="text" class="form-control" id="title" th:field="*{name}" placeholder="item placeholder">
 
                     <!--IF VALIDATION ERROR ON NAME (NULL), SHOW MESSAGE-->
                     <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Rename</button>
+            </form>
+
+            <!-- GO TO THE /reposition ENDPOINT -->
+            <form role="form" method="post" th:action="@{/items/{itemId}/reposition(itemId=${item.id})}" th:object="${item}">
+                <button type="submit" name="direction" value="Up">Up</button>
+                <button type="submit" name="direction" value="Down">Down</button>
             </form>
         </div>
     </section>

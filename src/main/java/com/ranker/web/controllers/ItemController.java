@@ -10,10 +10,7 @@ import com.ranker.web.services.ItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -89,6 +86,18 @@ public class ItemController {
 
         return "redirect:/lists/" + existingItem.getFavoritesList().getFavoritesListId();
     }
+
+
+    // Change the ranking of items via UP/DOWN buttons
+    @PostMapping("/items/{itemId}/reposition")
+    public String repositionItem(@PathVariable("itemId") Long itemId,
+                                 @RequestParam String direction) {
+
+        itemService.reposition(itemId, direction);
+
+        return "redirect:/items/" + itemId + "/edit";  // Reload page
+    }
+
 
     // FIXME: ALLOW USER TO EDIT/DELETE ALL LIST ITEMS ON ONE PAGE RATHER THAN CLICKING INTO THE ITEM EDIT PAGE EACH TIME
     // DELETE ITEM FROM LIST

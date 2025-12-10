@@ -1,17 +1,18 @@
 package com.ranker.web.services.impl;
 
 
-import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
 import com.ranker.web.repository.FavoritesListRepository;
 import com.ranker.web.repository.ItemRepository;
 import com.ranker.web.services.ItemService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import static com.ranker.web.mappers.FavoritesListMapper.mapToFavoritesListDTO;
-import static com.ranker.web.mappers.FavoritesListMapper.mapToListEntity;
+import java.util.Optional;
+
 import static com.ranker.web.mappers.ItemMapper.mapToItemDTO;
 import static com.ranker.web.mappers.ItemMapper.mapToItemEntity;
 
@@ -69,4 +70,58 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    @Override
+    @Transactional  // Treat whole method as one DB transaction
+    public void reposition(Long itemId, String direction) {
+
+        if (direction.equals("Up")) {
+            moveItemUp(itemId);
+        } else if (direction.equals("Down")) {
+            moveItemDown(itemId);
+        }
+
+    }
+
+    // Swap item's position with the higher ranked item
+    public void moveItemUp(Long itemId) {
+
+        // Get item and its position
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Current item not found"));
+
+        int itemPosition = item.getPosition();
+
+        // Get list of this item
+        FavoritesList list = item.getFavoritesList();
+
+        // Find prior higher ranked item within the same list
+        Item priorItem = itemRepository.findByFavoritesListFavoritesListIdAndPosition(list.getFavoritesListId(), itemPosition - 1)
+                .orElseThrow(() -> new EntityNotFoundException("Prior item not found"));
+
+        // Swap positions
+        item.setPosition(itemPosition - 1);
+        priorItem.setPosition(priorItem.getPosition() + 1);
+    }
+
+
+    // Swap item's position with the lower ranked item
+    public void moveItemDown(Long itemId) {
+
+        // Get item and its position
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Current item not found"));
+
+        int itemPosition = item.getPosition();
+
+        // Get list of this item
+        FavoritesList list = item.getFavoritesList();
+
+        // Find next lower ranked item within the same list
+        Item nextItem = itemRepository.findByFavoritesListFavoritesListIdAndPosition(list.getFavoritesListId(), itemPosition + 1)
+                .orElseThrow(() -> new EntityNotFoundException("Next item not found"));
+
+        // Swap positions
+        item.setPosition(itemPosition + 1);
+        nextItem.setPosition(nextItem.getPosition() - 1);
+    }
 }

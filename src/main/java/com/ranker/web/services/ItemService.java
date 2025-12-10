@@ -14,4 +14,6 @@ public interface ItemService {
     void updateItem(ItemDTO itemDTO);
 
     void deleteItem(Long itemId);
+
+    void reposition(Long itemId, String direction);
 }
