@@ -3,7 +3,6 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
-import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 
 @Controller
@@ -84,7 +81,7 @@ public class ItemController {
 
         itemService.updateItem(itemDTO);
 
-        return "redirect:/lists/" + existingItem.getFavoritesList().getFavoritesListId();
+        return "redirect:/lists/" + existingItem.getFavoritesList().getId();
     }
 
 
@@ -105,7 +102,7 @@ public class ItemController {
     public String deleteItem(@PathVariable("itemId") Long itemId) {
 
         // Get list of the item about to be deleted to redirect user back to the list after deletion
-        Long listId = itemService.findItemById(itemId).getFavoritesList().getFavoritesListId();
+        Long listId = itemService.findItemById(itemId).getFavoritesList().getId();
 
         itemService.deleteItem(itemId);
 

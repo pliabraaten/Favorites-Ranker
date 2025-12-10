@@ -34,7 +34,7 @@
             <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
             <form role="form"
                   method="post"
-                  th:action="@{/items/{listId}(listId=${list.favoritesListId})}"
+                  th:action="@{/items/{listId}(listId=${list.id})}"
                   th:object="${item}">
 
                 <div class="form-group mb-3">

@@ -20,7 +20,7 @@ public class FavoritesList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long favoritesListId;
+    private Long id;
 
     @ManyToOne  // A user can have many lists
     @JoinColumn(name = "user_id", nullable = false)  // Explicitly name the column

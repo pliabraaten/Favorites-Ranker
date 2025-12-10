@@ -11,8 +11,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static com.ranker.web.mappers.ItemMapper.mapToItemDTO;
 import static com.ranker.web.mappers.ItemMapper.mapToItemEntity;
 
@@ -95,7 +93,7 @@ public class ItemServiceImpl implements ItemService {
         FavoritesList list = item.getFavoritesList();
 
         // Find prior higher ranked item within the same list
-        Item priorItem = itemRepository.findByFavoritesListFavoritesListIdAndPosition(list.getFavoritesListId(), itemPosition - 1)
+        Item priorItem = itemRepository.findByFavoritesListIdAndPosition(list.getId(), itemPosition - 1)
                 .orElseThrow(() -> new EntityNotFoundException("Prior item not found"));
 
         // Swap positions
@@ -117,7 +115,7 @@ public class ItemServiceImpl implements ItemService {
         FavoritesList list = item.getFavoritesList();
 
         // Find next lower ranked item within the same list
-        Item nextItem = itemRepository.findByFavoritesListFavoritesListIdAndPosition(list.getFavoritesListId(), itemPosition + 1)
+        Item nextItem = itemRepository.findByFavoritesListIdAndPosition(list.getId(), itemPosition + 1)
                 .orElseThrow(() -> new EntityNotFoundException("Next item not found"));
 
         // Swap positions

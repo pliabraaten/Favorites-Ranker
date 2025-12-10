@@ -53,8 +53,8 @@
           <div th:each="list :${lists}" class="lead fw-normal text-muted mb-0">
             <div class="position-relative mb-3">
               <h3 class="text-center mb-5" th:text=${list.listName}></h3>
-              <a class="btn btn-primary" th:href="@{/lists/{listId}(listId=${list.favoritesListId})}">View</a>
-              <a class="btn btn-primary" th:href="@{/lists/{listId}/edit(listId=${list.favoritesListId})}">Edit</a>
+              <a class="btn btn-primary" th:href="@{/lists/{listId}(listId=${list.id})}">View</a>
+              <a class="btn btn-primary" th:href="@{/lists/{listId}/edit(listId=${list.id})}">Edit</a>
             </div>
           </div>
         </div>

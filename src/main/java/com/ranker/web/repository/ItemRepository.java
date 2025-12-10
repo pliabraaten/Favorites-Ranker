@@ -11,6 +11,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {  // Long is 
     // Custom Queries
     Optional<Item> findByPosition(int position);
 
-    Optional<Item> findByFavoritesListFavoritesListIdAndPosition(Long favoritesListId, int i);
+    Optional<Item> findByFavoritesListIdAndPosition(Long id, int i);
 
 }

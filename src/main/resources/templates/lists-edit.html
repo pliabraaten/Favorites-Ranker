@@ -25,11 +25,11 @@
             <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
             <form role="form"
                   method="post"
-                  th:action="@{/lists/{listId}/edit(listId=${list.favoritesListId})}"
+                  th:action="@{/lists/{listId}/edit(listId=${list.id})}"
                   th:object="${list}">
 
                 <!-- PUT ID IN JSON SO IT IS SENT THROUGH TO THE CONTROLLER -->
-                <input type="hidden" th:field="*{favoritesListId}">
+                <input type="hidden" th:field="*{id}">
 
                 <div class="form-group mb-3">
                     <label for="title">List Name</label>

@@ -10,7 +10,6 @@ import com.ranker.web.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,10 +100,10 @@ public class FavoritesListController {
     }
 
     // OPEN LIST EDIT FORM FOR SPECIFIC LIST
-    @GetMapping("/lists/{favoritesListId}/edit")
-    public String editListForm(@PathVariable("favoritesListId") long favoritesListId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
+    @GetMapping("/lists/{id}/edit")
+    public String editListForm(@PathVariable("id") long listId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
 
-        FavoritesListDTO listDTO = favoritesListService.findListById(favoritesListId);  // Pull list via services and set it to DTO
+        FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list via services and set it to DTO
 
         model.addAttribute("list", listDTO);  // To edit, first pull the entity->DTO
 
@@ -112,8 +111,8 @@ public class FavoritesListController {
     }
 
     // SAVE CHANGES TO LIST
-    @PostMapping("/lists/{favoritesListId}/edit")  // URL has to match @PathVariable below
-    public String updateList(@PathVariable("favoritesListId") Long listId,
+    @PostMapping("/lists/{id}/edit")  // URL has to match @PathVariable below
+    public String updateList(@PathVariable("id") Long listId,
                              @Valid @ModelAttribute("list") FavoritesListDTO listDTO,  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
                              BindingResult result, Model model) {  // If validation on the FavoritesListDTO is not met
 
@@ -122,7 +121,7 @@ public class FavoritesListController {
             return "lists-edit";  // Re-render NOT a redirect reload with existing values
         }
 
-        listDTO.setFavoritesListId(listId);  //
+        listDTO.setId(listId);  //
 
         favoritesListService.updateList(listDTO);
 
@@ -131,8 +130,8 @@ public class FavoritesListController {
 
 
     // LOAD DETAILS FOR SELECTED LIST
-    @GetMapping("/lists/{favoritesListId}")
-    public String listDetail(@PathVariable("favoritesListId") long listId, Model model) {
+    @GetMapping("/lists/{id}")
+    public String listDetail(@PathVariable("id") long listId, Model model) {
 
         FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list from DB
 
@@ -143,8 +142,8 @@ public class FavoritesListController {
 
 
     // DELETE EXISTING LIST
-    @GetMapping("/lists/{favoritesListId}/delete")
-    public String deleteList(@PathVariable("favoritesListId") long listId) {
+    @GetMapping("/lists/{id}/delete")
+    public String deleteList(@PathVariable("id") long listId) {
 
         favoritesListService.delete(listId);
 
