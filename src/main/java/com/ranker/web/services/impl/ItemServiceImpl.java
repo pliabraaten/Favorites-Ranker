@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.ranker.web.mappers.ItemMapper.mapToItemDTO;
 import static com.ranker.web.mappers.ItemMapper.mapToItemEntity;
 
@@ -81,6 +83,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     // Swap item's position with the higher ranked item
+    @Transactional
     public void moveItemUp(Long itemId) {
 
         // Get item and its position
@@ -93,16 +96,21 @@ public class ItemServiceImpl implements ItemService {
         FavoritesList list = item.getFavoritesList();
 
         // Find prior higher ranked item within the same list
-        Item priorItem = itemRepository.findByFavoritesListIdAndPosition(list.getId(), itemPosition - 1)
-                .orElseThrow(() -> new EntityNotFoundException("Prior item not found"));
+        Optional<Item> priorItemOptional = itemRepository.findByFavoritesListIdAndPosition(list.getId(), itemPosition - 1);
 
-        // Swap positions
-        item.setPosition(itemPosition - 1);
-        priorItem.setPosition(priorItem.getPosition() + 1);
+        // Swap positions if prior item is found
+        if (priorItemOptional.isPresent()) {  // If the optional wrapper returns an item (nextItem is not the last position)
+            Item priorItem = priorItemOptional.get();  // Set it as a variable to strip the optional wrapper for normal handling
+
+            // Swap
+            item.setPosition(itemPosition + 1);
+            priorItem.setPosition(itemPosition);
+        }
     }
 
 
     // Swap item's position with the lower ranked item
+    @Transactional
     public void moveItemDown(Long itemId) {
 
         // Get item and its position
@@ -115,11 +123,16 @@ public class ItemServiceImpl implements ItemService {
         FavoritesList list = item.getFavoritesList();
 
         // Find next lower ranked item within the same list
-        Item nextItem = itemRepository.findByFavoritesListIdAndPosition(list.getId(), itemPosition + 1)
-                .orElseThrow(() -> new EntityNotFoundException("Next item not found"));
+        Optional<Item> nextItemOptional = itemRepository.findByFavoritesListIdAndPosition(list.getId(), itemPosition + 1);
 
-        // Swap positions
-        item.setPosition(itemPosition + 1);
-        nextItem.setPosition(nextItem.getPosition() - 1);
+        // Swap positions if not last
+        if (nextItemOptional.isPresent()) {  // If the optional wrapper returns an item (nextItem is not the last position)
+            Item nextItem = nextItemOptional.get();  // Set it as a variable to strip the optional wrapper for normal handling
+
+            // Swap
+            item.setPosition(itemPosition + 1);
+            nextItem.setPosition(itemPosition);
+        }
+
     }
 }

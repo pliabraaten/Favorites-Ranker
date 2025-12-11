@@ -99,6 +99,7 @@ public class FavoritesListController {
         return "redirect:/lists";
     }
 
+
     // OPEN LIST EDIT FORM FOR SPECIFIC LIST
     @GetMapping("/lists/{id}/edit")
     public String editListForm(@PathVariable("id") long listId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
@@ -109,6 +110,7 @@ public class FavoritesListController {
 
         return "lists-edit";
     }
+
 
     // SAVE CHANGES TO LIST
     @PostMapping("/lists/{id}/edit")  // URL has to match @PathVariable below
@@ -161,6 +163,4 @@ public class FavoritesListController {
 
         return "lists-list";
     }
-
-
 }
