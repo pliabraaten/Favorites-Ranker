@@ -79,7 +79,8 @@ public class ItemController {
 
         // Keep its list association
         itemDTO.setFavoritesList(existingItem.getFavoritesList());
-        itemDTO.setId(itemId);
+        itemDTO.setId(existingItem.getId());
+        itemDTO.setPosition(existingItem.getPosition());
 
         itemService.updateItem(itemDTO);
 
