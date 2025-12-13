@@ -40,6 +40,10 @@ public class ItemServiceImpl implements ItemService {
         Item item = mapToItemEntity(itemDTO);  // Map DTO to entity
         item.setFavoritesList(foundList);  // Set list object to the list found by ID
 
+        // Count existing items +1 and set position in the list
+        int nextPosition = itemRepository.countByFavoritesListId(listId) + 1;  // COUNT # of items WHERE FavoritesListId = listId
+        item.setPosition(nextPosition);
+
         itemRepository.save(item);
     }
 

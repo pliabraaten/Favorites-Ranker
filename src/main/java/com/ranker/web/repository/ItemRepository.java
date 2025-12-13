@@ -13,4 +13,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {  // Long is 
 
     Optional<Item> findByFavoritesListIdAndPosition(Long id, int i);
 
+    int countByFavoritesListId(Long listId);
 }
