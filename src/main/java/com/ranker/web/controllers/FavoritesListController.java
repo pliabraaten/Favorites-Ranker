@@ -163,4 +163,17 @@ public class FavoritesListController {
 
         return "lists-list";
     }
+
+
+
+    @GetMapping("/lists/{listId}/rank")
+    public String rankList(@PathVariable("listId") long listId) {
+
+        // Get all items in the list
+
+        // Pass items to the view via model.addAttribute
+
+
+        return "pairwise-comparison";
+    }
 }

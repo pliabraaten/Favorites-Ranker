@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+
+      layout:decorate="~{layout}">
+<!--Reference layout from template-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ranker</title>
+</head>
+
+<!-- Template Downloaded from Bootstrap-->
+<body class="d-flex flex-column h-100">
+  <main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <!-- INJECT LAYOUT FRAGMENT-->
+    <section layout:fragment="body" class="py-5">
+      <div class="comparison-container">
+        <h2>Which do you prefer?</h2>
+
+        <div class="comparison-choices">
+<!--          <button id="item1-btn" class="choice-btn">-->
+<!--            <span id="item1-name"></span>-->
+<!--          </button>-->
+
+          <p>OR</p>
+
+<!--          <button id="item2-btn" class="choice-btn">-->
+<!--            <span id="item2-name"></span>-->
+<!--          </button>-->
+        </div>
+
+      </div>
+    </section>
+  </main>
+</body>
+</html>
