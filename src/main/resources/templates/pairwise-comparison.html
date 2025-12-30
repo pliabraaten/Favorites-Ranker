@@ -20,23 +20,32 @@
     <!-- Page Content-->
     <!-- INJECT LAYOUT FRAGMENT-->
     <section layout:fragment="body" class="py-5">
-      <div class="comparison-container">
-        <h2>Which do you prefer?</h2>
+        <div id="ranking-container">
+            <h2>Rank: <span th:text="${list.listName}"></span></h2>
 
-        <div class="comparison-choices">
-<!--          <button id="item1-btn" class="choice-btn">-->
-<!--            <span id="item1-name"></span>-->
-<!--          </button>-->
+            <div id="comparison-area">
+                <h3>Which do you prefer?</h3>
+                <button id="option-a" class="comparison-btn"></button>
+                <button id="option-b" class="comparison-btn"></button>
+            </div>
 
-          <p>OR</p>
-
-<!--          <button id="item2-btn" class="choice-btn">-->
-<!--            <span id="item2-name"></span>-->
-<!--          </button>-->
+            <div id="progress">
+                <span id="current">0</span> / <span id="total">0</span> comparisons
+            </div>
         </div>
-
-      </div>
     </section>
   </main>
+
+  <!-- Embed data from server into JavaScript -->
+  <script th:inline="javascript">
+      /*<![CDATA[*/
+      const listId = /*[[${list.id}]]*/ 0;
+      const items = /*[[${items}]]*/ [];
+      /*]]>*/
+  </script>
+
+  <!-- Your sorting logic -->
+  <script th:src="@{/js/pairwise-sort.js}"></script>
+
 </body>
 </html>

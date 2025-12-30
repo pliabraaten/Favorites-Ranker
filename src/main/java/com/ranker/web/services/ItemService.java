@@ -1,8 +1,10 @@
 package com.ranker.web.services;
 
 
-import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
+import com.ranker.web.models.Item;
+
+import java.util.List;
 
 
 public interface ItemService {
@@ -16,4 +18,6 @@ public interface ItemService {
     void deleteItem(Long itemId);
 
     void reposition(Long itemId, String direction);
+
+    List<ItemDTO> getItemsByListId(long listId);  // Sorted in Repo by position value
 }

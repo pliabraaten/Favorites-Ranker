@@ -2,6 +2,7 @@ package com.ranker.web.services.impl;
 
 
 import com.ranker.web.dto.ItemDTO;
+import com.ranker.web.mappers.ItemMapper;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
 import com.ranker.web.repository.FavoritesListRepository;
@@ -11,7 +12,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.ranker.web.mappers.ItemMapper.mapToItemDTO;
 import static com.ranker.web.mappers.ItemMapper.mapToItemEntity;
@@ -74,6 +77,19 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    // GET ALL ITEMS IN A LIST
+    @Override
+    public List<ItemDTO> getItemsByListId(long listId) {
+
+        List<Item> items = itemRepository.findByFavoritesListIdOrderByPositionAsc(listId);
+
+        // Convert entire list to DTOs
+        return items.stream()
+                .map(ItemMapper::mapToItemDTO)  // Use your existing mapper
+                .collect(Collectors.toList());
+    }
+
+
     @Override
     @Transactional  // Treat whole method as one DB transaction
     public void reposition(Long itemId, String direction) {
@@ -85,6 +101,7 @@ public class ItemServiceImpl implements ItemService {
         }
 
     }
+
 
     // Swap item's position with the higher ranked item
     @Transactional

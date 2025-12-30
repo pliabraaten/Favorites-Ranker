@@ -2,12 +2,16 @@ package com.ranker.web.controllers;
 
 
 import com.ranker.web.dto.FavoritesListDTO;
+import com.ranker.web.dto.ItemDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.UserEntity;
 import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.services.FavoritesListService;
+import com.ranker.web.services.ItemService;
 import com.ranker.web.services.UserService;
 import jakarta.validation.Valid;
+import org.aspectj.weaver.Position;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,11 +29,13 @@ public class FavoritesListController {
 
     private FavoritesListService favoritesListService;
     private UserService userService; // ***
+    private ItemService itemService;
 
 
     @Autowired
-    public FavoritesListController(FavoritesListService favoritesListService, UserService userService) {
+    public FavoritesListController(FavoritesListService favoritesListService, UserService userService, ItemService itemService) {
         this.favoritesListService = favoritesListService;
+        this.itemService = itemService;
         this.userService = userService;  // ***
     }
 
@@ -165,14 +171,18 @@ public class FavoritesListController {
     }
 
 
-
+    // GET LIST INFO AND ALL ITEMS SORTED BY POSITION VALUE TO START RANKING
     @GetMapping("/lists/{listId}/rank")
-    public String rankList(@PathVariable("listId") long listId) {
+    public String showRankingPage(@PathVariable long listId, Model model) {
 
-        // Get all items in the list
+        // Get list and all items
+        FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list via services and set it to DTO
+        List<ItemDTO> itemsDTO = itemService.getItemsByListId(listId);  // Sorted by position at Repository
 
         // Pass items to the view via model.addAttribute
-
+        model.addAttribute("listId", listId);
+        model.addAttribute("listName", listDTO.getListName());
+        model.addAttribute("items", itemsDTO);
 
         return "pairwise-comparison";
     }
