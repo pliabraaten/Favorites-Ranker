@@ -21,6 +21,7 @@
     <!-- INJECT LAYOUT FRAGMENT-->
     <section layout:fragment="body" class="py-5">
         <div id="ranking-container">
+
             <h2>Rank: <span th:text="${list.listName}"></span></h2>
 
             <div id="comparison-area">
@@ -39,12 +40,15 @@
   <!-- Embed data from server into JavaScript -->
   <script th:inline="javascript">
       /*<![CDATA[*/
-      const listId = /*[[${list.id}]]*/ 0;
+
+      /* Compatibility wrapper for XML/XHTML parsers to handle characters like <>& */
+      const listName = /*[[${list.listName}]]*/ '';
       const items = /*[[${items}]]*/ [];
+
       /*]]>*/
   </script>
 
-  <!-- Your sorting logic -->
+  <!-- external js file with sorting logic -->
   <script th:src="@{/js/pairwise-sort.js}"></script>
 
 </body>
