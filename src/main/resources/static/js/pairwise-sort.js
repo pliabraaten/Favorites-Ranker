@@ -1,7 +1,9 @@
 
 
 
-let items = [];  //
+// items list is populated from Thymeleaf when the page loads
+console.log(items);  // FIXME: TESTING
+
 let currentItemIndex = 0;  //
 let comparisons = [];  //
 let sortedItemIndex = 0;  // Tracks which items have been sorted
@@ -9,7 +11,6 @@ let itemCount = 0;  // Number of items in the list
 
 let L = 0;  // Track left index
 let R = 0;  // For calculating the middle
-let selectedItem = "";  // Name of item being ranked
 
 
 function rank() {
@@ -22,45 +23,66 @@ function rank() {
             L = 0;  // Left
             R = i - 1;  // Right
             let j = i - 1;  // i is the index of selectedItem, j is prior element
+            let selectedItem = items[i];  // Set to item object for comparisons
 
             // Find rank position with pairwise comparisons via a binary sort comparison method
-            let insertPosition = binarySearch(i, L, R, rankedList, selectedItem);
+            let insertPosition = binarySearch(i, L, R, selectedItem);
 
             // Move the element to the ranked value position in the array
-            insertionSort(j, insertPosition, i, rankedList, selectedItem);
-
+            insertionSort(j, insertPosition, i, selectedItem);
 
         }
     }
 }
 
-function binarySearch(i, L, R, rankedList, selectedItem) {
 
-    while (L <= R  && R >= 0) {  // Repeat until no more middle value
+function binarySearch(i, L, R, selectedItem) {
 
-        int M = L + (R - L) / 2;  // Find middle element in the sorted (left) side of the array
+    // JavaScript is asynchronous, so using recursive function
+    if (L > R || R < 0) {  // Stop if no middle value indicating position is found
 
-        // Prompt user to compare nextItem (i) to middle item (M)
-        let winner = pairwisePrompt(i, M, rankedList);
+        return L;  // Found position
+    }
 
-        // If selected item is ranked higher than middle
-        if (winner.equals(selectedItem)) {
+    let M = L + (R - L) / 2);  // Find middle element in the sorted (left) side of the array
 
-            R = M - 1;  // L stays, R <- old middle; continue on left side of sorted
-        }
-        // If selected items is ranked lower than middle
-        else if (winner.equals(rankedList.get(M))) {
+    // Prompt user -> provide callback for after selection
+    pairwisePrompt(i, M, function(winner) {
+        if (winner === selectedItem) {  // If selected item is ranked higher than middle
 
-            L = M + 1;  // Move left to middle and continue search on right side of sorted
+            // Recursively search left
+            binarySearch(i, L, M - 1, selectedItem);  // L stays, R <- old middle - 1; continue on left side of sorted
+        } else {
+
+            // Recursively search right
+            binarySearch(i, M + 1, R, selectedItem);  // Move left to middle and continue search on right side of sorted
         }
     }
-    return L;
-
-
 }
 
 
-function insertionSort(j, insertPosition, i, rankedList, selectedItem) {
+function pairwisePrompt(i, M, callback) {  // callback
+
+    // Show user pairwise comparison of current item (i) to the middle item (M)
+        // Update the HTML to show both items
+    document.getElementById('item1-name').textContent = list[i].name;
+    document.getElementById('item2-name').textContent = list[M].name;
+
+    // Pass back winner when user clicks on it with click handlers
+    document.getElementById('item1-btn').onclick = function() {
+
+        let winner = list[i];  // User clicked item 1 (selected item)
+        callback(winner);  // Pass winner back with callback
+    }
+
+    document.getElementById('item2-btn').onclick = function() {
+        let winner = rankedList[M];  // User clicked item 2 (current middle item)
+        callback(winner);  // Pass winner back via callback
+    };
+
+}
+
+function insertionSort(j, insertPosition, i, list, selectedItem) {
 
 
 
@@ -83,22 +105,8 @@ function showNextComparison() {
     document.getElementById('item2-btn').onclick = () => chooseItem(item2, item1);
 }
 
-function chooseItem(winner, loser) {
-    // Record the comparison
-    comparisons.push({
-        item1Id: winner.id,
-        item2Id: loser.id,
-        winnerId: winner.id
-    });
-    
-    // Show next pair or finish
-    if (moreComparisonsNeeded()) {
-        showNextComparison();
-    } else {
-        sendResultsToBackend();
-    }
-}
-```
+
+
 
 //## The Flow
 //```
