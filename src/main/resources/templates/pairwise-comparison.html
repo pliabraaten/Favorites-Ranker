@@ -19,36 +19,41 @@
 
     <!-- Page Content-->
     <!-- INJECT LAYOUT FRAGMENT-->
-    <section layout:fragment="body" class="py-5">
-        <div id="ranking-container">
+      <section layout:fragment="body" class="py-5">
+          <div id="ranking-container">
+              <h2>Rank: <span th:text="${list.listName}"></span></h2>
 
-            <h2>Rank: <span th:text="${list.listName}"></span></h2>
+              <div id="comparison-area">
+                  <h3>Which do you prefer?</h3>
 
-            <div id="comparison-area">
-                <h3>Which do you prefer?</h3>
-                <button id="option-a" class="comparison-btn"></button>
-                <button id="option-b" class="comparison-btn"></button>
-            </div>
+                  <button id="item1-btn" class="comparison-btn"></button>
 
-            <div id="progress">
-                <span id="current">0</span> / <span id="total">0</span> comparisons
-            </div>
-        </div>
-    </section>
+                  <p>OR</p>
+
+                  <button id="item2-btn" class="comparison-btn"></button>
+              </div>
+
+              <div id="progress">
+                  <span id="current">0</span> / <span id="total">0</span> comparisons
+              </div>
+          </div>
+      </section>
   </main>
 
   <!-- Embed data from server into JavaScript -->
+  <!--  Define variables first -->
   <script th:inline="javascript">
       /*<![CDATA[*/
 
-      /* Compatibility wrapper for XML/XHTML parsers to handle characters like <>& */
-      const listName = /*[[${list.listName}]]*/ '';
-      const items = /*[[${items}]]*/ [];
+          /* Compatibility wrapper for XML/XHTML parsers to handle characters like <>& */
+          const listName = /*[[${list.listName}]]*/ '';
+          const listId = /*[[${list.id}]]*/ 0;
+          const items = /*[[${items}]]*/ [];
 
       /*]]>*/
   </script>
 
-  <!-- external js file with sorting logic -->
+  <!-- load external js file with sorting logic -->
   <script th:src="@{/js/pairwise-sort.js}"></script>
 
 </body>

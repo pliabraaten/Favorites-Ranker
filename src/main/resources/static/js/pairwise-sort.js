@@ -99,8 +99,8 @@ function pairwisePrompt(i, M, callback) {  // callback
 
     // Show user pairwise comparison of current item (i) to the middle item (M)
         // Update the HTML to show both items
-    document.getElementById('item1-name').textContent = items[i].name;
-    document.getElementById('item2-name').textContent = items[M].name;
+    document.getElementById('item1-btn').textContent = items[i].name;
+    document.getElementById('item2-btn').textContent = items[M].name;
 
     // Pass back winner when user clicks on it with click handlers
     document.getElementById('item1-btn').onclick = function() {

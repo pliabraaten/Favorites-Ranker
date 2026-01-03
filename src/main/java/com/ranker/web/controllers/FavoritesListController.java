@@ -180,8 +180,7 @@ public class FavoritesListController {
         List<ItemDTO> itemsDTO = itemService.getItemsByListId(listId);  // Sorted by position at Repository
 
         // Pass items to the view via model.addAttribute
-        model.addAttribute("listId", listId);
-        model.addAttribute("listName", listDTO.getListName());
+        model.addAttribute("list", listDTO);
         model.addAttribute("items", itemsDTO);
 
         return "pairwise-comparison";
