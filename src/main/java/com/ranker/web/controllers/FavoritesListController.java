@@ -10,8 +10,6 @@ import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
 import com.ranker.web.services.UserService;
 import jakarta.validation.Valid;
-import org.aspectj.weaver.Position;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

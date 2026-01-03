@@ -22,6 +22,7 @@
 
 // items list is populated from Thymeleaf when the page loads
 console.log(items);  // FIXME: TESTING
+console.log('listId:', listId);
 
 let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
 

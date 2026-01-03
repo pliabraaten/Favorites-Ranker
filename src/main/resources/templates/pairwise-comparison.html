@@ -24,17 +24,13 @@
               <h2>Rank: <span th:text="${list.listName}"></span></h2>
 
               <div id="comparison-area">
-                  <h3>Which do you prefer?</h3>
+                  <h3>Which do you prefer more?</h3>
 
                   <button id="item1-btn" class="comparison-btn"></button>
 
                   <p>OR</p>
 
                   <button id="item2-btn" class="comparison-btn"></button>
-              </div>
-
-              <div id="progress">
-                  <span id="current">0</span> / <span id="total">0</span> comparisons
               </div>
           </div>
       </section>
@@ -43,14 +39,9 @@
   <!-- Embed data from server into JavaScript -->
   <!--  Define variables first -->
   <script th:inline="javascript">
-      /*<![CDATA[*/
-
-          /* Compatibility wrapper for XML/XHTML parsers to handle characters like <>& */
           const listName = /*[[${list.listName}]]*/ '';
           const listId = /*[[${list.id}]]*/ 0;
           const items = /*[[${items}]]*/ [];
-
-      /*]]>*/
   </script>
 
   <!-- load external js file with sorting logic -->
