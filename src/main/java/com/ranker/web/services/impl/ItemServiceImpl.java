@@ -38,7 +38,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void saveItem(Long listId, ItemDTO itemDTO) {  // ItemDTO is created by user -> mapped to DB entity for saving
 
-        FavoritesList foundList = listRepository.findById(listId).get();  // Find list id
+        FavoritesList foundList = listRepository.findById(listId)  // Find list id
+            .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
         Item item = mapToItemEntity(itemDTO);  // Map DTO to entity
         item.setFavoritesList(foundList);  // Set list object to the list found by ID

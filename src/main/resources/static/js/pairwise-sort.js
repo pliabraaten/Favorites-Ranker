@@ -20,15 +20,15 @@
     */
 
 
-// items list is populated from Thymeleaf when the page loads
-console.log(items);  // FIXME: TESTING
-console.log('listId:', listId);
-
 let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
 
 
 // START WHEN PAGE LOADS
 document.addEventListener('DOMContentLoaded', function() {
+
+    // items list is populated from Thymeleaf when the page loads
+    console.log(items);  // FIXME: TESTING
+    console.log('listId:', listId);
 
     if (items.length === 0) {  // If no items in the list
         alert('No items to rank!');

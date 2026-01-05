@@ -17,7 +17,8 @@ public class ItemMapper {
                 .id(item.getId())
                 .name(item.getName())
                 .position(item.getPosition())
-                .favoritesList(item.getFavoritesList())
+                .listId(item.getFavoritesList() != null ?
+                        item.getFavoritesList().getId() : null)
                 .build();
 
         return itemDTO;
@@ -30,7 +31,6 @@ public class ItemMapper {
                 .id(itemDTO.getId())
                 .name(itemDTO.getName())
                 .position(itemDTO.getPosition())
-                .favoritesList(itemDTO.getFavoritesList())
                 .build();
     }
 }

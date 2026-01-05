@@ -78,13 +78,13 @@ public class ItemController {
         ItemDTO existingItem = itemService.findItemById(itemId);
 
         // Keep its list association
-        itemDTO.setFavoritesList(existingItem.getFavoritesList());
+        itemDTO.setListId(existingItem.getListId());
         itemDTO.setId(existingItem.getId());
         itemDTO.setPosition(existingItem.getPosition());
 
         itemService.updateItem(itemDTO);
 
-        return "redirect:/lists/" + existingItem.getFavoritesList().getId();
+        return "redirect:/lists/" + existingItem.getListId();
     }
 
 
@@ -105,7 +105,7 @@ public class ItemController {
     public String deleteItem(@PathVariable("itemId") Long itemId) {
 
         // Get list of the item about to be deleted to redirect user back to the list after deletion
-        Long listId = itemService.findItemById(itemId).getFavoritesList().getId();
+        Long listId = itemService.findItemById(itemId).getListId();
 
         itemService.deleteItem(itemId);
 

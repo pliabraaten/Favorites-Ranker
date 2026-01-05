@@ -18,6 +18,11 @@
     <!--Template titles for pages-->
     <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Favorites Ranker</title>
 
+</head>
+
+<!--Template placeholder for content of page-->
+<body class="d-flex flex-column h-100">
+
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container px-5">
@@ -50,28 +55,32 @@
         </div>
     </nav>
 
-</head>
+    <main class="flex-shrink-0">
+        <!-- This is where page content gets inserted -->
+        <div layout:fragment="body"></div>
+    </main>
 
-<!--Template placeholder for body of page-->
-<body layout:fragment="body"></body>
-
-<!-- Footer-->
-<footer class="bg-dark py-4 mt-auto">
-    <div class="container px-5">
-        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-            <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2025</div></div>
-            <div class="col-auto">
-                <a class="link-light small" href="#!">Privacy</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Terms</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Contact</a>
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2025</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <th:block layout:fragment="scripts">
+        <!-- Page-specific scripts go here -->
+    </th:block>
+</body>
 </html>

@@ -17,6 +17,6 @@ public class ItemDTO {
     private Long id;
     private String name;
     private int position;
-    private FavoritesList favoritesList;
+    private Long listId;
 
 }

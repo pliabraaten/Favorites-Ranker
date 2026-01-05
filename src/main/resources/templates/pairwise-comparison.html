@@ -9,43 +9,42 @@
 <!--Reference layout from template-->
 
 <head>
-  <meta charset="UTF-8">
-  <title>Ranker</title>
+    <meta charset="UTF-8">
+    <title>Ranker</title>
 </head>
 
-<!-- Template Downloaded from Bootstrap-->
 <body class="d-flex flex-column h-100">
-  <main class="flex-shrink-0">
+<main class="flex-shrink-0">
 
     <!-- Page Content-->
-    <!-- INJECT LAYOUT FRAGMENT-->
-      <section layout:fragment="body" class="py-5">
-          <div id="ranking-container">
-              <h2>Rank: <span th:text="${list.listName}"></span></h2>
+    <!-- INJECT LAYOUT CONTENT FRAGMENT-->
+    <section layout:fragment="body" class="py-5">
+        <div id="ranking-container">
+            <h2><span th:text="${list.listName}"></span></h2>
 
-              <div id="comparison-area">
-                  <h3>Which do you prefer more?</h3>
+            <div id="comparison-area">
+                <h3>Which do you prefer more?</h3>
 
-                  <button id="item1-btn" class="comparison-btn"></button>
+                <button id="item1-btn" class="comparison-btn"></button>
 
-                  <p>OR</p>
+                <p>OR</p>
 
-                  <button id="item2-btn" class="comparison-btn"></button>
-              </div>
-          </div>
-      </section>
-  </main>
+                <button id="item2-btn" class="comparison-btn"></button>
+            </div>
+        </div>
+    </section>
 
-  <!-- Embed data from server into JavaScript -->
-  <!--  Define variables first -->
-  <script th:inline="javascript">
-          const listName = /*[[${list.listName}]]*/ '';
-          const listId = /*[[${list.id}]]*/ 0;
-          const items = /*[[${items}]]*/ [];
-  </script>
-
-  <!-- load external js file with sorting logic -->
-  <script th:src="@{/js/pairwise-sort.js}"></script>
-
+    <!-- Embed data from server into JavaScript -->
+    <!--  Define variables first -->
+    <th:block layout:fragment="scripts">
+        <script th:inline="javascript">
+            const listName = /*[[${list.listName}]]*/ '';
+            const listId = /*[[${list.id}]]*/ 0;
+            const items = /*[[${items}]]*/ [];
+        </script>
+        <!-- load external js file with sorting logic -->
+        <script th:src="@{/js/pairwise-sort.js}"></script>
+    </th:block>
+</main>
 </body>
 </html>
