@@ -65,22 +65,30 @@ function rankItem() {
 // BINARY SEARCH: recursive with user prompts to find position for each item
 function binarySearch(i, L, R, selectedItem) {
 
+    console.log('-- Binary Search Called --');
+    console.log('L:', L, 'R:', R, 'i:', i);
+
     // JavaScript is asynchronous, so using recursive function
     if (L > R || R < 0) {  // Stop if no middle value indicating position is found
 
+        console.log('→ INSERTING at position', L);
+
         // Insert item in the found position
         insertItem(L, i, selectedItem);  // If condition is true, L is insert position
+
+        console.log('Current items array:', JSON.stringify(items.map(item => item.name)));
 
         moveToNextItem();  // NEXT ITEM
 
         return;
     }
 
-    let M = Math.floor((L + (R - L)) / 2);  // Find middle element in the sorted (left) side of the array
+    let M = L + Math.floor((R - L) / 2);  // Find middle element in the sorted (left) side of the array
 
     // PROMPT USER -> provide callback for after selection of winning item
     pairwisePrompt(i, M, function(winner) {
-        if (winner === selectedItem) {  // If selected item is ranked higher than middle
+
+        if (winner.id === selectedItem.id) {  // If selected item is ranked higher than middle
 
             // Recursively search left
             binarySearch(i, L, M - 1, selectedItem);  // L stays, R <- old middle - 1; continue on left side of sorted
@@ -97,6 +105,10 @@ function binarySearch(i, L, R, selectedItem) {
 function pairwisePrompt(i, M, callback) {  // callback
 
     let hasResponded = false;  // Flag to prevent double clicks by user
+
+    // Log the current state
+    console.log('i:', i, 'item I:', items[i], 'vs M:', M, 'item M', items[M]);
+    console.log('sortedItemIndex:', sortedItemIndex);
 
     // Show user pairwise comparison of current item (i) to the middle item (M)
         // Update the HTML to show both items
