@@ -3,6 +3,7 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
+import com.ranker.web.dto.RankRequestDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.UserEntity;
 import com.ranker.web.security.SecurityUtil;
@@ -11,6 +12,7 @@ import com.ranker.web.services.ItemService;
 import com.ranker.web.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -182,5 +184,17 @@ public class FavoritesListController {
         model.addAttribute("items", itemsDTO);
 
         return "pairwise-comparison";
+    }
+
+
+    // SAVE RANKED ORDER FROM USER INPUT
+    @PostMapping("/api/lists/{listId}/save-rankings")
+    public ResponseEntity<Void> saveRankings(
+            @PathVariable long listId,
+            @RequestBody RankRequestDTO requestDTO) {
+
+        itemService.updatePositions(listId, requestDTO.getItems());
+
+        return ResponseEntity.ok().build();
     }
 }

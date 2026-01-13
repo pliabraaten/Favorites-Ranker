@@ -2,6 +2,7 @@ package com.ranker.web.services.impl;
 
 
 import com.ranker.web.dto.ItemDTO;
+import com.ranker.web.dto.ItemPositionDTO;
 import com.ranker.web.mappers.ItemMapper;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
@@ -91,6 +92,28 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    // UPDATE ITEM POSITIONS AFTER PAIRWISE COMPARISON RANKING: ItemPositionDTOs are passed in from the JSON
+    @Override
+    @Transactional
+    public void updatePositions(long listId, List<ItemPositionDTO> items) {
+
+        for (ItemPositionDTO dto : items) {  // For each item/position in the DTO list
+
+            // Find each item entity in the db by id
+            Item item = itemRepository.findById(dto.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Item not found"));
+
+            // Security check to make sure the item belongs to this list
+            if (!item.getFavoritesList().getId().equals(listId)) {
+                throw new SecurityException("Item " + dto.getId() + " does not belong to list " + listId);
+            }
+
+            item.setPosition(dto.getPosition());  // Update item's position to with the DTO position
+            itemRepository.save(item);
+        }
+    }
+
+
     @Override
     @Transactional  // Treat whole method as one DB transaction
     public void reposition(Long itemId, String direction) {
@@ -100,7 +123,6 @@ public class ItemServiceImpl implements ItemService {
         } else if (direction.equals("Down")) {
             moveItemDown(itemId);
         }
-
     }
 
 
