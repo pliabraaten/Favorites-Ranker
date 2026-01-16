@@ -1,0 +1,76 @@
+/* ===================================
+   Custom Styles for Favorites Ranker
+   =================================== */
+
+/* Brand Colors (customize these!) */
+:root {
+    --brand-primary: #0d6efd;  /* Bootstrap default blue */
+}
+
+/* Add any custom styles below */
+
+/* Example: Custom button hover effect */
+.btn-primary:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s;
+}
+
+/* Add more custom styles as needed */
+```
+
+**Save the file.**
+
+---
+
+## Step 4: Test Your Pages
+
+1. **Stop your Spring Boot application** (if running)
+2. **Start it again** (to reload templates)
+3. **Visit each page** of your site:
+   - Home page
+   - Lists page
+   - Items page
+   - Ranking page
+4. **Check that everything looks normal**
+
+---
+
+## Step 5: Check for Issues
+
+### If pages look broken:
+
+**Open Browser DevTools (F12)**:
+1. Go to **Console** tab
+2. Look for errors (red text)
+3. Go to **Network** tab
+4. Refresh page
+5. Look for failed requests (red lines)
+
+**Common issues:**
+- `custom.css` not loading → Check file name spelling
+- Styles look different → Expected! Bootstrap CDN might have slight differences from your compiled version
+
+---
+
+## Step 6: Clean Up Old File (Optional)
+
+**After confirming everything works:**
+
+1. Navigate to: `src/main/resources/static/css/`
+2. **Delete** or **keep** `styles.css` (you have the backup!)
+
+---
+
+## What Changed?
+
+### Before:
+```
+layout.html loads:
+  └── styles.css (200KB - Bootstrap + custom)
+```
+
+### After:
+```
+layout.html loads:
+  ├── bootstrap.min.css (from CDN - cached)
+  └── custom.css (small - only your styles)
