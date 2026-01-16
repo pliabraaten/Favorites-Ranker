@@ -3,95 +3,86 @@
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
 
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-
-    <!-- TODO: RESTYLE THIS -->
-    <style>
-        .main {
-            padding: 0px 10px;
-        }
-
-        @media screen and (max-width: 450px) {
-            .login-form{
-                margin-top: 10%;
-            }
-            .register-form{
-                margin-top: 10%;
-            }
-        }
-        @media screen and (min-width: 768px){
-            .main{
-                margin-left: 30%;
-            }
-
-            .sidenav{
-                width: 40%;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-            }
-        }
-    </style>
+    <title>Login</title>
 </head>
 
-<!-- Template Downloaded from Bootstrap-->
+<body>
+<!-- Content Fragment -->
+<section layout:fragment="body" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
 
-<body class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
+                <!-- Card for login form -->
+                <div class="card shadow">
+                    <div class="card-body p-5">
 
-    <!-- Page Content-->
-    <!-- INJECT LAYOUT FRAGMENT-->
-    <section layout:fragment="body">
+                        <!-- Title -->
+                        <h1 class="text-center mb-4">Login</h1>
 
-        <div class="main">
-            <div class="col-md-6 col-sm-12">
-
-                <div th:if="${param.error}" class="alert alert-danger">
-                    Invalid username and password.
-                </div>
-
-                <div th:if="${param.logout}" class="alert alert-primary">
-                    You have been logged out.
-                </div>
-
-
-                <div class="login-form">
-                    <form method="post" role="form" th:action="@{/login}">
-                        <div class="form-group">
-                            <label>Username</label>
-
-                            <!-- ID and Name is necessary for Spring Security -->
-                            <input
-                                    id="username"
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Username"
-                                    name="username">
+                        <!-- Error message -->
+                        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            Invalid username or password.
                         </div>
 
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input
-                                    id="password"
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="Password"
-                                    name="password">
+                        <!-- Logout message -->
+                        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                            <i class="bi bi-check-circle-fill"></i>
+                            You have been logged out successfully.
                         </div>
 
-                        <!-- Value is necessary for Spring Security -->
-                        <button type="submit" value="Log in" class="btn btn-primary">Login</button>
-                        <a class="btn btn-light" th:href="@{/register}">Create an account!</a>
-                    </form>
+                        <!-- Login Form -->
+                        <form method="post" th:action="@{/login}">
+
+                            <!-- Username Field -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input
+                                        id="username"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Enter your username"
+                                        name="username"
+                                        required
+                                        autofocus>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input
+                                        id="password"
+                                        type="password"
+                                        class="form-control"
+                                        placeholder="Enter your password"
+                                        name="password"
+                                        required>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
+                                </button>
+                            </div>
+
+                            <!-- Create Account Link -->
+                            <div class="text-center">
+                                <p class="mb-0">Don't have an account?</p>
+                                <a th:href="@{/register}" class="btn btn-outline-secondary mt-2">
+                                    <i class="bi bi-person-plus"></i> Create an account
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
 </body>
 </html>
