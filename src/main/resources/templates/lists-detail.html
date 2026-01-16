@@ -2,104 +2,152 @@
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
 
 <head>
     <meta charset="UTF-8">
-    <title>List Create</title>
+    <title>List Details</title>
 </head>
 
-<!-- Template Downloaded from Bootstrap-->
+<body>
+<!-- Content Fragment -->
+<section layout:fragment="body" class="py-5">
+    <div class="container">
 
-<body class="d-flex flex-column ">
-
-    <!-- Page Content-->
-    <!-- INJECT LAYOUT FRAGMENT-->
-    <section layout:fragment="body">
-
-        <!-- Page header with logo and tagline-->
-        <header class="py-5 bg-light border-bottom mb-4">
-            <div class="container">
-                <div class="text-center my-5">
-                    <h1 class="fw-bolder" th:text="${list.listName}"></h1>
-                    <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
-                </div>
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="display-4 fw-bold" th:text="${list.listName}">List Name</h1>
             </div>
-        </header>
+        </div>
 
-        <!-- Page content-->
-        <div class="container">
-            <div class="row">
-                <!-- -->
-                <div class="col-lg-8">
-                    <!-- -->
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="small text-muted">January 1, 2023</div>
-                            <h2 class="card-title" th:text=${list.listName}></h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" th:href="@{/items/{listId}/new(listId=${list.id})}">Add Item</a>
-                            <a class="btn btn-primary btn-danger" th:href="@{/lists/{listId}/delete(listId=${list.id})}">Delete</a>
+        <!-- Main Content Row -->
+        <div class="row">
+
+            <!-- Main Content Column -->
+            <div class="col-lg-8 mb-4">
+
+                <!-- List Info Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h4 mb-3" th:text="${list.listName}">List Name</h2>
+                        <p class="card-text text-muted mb-4">
+                            Manage your ranked items below. Add new items, edit existing ones, or delete items you no longer need.
+                        </p>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-primary" th:href="@{/items/{listId}/new(listId=${list.id})}">
+                                <i class="bi bi-plus-circle"></i> Add Item
+                            </a>
+                            <a class="btn btn-success" th:href="@{/lists/{listId}/rank(listId=${list.id})}">
+                                <i class="bi bi-sort-down"></i> Rank Items
+                            </a>
+                            <a class="btn btn-danger" th:href="@{/lists/{listId}/delete(listId=${list.id})}">
+                                <i class="bi bi-trash"></i> Delete List
+                            </a>
                         </div>
                     </div>
-                    <!-- SHOW LISTS -->
-                    <div class="row">
-                        <div class="col-lg-6">
+                </div>
 
-                            <!-- ITERATE OVER ALL ITEMS -->
-                            <div th:each="item :${list.items}" class="card mb-4">
-                                <div class="card-body">
-                                    <h3 class="card-title" th:text="${item.name}"></h3>
-                                    <h6>Ranked Position: <span th:text="${item.position}"></span></h6>
-                                    <a class="btn btn-primary" th:href="@{/items/{itemId}/edit(itemId=${item.id})}">Edit</a>
+                <!-- Items List -->
+                <h3 class="h5 mb-3">Your Items</h3>
 
-                                    <!-- DELETE DATA VIA FORMS (<a href> can only be used for GET and POST) -->
-                                    <form th:action="@{/items/{itemId}/delete(itemId=${item.id})}" method="post" style="display:inline;">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                <!-- Check if list is empty -->
+                <div th:if="${list.items.isEmpty()}" class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    No items yet. Click "Add Item" to get started!
+                </div>
+
+                <!-- Display Items -->
+                <div class="row">
+                    <div th:each="item : ${list.items}" class="col-lg-6 mb-3">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0" th:text="${item.name}">Item Name</h5>
+                                    <span class="badge bg-primary rounded-pill" th:text="${item.position}">1</span>
+                                </div>
+                                <p class="text-muted small mb-3">Position: <span th:text="${item.position}">1</span></p>
+
+                                <div class="d-flex gap-2">
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       th:href="@{/items/{itemId}/edit(itemId=${item.id})}">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+
+                                    <!-- Delete Form -->
+                                    <form th:action="@{/items/{itemId}/delete(itemId=${item.id})}"
+                                          method="post"
+                                          style="display:inline;">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Delete this item?')">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Search widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Search</div>
-                        <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
-                        </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+
+                <!-- Quick Actions Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
                     </div>
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/lists/{listId}/rank(listId=${list.id})}"
+                               class="btn btn-outline-primary">
+                                <i class="bi bi-sort-down"></i> Rank Your List
+                            </a>
+                            <a th:href="@{/items/{listId}/new(listId=${list.id})}"
+                               class="btn btn-outline-success">
+                                <i class="bi bi-plus-circle"></i> Add New Item
+                            </a>
+                            <a th:href="@{/lists}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to All Lists
+                            </a>
                         </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                     </div>
                 </div>
+
+                <!-- Stats Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="bi bi-graph-up"></i> Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <strong>Total Items:</strong>
+                            <span class="badge bg-secondary" th:text="${list.items.size()}">0</span>
+                        </div>
+                        <div class="mb-2">
+                            <strong>List Name:</strong>
+                            <span th:text="${list.listName}">List</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Card -->
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="bi bi-question-circle"></i> Need Help?</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="small mb-0">
+                            Use the "Rank Items" button to compare your items and create a custom ranking!
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
-
-    </section>
+    </div>
+</section>
 </body>
 </html>

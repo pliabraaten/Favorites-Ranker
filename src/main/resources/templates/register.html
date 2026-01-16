@@ -3,93 +3,110 @@
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
 
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-
-<!-- TODO: RESTYLE THIS -->
-    <style>
-        .main {
-            padding: 0px 10px;
-        }
-
-        @media screen and (max-width: 450px) {
-            .login-form{
-                margin-top: 10%;
-            }
-            .register-form{
-                margin-top: 10%;
-            }
-        }
-        @media screen and (min-width: 768px){
-            .main{
-                margin-left: 30%;
-            }
-
-            .sidenav{
-                width: 40%;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-            }
-        }
-    </style>
 </head>
 
-<!-- Template Downloaded from Bootstrap-->
+<body>
+<!-- Content Fragment -->
+<section layout:fragment="body" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
 
-<body class="d-flex flex-column h-100">
-    <main class="flex-shrink-0">
+                <!-- Card for registration form -->
+                <div class="card shadow">
+                    <div class="card-body p-5">
 
-        <!-- Page Content-->
-        <!-- INJECT LAYOUT FRAGMENT-->
-        <section layout:fragment="body">
+                        <!-- Title -->
+                        <h1 class="text-center mb-4">Create Account</h1>
 
-            <div class="main">
-                <div class="col-md-6 col-sm-12">
+                        <!-- Error message -->
+                        <div th:if="${param.fail}" class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            Username or email already exists.
+                        </div>
 
-                    <div th:if="${param.fail}" class="alert alert-success">Username or email already exists</div>
+                        <!-- Registration Form -->
+                        <form method="post" th:action="@{/register/save}" th:object="${user}">
 
-                    <div class="login-form">
-                        <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
-                            <div class="form-group">
-                                <label>Username</label>
+                            <!-- Username Field -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
                                 <input
+                                        id="username"
                                         type="text"
                                         class="form-control"
-                                        placeholder="Username"
-                                        th:field="*{username}">
+                                        placeholder="Choose a username"
+                                        th:field="*{username}"
+                                        th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"
+                                        required
+                                        autofocus>
+                                <div th:if="${#fields.hasErrors('username')}"
+                                     class="invalid-feedback"
+                                     th:errors="*{username}">
+                                    Username error
+                                </div>
                             </div>
-                            <p th:if="${#fields.hasErrors('username')}" class="text-danger"></p>
-                            <div class="form-group">
-                                <label>Email</label>
+
+                            <!-- Email Field -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
                                 <input
-                                        type="text"
+                                        id="email"
+                                        type="email"
                                         class="form-control"
-                                        placeholder="Email"
-                                        th:field="*{email}">
+                                        placeholder="Enter your email"
+                                        th:field="*{email}"
+                                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                        required>
+                                <div th:if="${#fields.hasErrors('email')}"
+                                     class="invalid-feedback"
+                                     th:errors="*{email}">
+                                    Email error
+                                </div>
                             </div>
-                            <p th:if="${#fields.hasErrors('email')}" class="text-danger"></p>
-                            <div class="form-group">
-                                <label>Password</label>
+
+                            <!-- Password Field -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
                                 <input
+                                        id="password"
                                         type="password"
                                         class="form-control"
-                                        placeholder="Password"
-                                        th:field="*{password}">
+                                        placeholder="Create a password"
+                                        th:field="*{password}"
+                                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                        required>
+                                <div th:if="${#fields.hasErrors('password')}"
+                                     class="invalid-feedback"
+                                     th:errors="*{password}">
+                                    Password error
+                                </div>
                             </div>
-                            <p th:if="${#fields.hasErrors('password')}" class="text-danger"></p>
 
-                            <button th:href="@{/register}" type="submit" class="btn btn-primary">Register</button>
-                            <a class="btn btn-light" th:href="@{/login}">Login here</a>
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-person-plus-fill"></i> Register
+                                </button>
+                            </div>
+
+                            <!-- Login Link -->
+                            <div class="text-center">
+                                <p class="mb-0">Already have an account?</p>
+                                <a th:href="@{/login}" class="btn btn-outline-secondary mt-2">
+                                    <i class="bi bi-box-arrow-in-right"></i> Login here
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+</section>
 </body>
 </html>

@@ -3,47 +3,69 @@
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
 
 <head>
     <meta charset="UTF-8">
-    <title>List Create</title>
+    <title>Create List</title>
 </head>
 
-<!-- Template Downloaded from Bootstrap-->
+<body>
+<section layout:fragment="body" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
 
-<body class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
+                <!-- Card for create form -->
+                <div class="card shadow">
+                    <div class="card-body p-5">
 
-    <!-- Page Content-->
-    <!-- INJECT LAYOUT FRAGMENT-->
-    <section layout:fragment="body" class="py-5">
+                        <!-- Title -->
+                        <h1 class="text-center mb-4">Create New List</h1>
+                        <p class="text-center text-muted mb-4">
+                            Start ranking your favorite things!
+                        </p>
 
-        <!--CREATE LIST FORM-->
-        <div class="container">
+                        <!-- Create Form -->
+                        <form method="post" th:action="@{/lists/new}" th:object="${list}">
 
-            <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
-            <form role="form"
-                  method="post"
-                  th:action="@{/lists/new}"
-                  th:object="${list}">
+                            <!-- List Name Field -->
+                            <div class="mb-3">
+                                <label for="title" class="form-label">List Name</label>
+                                <input
+                                        id="title"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="e.g., Favorite Restaurants"
+                                        th:field="*{listName}"
+                                        th:classappend="${#fields.hasErrors('listName')} ? 'is-invalid' : ''"
+                                        required
+                                        autofocus>
+                                <div th:if="${#fields.hasErrors('listName')}"
+                                     class="invalid-feedback"
+                                     th:errors="*{listName}">
+                                    List name is required
+                                </div>
+                            </div>
 
-                <div class="form-group mb-3">
-                    <label for="title">List Name</label>
-                    <input type="text"
-                           class="form-control"
-                           id="title"
-                           th:field="*{listName}"
-                           placeholder="Favorite Restaurants">
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-plus-circle-fill"></i> Create List
+                                </button>
+                            </div>
 
-                    <!--IF VALIDATION ERROR ON LISTNAME (NULL), SHOW MESSAGE-->
-                    <p th:if="${#fields.hasErrors('listName')}" class="text-danger" th:errors="*{listName}"></p>
+                            <!-- Back Link -->
+                            <div class="text-center">
+                                <a th:href="@{/lists}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Back to My Lists
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
+            </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
 </body>
 </html>

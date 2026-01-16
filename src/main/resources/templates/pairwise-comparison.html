@@ -1,50 +1,76 @@
 <!DOCTYPE html>
-
 <html lang="en"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
 
 <head>
     <meta charset="UTF-8">
-    <title>Ranker</title>
+    <title>Rank Items</title>
 </head>
 
-<body class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
+<body>
+<section layout:fragment="body" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
 
-    <!-- Page Content-->
-    <!-- INJECT LAYOUT CONTENT FRAGMENT-->
-    <section layout:fragment="body" class="py-5">
-        <div id="ranking-container">
-            <h2><span th:text="${list.listName}"></span></h2>
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bold mb-2">Rank Your List</h1>
+                    <p class="lead text-muted" th:text="${list.listName}">List Name</p>
+                </div>
 
-            <div id="comparison-area">
-                <h3>Which do you prefer more?</h3>
+                <!-- Comparison Card -->
+                <div id="comparison-area" class="card shadow">
+                    <div class="card-body p-5">
+                        <h3 class="text-center mb-4">Which do you prefer more?</h3>
 
-                <button id="item1-btn" class="comparison-btn"></button>
+                        <div class="d-flex gap-3 align-items-center mb-4">
+                            <button id="item1-btn"
+                                    class="btn btn-primary btn-lg flex-fill py-4">
+                                Item 1
+                            </button>
 
-                <p>OR</p>
+                            <span class="text-muted fw-bold fs-4">OR</span>
 
-                <button id="item2-btn" class="comparison-btn"></button>
+                            <button id="item2-btn"
+                                    class="btn btn-primary btn-lg flex-fill py-4">
+                                Item 2
+                            </button>
+                        </div>
+
+<!--                         Progress -->
+<!--                        <div class="text-center text-muted">-->
+<!--                            <small>-->
+<!--                                Items sorted <span id="current-comparison">0</span>-->
+<!--                                of <span id="total-comparisons">0</span>-->
+<!--                            </small>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+
+                <!-- Cancel Button -->
+                <div class="text-center mt-4">
+                    <a th:href="@{/lists/{listId}(listId=${list.id})}"
+                       class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle"></i> Cancel Ranking
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Embed data from server into JavaScript -->
-    <!--  Define variables first -->
-    <th:block layout:fragment="scripts">
-        <script th:inline="javascript">
-            const listName = /*[[${list.listName}]]*/ '';
-            const listId = /*[[${list.id}]]*/ 0;
-            const items = /*[[${items}]]*/ [];
-        </script>
-        <!-- load external js file with sorting logic -->
-        <script th:src="@{/js/pairwise-sort.js}"></script>
-    </th:block>
-</main>
+<!-- Scripts -->
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        const listName = /*[[${list.listName}]]*/ '';
+        const listId = /*[[${list.id}]]*/ 0;
+        const items = /*[[${items}]]*/ [];
+    </script>
+    <script th:src="@{/js/pairwise-sort.js}"></script>
+</th:block>
 </body>
 </html>

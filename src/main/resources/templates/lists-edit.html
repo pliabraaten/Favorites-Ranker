@@ -3,50 +3,75 @@
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<!--Reference layout from template-->
 
 <head>
     <meta charset="UTF-8">
-    <title>List Edit</title>
+    <title>Edit List</title>
 </head>
 
-<!-- Template Downloaded from Bootstrap-->
+<body>
+<section layout:fragment="body" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
 
-<body class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
+                <!-- Card for edit form -->
+                <div class="card shadow">
+                    <div class="card-body p-5">
 
-    <!-- Page Content-->
-    <!-- INJECT LAYOUT FRAGMENT-->
-    <section layout:fragment="body" class="py-5">
+                        <!-- Title -->
+                        <h1 class="text-center mb-4">Edit List</h1>
+                        <p class="text-center text-muted mb-4">
+                            Update your list name
+                        </p>
 
-        <!--CREATE LIST FORM-->
-        <div class="container">
+                        <!-- Edit Form -->
+                        <form method="post"
+                              th:action="@{/lists/{listId}/edit(listId=${list.id})}"
+                              th:object="${list}">
 
-            <!--ON POST ACTION GO TO THE /NEW ENDPOINT -->
-            <form role="form"
-                  method="post"
-                  th:action="@{/lists/{listId}/edit(listId=${list.id})}"
-                  th:object="${list}">
+                            <!-- Hidden ID field -->
+                            <input type="hidden" th:field="*{id}">
 
-                <!-- PUT ID IN JSON SO IT IS SENT THROUGH TO THE CONTROLLER -->
-                <input type="hidden" th:field="*{id}">
+                            <!-- List Name Field -->
+                            <div class="mb-3">
+                                <label for="title" class="form-label">List Name</label>
+                                <input
+                                        id="title"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="e.g., Top Restaurants"
+                                        th:field="*{listName}"
+                                        th:classappend="${#fields.hasErrors('listName')} ? 'is-invalid' : ''"
+                                        required
+                                        autofocus>
+                                <div th:if="${#fields.hasErrors('listName')}"
+                                     class="invalid-feedback"
+                                     th:errors="*{listName}">
+                                    List name is required
+                                </div>
+                            </div>
 
-                <div class="form-group mb-3">
-                    <label for="title">List Name</label>
-                    <input type="text"
-                           class="form-control"
-                           id="title"
-                           th:field="*{listName}"
-                           placeholder="Top Restaurants">
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle-fill"></i> Save Changes
+                                </button>
+                            </div>
 
-                    <!--IF VALIDATION ERROR ON LISTNAME (NULL), SHOW MESSAGE-->
-                    <p th:if="${#fields.hasErrors('listName')}" class="text-danger" th:errors="*{listName}"></p>
+                            <!-- Back Link -->
+                            <div class="text-center">
+                                <a th:href="@{/lists/{listId}(listId=${list.id})}"
+                                   class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </form>
+            </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
 </body>
 </html>
