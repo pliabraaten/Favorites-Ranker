@@ -18,7 +18,7 @@ public interface FavoritesListService {
 
     FavoritesListDTO findListById(long listId);
 
-    void updateList(FavoritesListDTO listDTO);
+    void updateListName(Long listId, String newName);
 
     void delete(long listId);
 

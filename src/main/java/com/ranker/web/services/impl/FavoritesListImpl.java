@@ -84,19 +84,15 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     @Override
-    public void updateList(FavoritesListDTO listDTO) {
+    public void updateListName(Long listId, String newName) {
 
-        // Get logged-in user from session
-        String username = SecurityUtil.getSessionUser();
-        UserEntity user = userRepository.findByUsername(username);
+        FavoritesList list = favoritesListRepository.findById(listId)
+                .orElseThrow(() -> new RuntimeException("List not found"));
 
-        FavoritesList listEntity = mapToListEntity(listDTO);  // Convert DTO to DB entity
-
-        // Preserve the original user of the list
-        listEntity.setUser(user);
-
-        favoritesListRepository.save(listEntity);
+        list.setListName(newName);
+        favoritesListRepository.save(list);
     }
+
 
 
     @Override
@@ -113,12 +109,6 @@ public class FavoritesListImpl implements FavoritesListService {
         return lists.stream().map(favoritesList -> mapToFavoritesListDTO(favoritesList)).collect(Collectors.toList());
     }
 
-
-//    @Override
-//    public Optional<FavoritesList> getListById(Long listId) {  // Optional<> is needed in case no list with that id is found
-//
-//        return favoritesListRepository.findById(listId);
-//    }
 
 
 }

@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 // TODO: REORGANIZE THESE MAPPINGS
@@ -105,36 +106,18 @@ public class FavoritesListController {
         return "redirect:/lists";
     }
 
+// INLINE EDIT INSTEAD OF LOADING NEW HTML PAGE
+//    // OPEN LIST EDIT FORM FOR SPECIFIC LIST
+//    @GetMapping("/lists/{id}/edit")
+//    public String editListForm(@PathVariable("id") long listId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
+//
+//        FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list via services and set it to DTO
+//
+//        model.addAttribute("list", listDTO);  // To edit, first pull the entity->DTO
+//
+//        return "lists-edit";
+//    }
 
-    // OPEN LIST EDIT FORM FOR SPECIFIC LIST
-    @GetMapping("/lists/{id}/edit")
-    public String editListForm(@PathVariable("id") long listId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
-
-        FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list via services and set it to DTO
-
-        model.addAttribute("list", listDTO);  // To edit, first pull the entity->DTO
-
-        return "lists-edit";
-    }
-
-
-    // SAVE CHANGES TO LIST
-    @PostMapping("/lists/{id}/edit")  // URL has to match @PathVariable below
-    public String updateList(@PathVariable("id") Long listId,
-                             @Valid @ModelAttribute("list") FavoritesListDTO listDTO,  // TODO: ADD EXPLANATION FOR @MODEL ATTRIBUTE
-                             BindingResult result, Model model) {  // If validation on the FavoritesListDTO is not met
-
-        if(result.hasErrors()) {  // Return to page if there is an error editing the list
-            model.addAttribute("list", listDTO);
-            return "lists-edit";  // Re-render NOT a redirect reload with existing values
-        }
-
-        listDTO.setId(listId);  //
-
-        favoritesListService.updateList(listDTO);
-
-        return "redirect:/lists";
-    }
 
 
     // LOAD DETAILS FOR SELECTED LIST
@@ -145,7 +128,7 @@ public class FavoritesListController {
 
         model.addAttribute("list", listDTO);  // Pass data to webpage by binding it to model
 
-        return "lists-detail";
+        return "lists-details";
     }
 
 
@@ -186,15 +169,4 @@ public class FavoritesListController {
         return "pairwise-comparison";
     }
 
-
-    // SAVE RANKED ORDER FROM USER INPUT
-    @PostMapping("/api/lists/{listId}/save-rankings")
-    public ResponseEntity<Void> saveRankings(
-            @PathVariable long listId,
-            @RequestBody RankRequestDTO requestDTO) {
-
-        itemService.updatePositions(listId, requestDTO.getItems());
-
-        return ResponseEntity.ok().build();
-    }
 }
