@@ -12,7 +12,6 @@
 </head>
 
 <!-- Template Downloaded from Bootstrap-->
-
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
 
@@ -28,7 +27,7 @@
             </div>
 
             <div class="text-center">
-                <a th:href="@{/lists}" class="btn btn-outline-secondary">
+                <a th:href="@{/lists/{listId}(listId=${list.id})}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left text-center"></i> Back to <span th:text="${list.listName}"></span> List
                 </a>
             </div>
@@ -51,7 +50,6 @@
                            th:field="*{name}"
                            placeholder="Item to be ranked"
                            autofocus
-                           required
                            minlength="1">
 
                     <!--IF VALIDATION ERROR ON ITEM NAME (NULL), SHOW MESSAGE-->
