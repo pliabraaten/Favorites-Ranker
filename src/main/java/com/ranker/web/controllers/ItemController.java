@@ -6,6 +6,7 @@ import com.ranker.web.dto.ItemDTO;
 import com.ranker.web.models.Item;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +44,16 @@ public class ItemController {
 
     // CREATE NEW ITEM
     @PostMapping("/items/{listId}")
-    public String saveItem(@PathVariable("listId") Long listId, @ModelAttribute("item")ItemDTO itemDTO, Model model) {
+    public String saveItem(@PathVariable("listId") Long listId,
+                           @Valid @ModelAttribute("item")ItemDTO itemDTO,
+                           BindingResult result,
+                           Model model) {
+
+        if (result.hasErrors()) {
+            // Stay on the same page and show validation errors
+            model.addAttribute("list", favoritesListService.findListById(listId));
+            return "items-create";
+        }
 
         itemService.saveItem(listId, itemDTO);
 

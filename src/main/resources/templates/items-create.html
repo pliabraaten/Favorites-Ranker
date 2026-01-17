@@ -50,7 +50,9 @@
                            id="title"
                            th:field="*{name}"
                            placeholder="Item to be ranked"
-                           autofocus>
+                           autofocus
+                           required
+                           minlength="1">
 
                     <!--IF VALIDATION ERROR ON ITEM NAME (NULL), SHOW MESSAGE-->
                     <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
