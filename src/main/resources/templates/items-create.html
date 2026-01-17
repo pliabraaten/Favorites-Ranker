@@ -26,6 +26,12 @@
                     <h1 class="fw-bolder" th:text="${list.listName}"></h1>
                 </div>
             </div>
+
+            <div class="text-center">
+                <a th:href="@{/lists}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left text-center"></i> Back to <span th:text="${list.listName}"></span> List
+                </a>
+            </div>
         </header>
 
         <!--CREATE ITEM FORM-->
@@ -43,16 +49,25 @@
                            class="form-control"
                            id="title"
                            th:field="*{name}"
-                           placeholder="Item to be ranked">
+                           placeholder="Item to be ranked"
+                           autofocus>
 
                     <!--IF VALIDATION ERROR ON ITEM NAME (NULL), SHOW MESSAGE-->
                     <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
 
+        <!-- Display Existing Items -->
+        <div class="row g-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
+            <div th:each="item : ${list.items}" class="col">
+                <div class="border rounded p-3 d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold" th:text="${item.name}">Item Name</span>
+                </div>
+            </div>
+        </div>
 
     </section>
 </main>

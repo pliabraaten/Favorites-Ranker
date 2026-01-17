@@ -47,7 +47,7 @@ public class ItemController {
 
         itemService.saveItem(listId, itemDTO);
 
-        return "redirect:/lists/" + listId;  // Send user back to details html for this list
+        return "redirect:/items/" + listId + "/new";  // Refresh page for the user to add more items
     }
 
 
