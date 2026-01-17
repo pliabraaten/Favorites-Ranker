@@ -18,6 +18,10 @@
     <!-- Your custom CSS (we'll create this next) -->
     <link th:href="@{/css/custom.css}" rel="stylesheet">
 
+    <!-- CSRF meta tags for JavaScript -->
+    <meta name="_csrf" th:content="${_csrf?.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+
     <!-- Template titles for pages -->
     <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Favorites Ranker</title>
 </head>

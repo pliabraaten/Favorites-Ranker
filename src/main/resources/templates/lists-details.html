@@ -73,8 +73,6 @@
                     </div>
                 </div>
 
-
-
                 <!-- Items List -->
                 <h3 class="h5 mb-3">Your Items</h3>
 
@@ -180,16 +178,14 @@
 <!-- Scripts -->
 <th:block layout:fragment="scripts">
 
+    <script th:src="@{/js/list-details.js}"></script>
+
     <script th:inline="javascript">
         initListDetails({
             id: /*[[${list.id}]]*/,
             name: /*[[${list.listName}]]*/,
-            csrfToken: /*[[${_csrf.token}]]*/,
-            csrfHeader: /*[[${_csrf.headerName}]]*/
         });
     </script>
-
-    <script src="/js/list-details.js"></script>
 
 </th:block>
 </body>
