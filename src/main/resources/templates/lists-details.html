@@ -82,38 +82,33 @@
                     No items yet. Click "Add Item" to get started!
                 </div>
 
-                <!-- Display Items -->
-                <div class="row">
-                    <div th:each="item : ${list.items}" class="col-lg-6 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title mb-0" th:text="${item.name}">Item Name</h5>
-                                    <span class="badge bg-primary rounded-pill" th:text="${item.position}">1</span>
-                                </div>
-                                <p class="text-muted small mb-3">Position: <span th:text="${item.position}">1</span></p>
+                <!-- Display Items as a compact list -->
+                <ul class="list-group mb-4" th:if="${!list.items.isEmpty()}">
+                    <li th:each="item : ${list.items}"
+                        class="list-group-item d-flex justify-content-between align-items-center">
 
-                                <div class="d-flex gap-2">
-                                    <a class="btn btn-sm btn-outline-primary"
-                                       th:href="@{/items/{itemId}/edit(itemId=${item.id})}">
-                                        <i class="bi bi-pencil"></i> Edit
-                                    </a>
-
-                                    <!-- Delete Form -->
-                                    <form th:action="@{/items/{itemId}/delete(itemId=${item.id})}"
-                                          method="post"
-                                          style="display:inline;">
-                                        <button type="submit"
-                                                class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Delete this item?')">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                        <!-- Position and Name -->
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="badge bg-primary rounded-pill" th:text="${item.position}">1</span>
+                            <span th:text="${item.name}" class="fw-semibold">Item Name</span>
                         </div>
-                    </div>
-                </div>
+
+                        <!-- Edit/Delete Buttons -->
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/items/{itemId}/edit(itemId=${item.id})}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <form th:action="@{/items/{itemId}/delete(itemId=${item.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Delete this item?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
             </div>
 
             <!-- Sidebar -->
