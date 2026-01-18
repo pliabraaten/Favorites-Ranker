@@ -1,13 +1,6 @@
-
-
-// CSRF HELPER FUNCTIONS: extracts CSRF token from the meta tages in <head>
-function getCsrfToken() {
-    return document.querySelector('meta[name="_csrf"]')?.content || '';
-}
-
-function getCsrfHeader() {
-    return document.querySelector('meta[name="_csrf_header"]')?.content || '';
-}
+// ==============================
+// list-details.js - List Details Page
+// ==============================
 
 
 // List Details State:
@@ -15,7 +8,9 @@ let currentListName;
 let listId;
 
 
+// -----------------------------
 // UI FUNCTIONS
+// -----------------------------
 function enterEditMode() {  // Hides title, shows input field, and focus cursor
     document.getElementById('display-mode').style.display = 'none';
     document.getElementById('edit-mode').style.display = 'block';
@@ -29,7 +24,9 @@ function cancelEdit() {  // Reverts back to regular display mode
 }
 
 
+// -----------------------------
 // INITIALIZATION
+// -----------------------------
 function initListDetails({ id, name }) {
     listId = id;
     currentListName = name;
@@ -40,16 +37,16 @@ function initListDetails({ id, name }) {
     // Event listeners
     document
         .getElementById('edit-name-btn')
-        .addEventListener('click', enterEditMode);
+        ?.addEventListener('click', enterEditMode);
 
     document
         .getElementById('cancel-edit-btn')
-        .addEventListener('click', cancelEdit);
+        ?.addEventListener('click', cancelEdit);
 
     const form = document.getElementById('edit-list-form');
 
     // Form submission
-    form.addEventListener('submit', async (e) => {
+    form?.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const input = document.getElementById('list-name-input');
@@ -62,9 +59,7 @@ function initListDetails({ id, name }) {
         }
 
         // Build request headers
-        const headers = {
-            'Content-Type': 'application/json'
-        };
+        const headers = { 'Content-Type': 'application/json' };
 
         // Add CSRF if available
         if (csrfToken && csrfHeader) {
@@ -86,15 +81,13 @@ function initListDetails({ id, name }) {
             // Updates page title
             document.querySelector('#display-mode h1').textContent = newName;
 
-            // Updates title
+            // Updates card title
             const cardTitle = document.querySelector('.card-body h2');
-            if (cardTitle) {
-                cardTitle.textContent = newName;
-            }
+            if (cardTitle) cardTitle.textContent = newName;
 
             currentListName = newName;
             cancelEdit();
-            
+
         } catch (error) {
             console.error('Error:', error);
             alert('Error updating list name');

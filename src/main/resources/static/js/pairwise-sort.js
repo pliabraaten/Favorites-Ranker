@@ -1,29 +1,37 @@
+// ==============================
+// pairwise-sort.js - Ranking Page
+// ==============================
+
 // RANK LIST BY PROMPTING USER WITH PAIRWISE COMPARISONS AND USE BINARY INSERTION SORT
 
 /* FIXME: ? Replace recursive binary search with an explicit state machine ?
      I am modeling binary search which is a synchronous algorithm with asynchronous user input via callbacks
-     Control flow is split across multiple call frames instead of a step by step singe state
+     Control flow is split across multiple call frames instead of a step by step single state
      But, stack depth is bounded by O(log n) per item
 */
 
-// FIXME: concerns with the Arrow's impossibility theorem: A > B, B > C, but C > A is possible in preferences
+/* FIXME: concerns with the Arrow's impossibility theorem:
+   A > B, B > C, but C > A is possible in preferences
+*/
 
-    /* BINARY INSERTION SORT
-        https://www.geeksforgeeks.org/dsa/binary-insertion-sort/
-        https://en.wikipedia.org/wiki/Insertion_sort#Variants
 
-        Time Complexity:
-            Comparisons with binary search: O(n log n) -> O(log n) comparisons per element resulting in O(n log n) comparisons overall
-            Insertion and shifting items: O(n^2)
-            Overall: O(n^2)
-         The algorithm as a whole has a running time of O(n^2) on average/worse case because of the swaps required for each insertion.
-    */
+/* BINARY INSERTION SORT
+    https://www.geeksforgeeks.org/dsa/binary-insertion-sort/
+    https://en.wikipedia.org/wiki/Insertion_sort#Variants
+
+    Time Complexity:
+        Comparisons with binary search: O(n log n) -> O(log n) comparisons per element resulting in O(n log n) comparisons overall
+        Insertion and shifting items: O(n^2)
+        Overall: O(n^2) on average/worst case because of the swaps required for each insertion.
+*/
 
 
 let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
 
 
+// -----------------------------
 // START WHEN PAGE LOADS
+// -----------------------------
 document.addEventListener('DOMContentLoaded', function() {
 
     // items list is populated from Thymeleaf when the page loads
@@ -44,12 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// START RANKING FUNCTION: select item to be ranked, set boundaries, and call binarySearch()
+// -----------------------------
+// START RANKING FUNCTION
+// -----------------------------
 function rankItem() {
 
     // If all items have been sorted
     if (sortedItemIndex >= items.length) {
-
         finishRanking();  // Print note and save
         return;
     }
@@ -62,7 +71,9 @@ function rankItem() {
 }
 
 
-// BINARY SEARCH: recursive with user prompts to find position for each item
+// -----------------------------
+// BINARY SEARCH
+// -----------------------------
 function binarySearch(i, L, R, selectedItem) {
 
     console.log('-- Binary Search Called --');
@@ -89,21 +100,20 @@ function binarySearch(i, L, R, selectedItem) {
     pairwisePrompt(i, M, function(winner) {
 
         if (winner.id === selectedItem.id) {  // If selected item is ranked higher than middle
-
             // Recursively search left
-            binarySearch(i, L, M - 1, selectedItem);  // L stays, R <- old middle - 1; continue on left side of sorted
+            binarySearch(i, L, M - 1, selectedItem);
         } else {
-
             // Recursively search right
-            binarySearch(i, M + 1, R, selectedItem);  // Move left to middle and continue search on right side of sorted
+            binarySearch(i, M + 1, R, selectedItem);
         }
     });
 }
 
 
-// PROMPT USER WITH COMPARISON: find and pass back the winning item
+// -----------------------------
+// PROMPT USER WITH COMPARISON
+// -----------------------------
 function pairwisePrompt(i, M, callback) {  // callback
-
     let hasResponded = false;  // Flag to prevent double clicks by user
 
     // Log the current state
@@ -111,71 +121,69 @@ function pairwisePrompt(i, M, callback) {  // callback
     console.log('sortedItemIndex:', sortedItemIndex);
 
     // Show user pairwise comparison of current item (i) to the middle item (M)
-        // Update the HTML to show both items
     document.getElementById('item1-btn').textContent = items[i].name;
     document.getElementById('item2-btn').textContent = items[M].name;
 
-    // Pass back winner when user clicks on it with click handlers
     document.getElementById('item1-btn').onclick = function() {
-        if (hasResponded) return;  // Prevent double clicks
-        hasResponded = true;  // Flag that click has occurred
-        let winner = items[i];  // User clicked item 1 (selected item)
-        callback(winner);  // Pass winner back with callback
+        if (hasResponded) return;
+        hasResponded = true;
+        let winner = items[i];
+        callback(winner);
     };
     document.getElementById('item2-btn').onclick = function() {
-        if (hasResponded) return;  // Prevent double clicks
-        hasResponded = true;  // Flag that click has occurred
-        let winner = items[M];  // User clicked item 2 (current middle item)
-        callback(winner);  // Pass winner back via callback
+        if (hasResponded) return;
+        hasResponded = true;
+        let winner = items[M];
+        callback(winner);
     };
 }
 
 
-// UPDATE ITEM POSITION VALUES: insert item and move all lower ranked items 1 index to the right
+// -----------------------------
+// INSERT ITEM IN ARRAY
+// -----------------------------
 function insertItem(insertPosition, i, selectedItem) {
-
-    let j = i - 1;  // j is prior item, i is current item
+    let j = i - 1;
 
     while (j >= insertPosition) {
-
-        items[j + 1] = items[j];  // Move item one place to the right (j starts as element immediately to the left of selectedItem)
-            // Put prior element at the index of element to its right
-
-        j--;  // Move to the next element to the left
-
+        items[j + 1] = items[j];
+        j--;
     }
-    // Keep moving elements to the right 1 until at insertPosition, then put value of selectedItem there
+
     items[j + 1] = selectedItem;
 }
 
 
-// INCREMENT TO THE NEXT ITEM TO BE SORTED
+// -----------------------------
+// NEXT ITEM
+// -----------------------------
 function moveToNextItem() {
-
     sortedItemIndex++;
     rankItem();
 }
 
 
-// ALL ITEMS RANKED: print message, reposition items in array, and save
+// -----------------------------
+// FINISH RANKING
+// -----------------------------
 function finishRanking() {
-
-    // Hide comparison area
     document.getElementById('comparison-area').innerHTML =
         '<h3>Ranked Up!</h3><p>Saving your rankings...</p>';
 
-    // Mapped values in the DTO rankedItems array based on ranked position in the object items array
+    // Map ranked items
     let rankedItems = items.map((item, index) => ({
         id: item.id,
-        position: index + 1  // Set index + 1 as item.position value
+        position: index + 1
     }));
 
-    // Send DTO array to backend
+    // Save rankings to backend
     saveRankings(rankedItems);
 }
 
 
-// SAVE rankedItems LIST
+// -----------------------------
+// SAVE RANKINGS
+// -----------------------------
 function saveRankings(rankedItems) {
     fetch(`/api/lists/${listId}/save-rankings`, {
         method: 'POST',
