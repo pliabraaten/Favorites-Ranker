@@ -13,3 +13,57 @@
   transition: all 0.2s ease-in-out;
 }
 
+/* Default (light) theme */
+body {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0,0,0,0.1);
+  --btn-primary-bg: #0d6efd;
+  --btn-primary-text: #fff;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.card {
+  background-color: var(--card-bg);
+  box-shadow: 0 0.5rem 1rem var(--card-shadow);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+/* Dark theme */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --card-shadow: rgba(0,0,0,0.4);
+  --btn-primary-bg: #0d6efd;
+  --btn-primary-text: #fff;
+}
+
+/* custom.css */
+
+/* Dark mode body styling */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Adjust links, cards, nav, etc. for dark mode */
+body.dark-mode .navbar-dark {
+    background-color: #1f1f1f;
+}
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body.dark-mode .list-group-item {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
