@@ -18,36 +18,27 @@
 
                 <!-- Header -->
                 <div class="text-center mb-5">
-                    <h1 class="display-5 fw-bold mb-2">Rank Your List</h1>
-                    <p class="lead text-muted" th:text="${list.listName}">List Name</p>
+                    <h1 class="fw-bold mb-2 display-6 display-lg-4">Rank Your List</h1>
+                    <p class="lead text-muted mb-2 display-3 display-lg-3" th:text="${list.listName}">List Name</p>
                 </div>
 
                 <!-- Comparison Card -->
                 <div id="comparison-area" class="card shadow">
-                    <div class="card-body p-5">
+                    <div class="card-body p-4">
                         <h3 class="text-center mb-4">Which do you prefer more?</h3>
-
                         <div class="d-flex gap-3 align-items-center mb-4">
                             <button id="item1-btn"
-                                    class="btn btn-primary btn-lg flex-fill py-4">
+                                    class="btn btn-outline-info fw-bold flex-fill py-5 px-0 fs-3">
                                 Item 1
                             </button>
-
-                            <span class="text-muted fw-bold fs-4">OR</span>
-
+                            <div class="d-none d-lg-block mb-4"> <!-- show only on large screens-->
+                                <span class="text-muted fw-bold fs-3">OR</span>
+                            </div>
                             <button id="item2-btn"
-                                    class="btn btn-primary btn-lg flex-fill py-4">
+                                    class="btn btn-outline-info fw-bold flex-fill py-5 px-0 fs-3">
                                 Item 2
                             </button>
                         </div>
-
-<!--                         Progress -->
-<!--                        <div class="text-center text-muted">-->
-<!--                            <small>-->
-<!--                                Items sorted <span id="current-comparison">0</span>-->
-<!--                                of <span id="total-comparisons">0</span>-->
-<!--                            </small>-->
-<!--                        </div>-->
                     </div>
                 </div>
 
