@@ -24,4 +24,5 @@ public interface ItemService {
 
     void updatePositions(long listId, List<ItemPositionDTO> items);
 
+    void updateItemName(Long itemId, String trim);
 }

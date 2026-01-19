@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/lists")
 public class FavoritesListApiController {
 
-
     private FavoritesListService favoritesListService;
     private ItemService itemService;
 

@@ -113,6 +113,17 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    // UPDATE ITEM NAME INLINE
+    @Override
+    public void updateItemName(Long itemId, String newName) {
+
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("List not found"));
+
+        item.setName(newName);
+        itemRepository.save(item);
+    }
+
 
     @Override
     @Transactional  // Treat whole method as one DB transaction

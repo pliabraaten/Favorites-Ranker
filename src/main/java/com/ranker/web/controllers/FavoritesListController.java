@@ -106,19 +106,6 @@ public class FavoritesListController {
         return "redirect:/lists";
     }
 
-// INLINE EDIT INSTEAD OF LOADING NEW HTML PAGE
-//    // OPEN LIST EDIT FORM FOR SPECIFIC LIST
-//    @GetMapping("/lists/{id}/edit")
-//    public String editListForm(@PathVariable("id") long listId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
-//
-//        FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list via services and set it to DTO
-//
-//        model.addAttribute("list", listDTO);  // To edit, first pull the entity->DTO
-//
-//        return "lists-edit";
-//    }
-
-
 
     // LOAD DETAILS FOR SELECTED LIST
     @GetMapping("/lists/{id}")
