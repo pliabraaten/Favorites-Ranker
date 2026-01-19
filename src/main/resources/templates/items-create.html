@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -15,38 +15,45 @@
     <!-- Page Content -->
     <section layout:fragment="body" class="py-5">
 
-        <!-- Page Header -->
-        <header class="py-5 bg-light border-bottom mb-5">
-            <div class="container text-center">
-                <h1 class="fw-bolder mb-3" th:text="${list.listName}">List Name</h1>
-                <a th:href="@{/lists/{listId}(listId=${list.id})}" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-left text-center"></i> Back to
-                    <span th:text="${list.listName}"></span> List Details</a>
-            </div>
-        </header>
-
         <!-- Create Item Form -->
-        <div class="container mb-5">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">Add New Item</h5>
-                    <form role="form"
-                          method="post"
-                          th:action="@{/items/{listId}(listId=${list.id})}"
-                          th:object="${item}">
-                        <div class="mb-3">
-                            <input type="text"
-                                   class="form-control"
-                                   id="title"
-                                   th:field="*{name}"
-                                   placeholder="Enter item name"
-                                   autofocus
-                                   minlength="1"
-                                   required>
-                            <p th:if="${#fields.hasErrors('name')}" class="text-danger mt-1" th:errors="*{name}"></p>
+        <div class="container mb-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <h1 class="fw-bolder mb-3 text-center" th:text="${list.listName}">List Name</h1>
+                            <div class="text-center mb-3">
+                                <a class="btn btn-outline-secondary"
+                                   th:href="@{/lists/{listId}(listId=${list.id})}">
+                                    <i class="bi bi-arrow-left"></i> Back to List Details</a>
+                            </div>
+                            <h5 class="card-title mb-3">Add New Item</h5>
+                            <form role="form"
+                                  method="post"
+                                  th:action="@{/items/{listId}(listId=${list.id})}"
+                                  th:object="${item}">
+
+                                <div class="mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="title"
+                                           th:field="*{name}"
+                                           placeholder="Enter item name"
+                                           autofocus
+                                           minlength="1"
+                                           required>
+                                    <p th:if="${#fields.hasErrors('name')}"
+                                       class="text-danger mt-1"
+                                       th:errors="*{name}"></p>
+                                </div>
+
+                                <button type="submit"
+                                        class="btn btn-primary btn-lg mx-auto d-block">
+                                    <i class="bi bi-plus-circle-fill"></i> Create Item
+                                </button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Item</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

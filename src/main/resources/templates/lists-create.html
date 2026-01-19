@@ -22,7 +22,7 @@
                         <!-- Title -->
                         <h1 class="text-center mb-4">Create New List</h1>
                         <p class="text-center text-muted mb-4">
-                            Start ranking your favorite things!
+                            Start ranking your favorite movies, restaurants, books etc.!
                         </p>
 
                         <!-- Create Form -->
@@ -30,12 +30,13 @@
 
                             <!-- List Name Field -->
                             <div class="mb-3">
-                                <label for="title" class="form-label">List Name</label>
+                                <h5 class="card-title mb-3">Add New List</h5>
+
                                 <input
                                         id="title"
                                         type="text"
                                         class="form-control"
-                                        placeholder="e.g., Favorite Restaurants"
+                                        placeholder="Enter List Name"
                                         th:field="*{listName}"
                                         th:classappend="${#fields.hasErrors('listName')} ? 'is-invalid' : ''"
                                         required
