@@ -60,43 +60,42 @@ public class ItemController {
         return "redirect:/items/" + listId + "/new";  // Refresh page for the user to add more items
     }
 
-
-    // OPEN ITEM EDIT FORM FOR SPECIFIC Item
-    @GetMapping("/items/{itemId}/edit")
-    public String editItemForm(@PathVariable("itemId") long itemId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
-
-        ItemDTO itemDTO = itemService.findItemById(itemId);  // Pull item via services and set it to DTO
-
-        model.addAttribute("item", itemDTO);  // To edit, first pull the entity->DTO
-
-        return "items-edit";
-    }
-
-
-    // SAVE EDITED ITEM
-    @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@PathVariable("itemId") Long itemId,
-                             @ModelAttribute("item") ItemDTO itemDTO,
-                             Model model, BindingResult result) {
-
-        if(result.hasErrors()) {  // Return to page if there is an error editing the item
-            model.addAttribute("item", itemDTO);
-            return "items-edit";  // Re-render NOT a redirect reload with existing values
-        }
-
-        // Get list from existing item
-        ItemDTO existingItem = itemService.findItemById(itemId);
-
-        // Keep its list association
-        itemDTO.setListId(existingItem.getListId());
-        itemDTO.setId(existingItem.getId());
-        itemDTO.setPosition(existingItem.getPosition());
-
-        itemService.updateItem(itemDTO);
-
-        return "redirect:/lists/" + existingItem.getListId();
-    }
-
+// CHANGED OVER TO INLINE EDITS FOR ITEM NAME
+//    // OPEN ITEM EDIT FORM FOR SPECIFIC Item
+//    @GetMapping("/items/{itemId}/edit")
+//    public String editItemForm(@PathVariable("itemId") long itemId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
+//
+//        ItemDTO itemDTO = itemService.findItemById(itemId);  // Pull item via services and set it to DTO
+//
+//        model.addAttribute("item", itemDTO);  // To edit, first pull the entity->DTO
+//
+//        return "items-edit";
+//    }
+//
+//
+//    // SAVE EDITED ITEM
+//    @PostMapping("/items/{itemId}/edit")
+//    public String updateItem(@PathVariable("itemId") Long itemId,
+//                             @ModelAttribute("item") ItemDTO itemDTO,
+//                             Model model, BindingResult result) {
+//
+//        if(result.hasErrors()) {  // Return to page if there is an error editing the item
+//            model.addAttribute("item", itemDTO);
+//            return "items-edit";  // Re-render NOT a redirect reload with existing values
+//        }
+//
+//        // Get list from existing item
+//        ItemDTO existingItem = itemService.findItemById(itemId);
+//
+//        // Keep its list association
+//        itemDTO.setListId(existingItem.getListId());
+//        itemDTO.setId(existingItem.getId());
+//        itemDTO.setPosition(existingItem.getPosition());
+//
+//        itemService.updateItem(itemDTO);
+//
+//        return "redirect:/lists/" + existingItem.getListId();
+//    }
 
     // Change the ranking of items via UP/DOWN buttons
     @PostMapping("/items/{itemId}/reposition")

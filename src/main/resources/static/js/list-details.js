@@ -72,6 +72,7 @@ async function handleListNameSubmit(e) {
 // ITEM NAME EDITING
 // -----------------------------
 function enterItemEditMode(button) {
+
     closeAllItemEditModes();  // Close any open edit modes
 
     // Find and store html references
@@ -94,7 +95,7 @@ function enterItemEditMode(button) {
 
 function cancelItemEdit(button) {
 
-    // Find and store refrences
+    // Find and store references
     const listItem = button.closest('li');
     const container = listItem.querySelector('.item-container');
     const actionButtons = container.querySelector('.item-action-buttons');
@@ -129,7 +130,8 @@ function closeAllItemEditModes() {
 
     // Show all display modes
     document.querySelectorAll('.item-display-mode').forEach(el => {
-        el.style.display = 'flex';
+        el.classList.remove('d-none');
+        el.classList.add('d-flex');
     });
 
     // Show all action buttons

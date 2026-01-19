@@ -115,10 +115,29 @@
                             <!-- Position Badge (always visible) -->
                             <span class="badge bg-primary rounded-pill" th:text="${item.position}">1</span>
 
-
-                            <!-- Item Name: display mode -->
+                            <!-- Item Name and Up/Down Arrows (display mode) -->
                             <div class="item-display-mode d-flex align-items-center gap-3 flex-grow-1"
                                  th:data-item-name="${item.name}">
+
+                                <!-- Position Arrow Buttons -->
+                                <form role="form" method="post" th:action="@{/items/{itemId}/reposition(itemId=${item.id})}"
+                                      class="d-flex gap-1">
+                                    <button type="submit"
+                                            name="direction"
+                                            value="Up"
+                                            class="btn btn-sm btn-outline-secondary"
+                                            style="padding: 0.125rem 0.375rem;">
+                                        <i class="bi bi-arrow-up"></i>
+                                    </button>
+                                    <button type="submit"
+                                            name="direction"
+                                            value="Down"
+                                            class="btn btn-sm btn-outline-secondary"
+                                            style="padding: 0.125rem 0.375rem;">
+                                        <i class="bi bi-arrow-down"></i>
+                                    </button>
+                                </form>
+
                                 <span th:text="${item.name}" class="fw-semibold item-name-display">Item Name</span>
                             </div>
 
