@@ -98,12 +98,10 @@ public class FavoritesListController {
             return "lists-create";  // No redirect here in order to re-render the form
         }
 
-        String username = userDetails.getUsername();  // Obtain the logged-in username
-
         // Save new list via the service instance and then go back to home page
-        favoritesListService.saveList(listDTO);
+        Long listId = favoritesListService.saveList(listDTO);
 
-        return "redirect:/lists";
+        return "redirect:/lists/" + listId;
     }
 
 

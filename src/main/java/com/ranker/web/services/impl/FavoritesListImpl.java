@@ -51,7 +51,7 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     @Override
-    public FavoritesListDTO saveList(FavoritesListDTO listDTO) {
+    public Long saveList(FavoritesListDTO listDTO) {
 
         // Get logged-in user from session
         String username = SecurityUtil.getSessionUser();
@@ -68,7 +68,7 @@ public class FavoritesListImpl implements FavoritesListService {
         FavoritesList savedEntity = favoritesListRepository.save(listEntity);    // JPA automatically provides .save()
 
         // Convert entity back to DTO and return
-        return listDTO;   // error when using mapToFavoritesListDTO(savedEntity) -> because no items are saved at this time
+        return savedEntity.getId();   // error when using mapToFavoritesListDTO(savedEntity) -> because no items are saved at this time
     }
 
 
