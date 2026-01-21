@@ -3,6 +3,7 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
+import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
@@ -49,77 +50,45 @@ public class ItemController {
                            BindingResult result,
                            Model model) {
 
-        if (result.hasErrors()) {
-            // Stay on the same page and show validation errors
-            model.addAttribute("list", favoritesListService.findListById(listId));
-            return "items-create";
-        }
+//        if (result.hasErrors()) {
+//            // Stay on the same page and show validation errors
+//            model.addAttribute("list", favoritesListService.findListById(listId));
+//            return "items-create";
+//        }
 
         itemService.saveItem(listId, itemDTO);
 
         return "redirect:/items/" + listId + "/new";  // Refresh page for the user to add more items
     }
 
-// CHANGED OVER TO INLINE EDITS FOR ITEM NAME
-//    // OPEN ITEM EDIT FORM FOR SPECIFIC Item
-//    @GetMapping("/items/{itemId}/edit")
-//    public String editItemForm(@PathVariable("itemId") long itemId, Model model) {  // PathVariable annotation takes template variable and uses it for the method parameter
-//
-//        ItemDTO itemDTO = itemService.findItemById(itemId);  // Pull item via services and set it to DTO
-//
-//        model.addAttribute("item", itemDTO);  // To edit, first pull the entity->DTO
-//
-//        return "items-edit";
-//    }
-//
-//
-//    // SAVE EDITED ITEM
-//    @PostMapping("/items/{itemId}/edit")
-//    public String updateItem(@PathVariable("itemId") Long itemId,
-//                             @ModelAttribute("item") ItemDTO itemDTO,
-//                             Model model, BindingResult result) {
-//
-//        if(result.hasErrors()) {  // Return to page if there is an error editing the item
-//            model.addAttribute("item", itemDTO);
-//            return "items-edit";  // Re-render NOT a redirect reload with existing values
-//        }
-//
-//        // Get list from existing item
-//        ItemDTO existingItem = itemService.findItemById(itemId);
-//
-//        // Keep its list association
-//        itemDTO.setListId(existingItem.getListId());
-//        itemDTO.setId(existingItem.getId());
-//        itemDTO.setPosition(existingItem.getPosition());
-//
-//        itemService.updateItem(itemDTO);
-//
-//        return "redirect:/lists/" + existingItem.getListId();
-//    }
 
     // Change the ranking of items via UP/DOWN buttons
     @PostMapping("/items/{itemId}/reposition")
-    public String repositionItem(@PathVariable("itemId") Long itemId,
+    public String repositionItem(@PathVariable Long itemId,
                                  @RequestParam String direction) {
 
-        itemService.reposition(itemId, direction);
+        Long listId = itemService.getListIdByItemId(itemId);
 
-        return "redirect:/items/" + itemId + "/edit";  // Reload page
+        itemService.repositionItem(itemId, direction);
+
+        System.out.println("Controller hit");
+
+        return "redirect:/lists/" + listId;  // Refresh page for the new order of items
     }
 
 
-    // FIXME: ALLOW USER TO EDIT/DELETE ALL LIST ITEMS ON ONE PAGE RATHER THAN CLICKING INTO THE ITEM EDIT PAGE EACH TIME
-    // DELETE ITEM FROM LIST
-    @PostMapping("/items/{itemId}/delete")
-    public String deleteItem(@PathVariable("itemId") Long itemId) {
-
-        // Get list of the item about to be deleted to redirect user back to the list after deletion
-        Long listId = itemService.findItemById(itemId).getListId();
-
-        itemService.deleteItem(itemId);
-
-        return "redirect:/lists/" + listId;
-    }
+//    // FIXME: ALLOW USER TO EDIT/DELETE ALL LIST ITEMS ON ONE PAGE RATHER THAN CLICKING INTO THE ITEM EDIT PAGE EACH TIME
+//    // DELETE ITEM FROM LIST
+//    @PostMapping("/items/{itemId}/delete")
+//    public String deleteItem(@PathVariable("itemId") Long itemId) {
+//
+//        // Get list of the item about to be deleted to redirect user back to the list after deletion
+//        Long listId = itemService.findItemById(itemId).getListId();
+//
+//        itemService.deleteItem(itemId);
+//
+//        return "redirect:/lists/" + listId;
+//    }
 
 
 }

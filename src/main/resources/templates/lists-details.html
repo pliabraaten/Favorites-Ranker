@@ -120,16 +120,21 @@
                                  th:data-item-name="${item.name}">
 
                                 <!-- Position Arrow Buttons -->
-                                <form role="form" method="post" th:action="@{/items/{itemId}/reposition(itemId=${item.id})}"
+                                <form method="post"
+                                      th:action="@{/items/{itemId}/reposition(itemId=${item.id})}"
                                       class="d-flex gap-1">
+
                                     <button type="submit"
+                                            th:if="${item.position > 1}"
                                             name="direction"
                                             value="Up"
                                             class="btn btn-sm btn-outline-secondary"
                                             style="padding: 0.125rem 0.375rem;">
                                         <i class="bi bi-arrow-up"></i>
                                     </button>
+
                                     <button type="submit"
+                                            th:if="${item.position < list.items.size()}"
                                             name="direction"
                                             value="Down"
                                             class="btn btn-sm btn-outline-secondary"

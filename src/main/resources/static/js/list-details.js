@@ -192,8 +192,10 @@ async function handleItemNameSubmit(e, form) {
 // EVENT DELEGATION
 // -----------------------------
 function setupItemEventListeners() {
+
     // Use event delegation for dynamically created item elements
     document.addEventListener('click', function(e) {
+
         // Edit button click
         if (e.target.closest('.edit-item-btn')) {
             enterItemEditMode(e.target.closest('.edit-item-btn'));

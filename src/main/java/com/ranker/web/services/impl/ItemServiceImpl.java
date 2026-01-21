@@ -10,6 +10,7 @@ import com.ranker.web.repository.FavoritesListRepository;
 import com.ranker.web.repository.ItemRepository;
 import com.ranker.web.services.ItemService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -126,8 +127,18 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
+    public Long getListIdByItemId(Long itemId) {
+
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        return item.getFavoritesList().getId();
+    }
+
+
+    @Override
     @Transactional  // Treat whole method as one DB transaction
-    public void reposition(Long itemId, String direction) {
+    public void repositionItem(Long itemId, String direction) {
 
         if (direction.equals("Up")) {
             moveItemUp(itemId);
@@ -158,7 +169,7 @@ public class ItemServiceImpl implements ItemService {
             Item priorItem = priorItemOptional.get();  // Set it as a variable to strip the optional wrapper for normal handling
 
             // Swap
-            item.setPosition(itemPosition + 1);
+            item.setPosition(itemPosition - 1);
             priorItem.setPosition(itemPosition);
         }
     }
