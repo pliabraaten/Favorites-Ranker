@@ -76,37 +76,27 @@ function rankItem() {
 // -----------------------------
 function binarySearch(i, L, R, selectedItem) {
 
-    console.log('-- Binary Search Called --');
-    console.log('L:', L, 'R:', R, 'i:', i);
+  // Base case: search range exhausted, position found
+  if (L > R || R < 0) {
+    // Insert item at the found position (L is the insertion index)
+    insertItem(L, i, selectedItem);
+    moveToNextItem();
+    return;
+  }
 
-    // JavaScript is asynchronous, so using recursive function
-    if (L > R || R < 0) {  // Stop if no middle value indicating position is found
+  // Find middle element in the sorted portion of the array
+  let M = L + Math.floor((R - L) / 2);
 
-        console.log('→ INSERTING at position', L);
-
-        // Insert item in the found position
-        insertItem(L, i, selectedItem);  // If condition is true, L is insert position
-
-        console.log('Current items array:', JSON.stringify(items.map(item => item.name)));
-
-        moveToNextItem();  // NEXT ITEM
-
-        return;
+  // Prompt user to compare selectedItem with item at position M
+  pairwisePrompt(i, M, function(winner) {
+    if (winner.id === selectedItem.id) {
+      // Selected item ranked higher - search left half
+      binarySearch(i, L, M - 1, selectedItem);
+    } else {
+      // Middle item ranked higher - search right half
+      binarySearch(i, M + 1, R, selectedItem);
     }
-
-    let M = L + Math.floor((R - L) / 2);  // Find middle element in the sorted (left) side of the array
-
-    // PROMPT USER -> provide callback for after selection of winning item
-    pairwisePrompt(i, M, function(winner) {
-
-        if (winner.id === selectedItem.id) {  // If selected item is ranked higher than middle
-            // Recursively search left
-            binarySearch(i, L, M - 1, selectedItem);
-        } else {
-            // Recursively search right
-            binarySearch(i, M + 1, R, selectedItem);
-        }
-    });
+  });
 }
 
 
