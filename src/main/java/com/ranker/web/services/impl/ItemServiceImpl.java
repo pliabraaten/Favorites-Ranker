@@ -74,9 +74,22 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public void deleteItem(Long itemId) {
 
+        // Get the item before deleting
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new EntityNotFoundException("Item not found"));
+
+        // Get position and list to update all other items
+        int deletedPosition = item.getPosition();
+        Long listId = item.getFavoritesList().getId();
+
+        // Delete the item
         itemRepository.deleteById(itemId);
+
+        // Update position values for all other items
+        itemRepository.decrementPositionsAfter(listId, deletedPosition);
     }
 
 

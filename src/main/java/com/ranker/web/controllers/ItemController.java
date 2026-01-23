@@ -77,18 +77,15 @@ public class ItemController {
     }
 
 
-//    // FIXME: ALLOW USER TO EDIT/DELETE ALL LIST ITEMS ON ONE PAGE RATHER THAN CLICKING INTO THE ITEM EDIT PAGE EACH TIME
-//    // DELETE ITEM FROM LIST
-//    @PostMapping("/items/{itemId}/delete")
-//    public String deleteItem(@PathVariable("itemId") Long itemId) {
-//
-//        // Get list of the item about to be deleted to redirect user back to the list after deletion
-//        Long listId = itemService.findItemById(itemId).getListId();
-//
-//        itemService.deleteItem(itemId);
-//
-//        return "redirect:/lists/" + listId;
-//    }
+    // DELETE ITEM FROM LIST
+    @PostMapping("/items/{itemId}/delete")
+    public String deleteItem(@PathVariable("itemId") Long itemId) {
 
+        // Get list of the item about to be deleted to redirect user back to the list after deletion
+        Long listId = itemService.findItemById(itemId).getListId();
 
+        itemService.deleteItem(itemId);
+
+        return "redirect:/lists/" + listId;
+    }
 }
