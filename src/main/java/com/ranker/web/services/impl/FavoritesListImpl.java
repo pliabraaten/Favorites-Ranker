@@ -8,6 +8,8 @@ import com.ranker.web.repository.UserRepository;
 //import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.services.FavoritesListService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,12 +96,12 @@ public class FavoritesListImpl implements FavoritesListService {
     }
 
 
-
     @Override
     public void delete(long listId) {
 
         favoritesListRepository.deleteById(listId);
     }
+
 
     @Override
     public List<FavoritesListDTO> searchLists(String query) {
@@ -109,6 +111,16 @@ public class FavoritesListImpl implements FavoritesListService {
         return lists.stream().map(favoritesList -> mapToFavoritesListDTO(favoritesList)).collect(Collectors.toList());
     }
 
+
+    @Override
+    @Transactional
+    public void updateSortedCount(Long listId, int sortedCount) {
+        FavoritesList list = favoritesListRepository.findById(listId)
+                .orElseThrow(() -> new EntityNotFoundException("List not found"));
+
+        list.setSortedCount(sortedCount);
+        favoritesListRepository.save(list);
+    }
 
 
 }

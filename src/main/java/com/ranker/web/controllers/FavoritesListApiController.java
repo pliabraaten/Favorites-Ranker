@@ -2,8 +2,10 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.RankRequestDTO;
 import com.ranker.web.dto.UpdateListNameRequestDTO;
+import com.ranker.web.dto.UpdateSortedCountRequest;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,17 @@ public class FavoritesListApiController {
 
         favoritesListService.updateListName(listId, requestDTO.getListName().trim());
 
+        return ResponseEntity.ok().build();
+    }
+
+
+    // UPDATE THE SORTED COUNT: track which items have been sorted
+    @PatchMapping("/api/lists/{listId}/sorted-count")
+    public ResponseEntity<?> updateSortedCount(
+            @PathVariable Long listId,
+            @Valid @RequestBody UpdateSortedCountRequest request) {
+
+        favoritesListService.updateSortedCount(listId, request.getSortedCount());
         return ResponseEntity.ok().build();
     }
 }

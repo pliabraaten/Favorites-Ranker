@@ -26,17 +26,13 @@
 */
 
 
-let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
-
-
 // -----------------------------
 // START WHEN PAGE LOADS
 // -----------------------------
-document.addEventListener('DOMContentLoaded', function() {
+// TODO:
+let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
 
-    // items list is populated from Thymeleaf when the page loads
-    console.log(items);  // FIXME: TESTING
-    console.log('listId:', listId);
+document.addEventListener('DOMContentLoaded', function() {
 
     if (items.length === 0) {  // If no items in the list
         alert('No items to rank!');
@@ -59,7 +55,7 @@ function rankItem() {
 
     // If all items have been sorted
     if (sortedItemIndex >= items.length) {
-        finishRanking();  // Print note and save
+        finishRanking();  // Move to print note and save
         return;
     }
 
@@ -106,10 +102,6 @@ function binarySearch(i, L, R, selectedItem) {
 function pairwisePrompt(i, M, callback) {  // callback
     let hasResponded = false;  // Flag to prevent double clicks by user
 
-    // Log the current state
-    console.log('i:', i, 'item I:', items[i], 'vs M:', M, 'item M', items[M]);
-    console.log('sortedItemIndex:', sortedItemIndex);
-
     // Show user pairwise comparison of current item (i) to the middle item (M)
     document.getElementById('item1-btn').textContent = items[i].name;
     document.getElementById('item2-btn').textContent = items[M].name;
@@ -141,7 +133,7 @@ function insertItem(insertPosition, i, selectedItem) {
     }
 
     items[j + 1] = selectedItem;
-}
+ }
 
 
 // -----------------------------
@@ -149,7 +141,29 @@ function insertItem(insertPosition, i, selectedItem) {
 // -----------------------------
 function moveToNextItem() {
     sortedItemIndex++;
+    updateListSortedCount(sortedItemIndex);  // Save updated sortedCount to db
     rankItem();
+}
+
+
+// -----------------------------
+// UPDATE SORTED COUNT IN DATABASE
+// -----------------------------
+function updateListSortedCount(sortedCount) {
+    const csrfToken = getCsrfToken();
+    const csrfHeader = getCsrfHeader();
+
+    fetch(`/api/lists/${listId}/sorted-count`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+        },
+        body: JSON.stringify({ sortedCount: sortedCount })
+    })
+    .catch(error => {
+        console.error('Error updating sorted count:', error);
+    });
 }
 
 
