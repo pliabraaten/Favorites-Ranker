@@ -189,10 +189,14 @@ function finishRanking() {
 // SAVE RANKINGS
 // -----------------------------
 function saveRankings(rankedItems) {
+    const csrfToken = getCsrfToken();
+    const csrfHeader = getCsrfHeader();
+
     fetch(`/api/lists/${listId}/save-rankings`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
         },
         body: JSON.stringify({ items: rankedItems })
     })
