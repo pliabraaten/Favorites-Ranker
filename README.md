@@ -1,21 +1,6 @@
-# Favorites-Ranker
-List ranking tool using pairwise comparison to determine preference order
-
-
-
-Rank Algorithm: 
-- initially started with iterating through every combination of elements
-- updated to omit pairs of the same element
-- changed to matrix to store winners as values and elements as indexes and to avoid repeated pairs (ab and then ba)
-- changed back to list of elements and list of results (avoid repeated pairs)
-  - ranked based on count of wins for each element
-  - even omitting repeated pairs, it still is n*(n – 1)/2 comparisons or N^2
-- change to binary insertion sort to decrease the number of comparisons for the user
-
-
 # Favorites Ranker
 
-A full-stack web application that enables users to create custom lists and rank items through an intuitive pairwise comparison algorithm and manual positioning controls.
+A full-stack web application that enables users to create custom lists and rank items through a pairwise comparison algorithm and manual positioning controls.
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
@@ -39,7 +24,7 @@ A full-stack web application that enables users to create custom lists and rank 
 
 Favorites Ranker is a web-based ranking application built with Spring Boot and Thymeleaf. Users can create personalized lists (favorite movies, TV shows, books, etc.) and rank items using two methods:
 - **Pairwise Comparison Algorithm**: Make head-to-head comparisons to generate an optimized ranking
-- **Manual Positioning**: Use intuitive arrow buttons or inline editing to adjust rankings on the fly
+- **Manual Positioning**: Use inline editing to adjust rankings manually
 
 The application demonstrates modern full-stack development practices including RESTful API design, secure authentication, responsive UI, and database management.
 
@@ -48,19 +33,10 @@ The application demonstrates modern full-stack development practices including R
 ### Core Functionality
 -  **User Authentication & Authorization** - Secure login/registration with Spring Security
 -  **List Management** - Create, read, update, and delete custom ranking lists
--  **Binary Insertion Sort Algorithm** - Optimized O(n log n) pairwise comparison ranking with minimal user effort
+-  **Binary Insertion Sort Algorithm** - Optimized O(n²) pairwise comparison ranking
 -  **Inline Editing** - Edit list and item names directly without navigating to separate pages
 -  **Manual Repositioning** - Adjust item positions with up/down arrow buttons
 -  **Cascade Deletion** - Automatic position reindexing when items are removed
--  **Responsive Design** - Mobile-first UI built with Bootstrap 5
-
-### Technical Highlights
-- **Binary Search Optimization** - Logarithmic comparison complexity for efficient ranking
-- **RESTful API Architecture** - Clean separation between MVC controllers and API endpoints
-- **AJAX Operations** - Asynchronous updates for seamless user experience
-- **Transaction Management** - ACID-compliant database operations with Spring JPA
-- **DTO Pattern** - Decoupled data transfer between layers
-- **Service Layer Architecture** - Business logic separation following SOLID principles- 
 
 ## Algorithm Deep Dive: Binary Insertion Sort with Pairwise Comparisons
 
@@ -68,126 +44,91 @@ The application demonstrates modern full-stack development practices including R
 
 The ranking system implements a **Binary Insertion Sort** algorithm optimized for user-driven pairwise comparisons. This approach minimizes the number of comparisons needed while providing an intuitive, interactive ranking experience.
 
-### How It Works
-
-Traditional sorting requires comparing item values directly. However, when ranking subjective preferences (e.g., "Which movie is better?"), there are no inherent numeric values. Instead, the algorithm:
-
-1. **Maintains a sorted sublist** of already-ranked items
-2. **Inserts new items** one at a time using binary search
-3. **Asks the user to compare** items at strategic positions
-4. **Converges to optimal placement** with minimal comparisons
-
 ### Implementation
-```java
-// Simplified pseudo-code of the core algorithm
-public void rankItem(Item newItem, List rankedItems) {
-    int low = 0;
-    int high = rankedItems.size();
-    
-    while (low < high) {
-        int mid = (low + high) / 2;
-        
-        // Ask user: "Is newItem better than rankedItems[mid]?"
-        boolean isBetter = getUserComparison(newItem, rankedItems.get(mid));
-        
-        if (isBetter) {
-            high = mid;  // Search upper half
-        } else {
-            low = mid + 1;  // Search lower half
-        }
+```javascript
+/**
+ * Binary search to find optimal insertion position for ranked item
+ * @param {number} i - Index of item being ranked
+ * @param {number} L - Left boundary of search range
+ * @param {number} R - Right boundary of search range
+ * @param {Object} selectedItem - Item to insert into ranking
+ */
+function binarySearch(i, L, R, selectedItem) {
+
+  // Base case: search range exhausted, position found
+  if (L > R || R < 0) {
+    // Insert item at the found position (L is the insertion index)
+    insertItem(L, i, selectedItem); 
+    moveToNextItem();
+    return;
+  }
+
+  // Find middle element in the sorted portion of the array
+  let M = L + Math.floor((R - L) / 2);
+
+  // Prompt user to compare selectedItem with item at position M
+  pairwisePrompt(i, M, function(winner) {
+    if (winner.id === selectedItem.id) { 
+      // Selected item ranked higher - search left half
+      binarySearch(i, L, M - 1, selectedItem);
+    } else {
+      // Middle item ranked higher - search right half
+      binarySearch(i, M + 1, R, selectedItem);
     }
-    
-    // Insert at optimal position
-    rankedItems.add(low, newItem);
-    updatePositions(rankedItems);
+  });
 }
 ```
 
+**Key Implementation Details:**
+- **Recursive approach** handles JavaScript's asynchronous nature with user input callbacks
+- **Callback pattern** (`pairwisePrompt`) waits for user selection before continuing search
+- **Overflow prevention**: Uses `L + Math.floor((R - L) / 2)` instead of `(L + R) / 2`
+- **Binary partitioning**: Eliminates half the search space with each comparison
+
+
 ### Time Complexity Analysis
 
-| Operation | Best Case | Average Case | Worst Case | Space |
-|-----------|-----------|--------------|------------|-------|
-| **Ranking n items** | O(n log n) | O(n log n) | O(n²) | O(n) |
-| **Single item insertion** | O(log n) | O(log n) | O(n) | O(1) |
-| **Position update** | O(n) | O(n) | O(n) | O(1) |
+| Operation | Complexity | Explanation |
+|-----------|-----------|-------------|
+| **Finding insertion position** | O(log n) | Binary search per item |
+| **User comparisons (n items)** | O(n log n) | log n comparisons × n items |
+| **Total insertion operations** | O(n²) | n insertions × O(n) shift per insert |
+| **Overall algorithm** | **O(n²)** | Dominated by insertion cost |
 
-#### Detailed Analysis
+#### Detailed Breakdown
 
-**Best/Average Case: O(n log n)**
-- Binary search finds insertion point in **O(log n)** comparisons
-- Repeated for **n items** → **O(n log n)** total comparisons
-- This is **optimal** for comparison-based sorting (proven lower bound)
-- Significantly better than naive bubble sort O(n²)
+**Comparison Phase: O(n log n)**
+- Binary search finds the optimal position in **O(log n)** comparisons per item
+- Ranking **n items** requires **O(n log n)** total user comparisons
+- This is **optimal** for comparison-based sorting (theoretical lower bound)
 
-**Worst Case: O(n²)**
-- Occurs when user comparisons are inconsistent (e.g., circular preferences: A > B > C > A)
-- Algorithm may need to backtrack or make additional comparisons
-- Still completes successfully due to fallback mechanisms
+**Insertion Phase: O(n²)**
+- After finding position, must **shift array elements** to make space
+- JavaScript array insertion at index requires shifting: **O(n)** per operation
+- Performing **n insertions** results in: **O(n²)** total shifts
 
-**Space Complexity: O(n)**
-- Stores ranked items in-memory
-- No additional data structures required beyond the list itself
+**Overall Complexity: O(n²)**
+- While binary search minimizes *comparisons*, array manipulation dominates runtime
+- **Trade-off**: Optimized for *user experience* (fewer questions) rather than *pure computational efficiency*
 
-[//]: # (FIXME:)
-Time Complexity:
-    Comparisons with binary search: O(n log n) -> O(log n) comparisons per element resulting in O(n log n) comparisons overall
-    Insertion and shifting items: O(n^2)
-    Overall: O(n^2) on average/worst case because of the swaps required for each insertion.
+#### Potential Optimizations
 
+Future improvements could reduce insertion complexity:
 
-### Advantages Over Alternatives
-
-| Algorithm | Comparisons | User Burden | Consistency Handling |
-|-----------|-------------|-------------|----------------------|
-| **Binary Insertion Sort** | O(n log n) | Minimal | Good |
-| Bubble Sort | O(n²) | Very High | Poor |
-| Merge Sort | O(n log n) | N/A* | N/A* |
-| Quick Sort | O(n log n) avg | N/A* | N/A* |
-
-*Cannot be used for user-driven comparisons (requires predetermined comparison function)
-
-### Why This Algorithm?
-
-1. **Minimizes User Effort**: Only ~log₂(n) questions per item
-  - Ranking 10 items: ~33 comparisons (vs. 45 with bubble sort)
-  - Ranking 20 items: ~86 comparisons (vs. 190 with bubble sort)
-
-2. **Intuitive User Experience**: Simple yes/no questions
-  - "Which do you prefer: Breaking Bad or The Wire?"
-  - No complex multi-way comparisons
-
-3. **Handles Inconsistencies**: Gracefully manages circular preferences
-  - Uses most recent comparison data
-  - Provides stable results even with contradictory input
-
-4. **Database Efficient**: Batch position updates
-  - Single transaction per item insertion
-  - Optimized SQL for position reindexing
-
-### Real-World Performance
-
-**Example: Ranking 15 Movies**
-- Theoretical comparisons: ~41 (log₂(15!) ≈ 41)
-- Actual user comparisons: ~38-45 (depending on choices)
-- Time to complete: ~2-3 minutes (at 4 seconds per comparison)
-
-**vs. Manual Drag-and-Drop:**
-- Potentially unlimited adjustments
-- No guarantee of optimal order
-- Cognitive load of managing entire list
+- **Linked List Implementation**: O(n log n) total (O(1) insertion, O(n) traversal)
+- **Database-Direct Insertion**: Batch position updates with SQL
+- **Deferred Positioning**: Assign relative scores, sort once at end
 
 ### Future Optimizations
 
 Planned improvements tracked in the roadmap:
 - **ELO Rating System**: Assign dynamic scores for faster insertions
-- **Machine Learning**: Predict preferences based on past comparisons
-- **Adaptive Questioning**: Skip obvious comparisons (e.g., #1 vs. #15)
 
 ##  Tech Stack
 
 ### Backend Development
 -  Building RESTful APIs with Spring Boot
-- Implementing authentication/authorization with Spring Security
+-  Implementing authentication/authorization with Spring Security
 -  **Designing and implementing sorting algorithms for user-driven data**
 -  **Analyzing time/space complexity and optimizing for real-world performance**
 -  Database design and JPA relationship mapping
