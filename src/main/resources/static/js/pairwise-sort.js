@@ -30,7 +30,7 @@
 // START WHEN PAGE LOADS
 // -----------------------------
 // TODO:
-let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
+//let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -153,12 +153,18 @@ function updateListSortedCount(sortedCount) {
     const csrfToken = getCsrfToken();
     const csrfHeader = getCsrfHeader();
 
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+
+    // Only add CSRF if enabled
+    if (csrfToken && csrfHeader) {
+        headers[csrfHeader] = csrfToken;
+    }
+
     fetch(`/api/lists/${listId}/sorted-count`, {
         method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            [csrfHeader]: csrfToken
-        },
+        headers: headers,
         body: JSON.stringify({ sortedCount: sortedCount })
     })
     .catch(error => {
@@ -192,23 +198,40 @@ function saveRankings(rankedItems) {
     const csrfToken = getCsrfToken();
     const csrfHeader = getCsrfHeader();
 
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+
+    // Only add CSRF if enabled
+    if (csrfToken && csrfHeader) {
+        headers[csrfHeader] = csrfToken;
+    }
+
     fetch(`/api/lists/${listId}/save-rankings`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            [csrfHeader]: csrfToken
-        },
+        headers: headers,
         body: JSON.stringify({ items: rankedItems })
     })
     .then(response => {
-        if (response.ok) {
-            window.location.href = `/lists/${listId}`;
-        } else {
-            alert('Error saving rankings. Please try again.');
+        if (!response.ok) {
+            // Show error and update UI
+            document.getElementById('comparison-area').innerHTML =
+                '<h3>Error</h3><p>Failed to save rankings. Please try again.</p>' +
+                '<button onclick="location.reload()" class="btn btn-primary mt-3">Retry</button>';
+            throw new Error('Failed to save rankings');
         }
+        return response;
+    })
+    .then(() => {
+        window.location.href = `/lists/${listId}`;
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error saving rankings. Please try again.');
+        // Update UI if not already updated
+        if (document.getElementById('comparison-area').innerHTML.includes('Saving')) {
+            document.getElementById('comparison-area').innerHTML =
+                '<h3>Error</h3><p>Failed to save rankings. Please try again.</p>' +
+                '<button onclick="location.reload()" class="btn btn-primary mt-3">Retry</button>';
+        }
     });
 }

@@ -54,7 +54,7 @@ public class FavoritesListApiController {
 
 
     // UPDATE THE SORTED COUNT: track which items have been sorted
-    @PatchMapping("/api/lists/{listId}/sorted-count")
+    @PatchMapping("/{listId}/sorted-count")
     public ResponseEntity<?> updateSortedCount(
             @PathVariable Long listId,
             @Valid @RequestBody UpdateSortedCountRequest request) {

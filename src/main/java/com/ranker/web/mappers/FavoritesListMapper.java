@@ -19,6 +19,7 @@ public class FavoritesListMapper {
                 .listName(list.getListName())
                 .items(list.getItems().stream().map((item) -> mapToItemDTO(item)).collect(Collectors.toList()))
                 .user(list.getUser())
+                .sortedCount(list.getSortedCount())
                 .build();
 
         return listDTO;
@@ -31,6 +32,7 @@ public class FavoritesListMapper {
         FavoritesList listEntity = FavoritesList.builder()
                 .id(listDTO.getId())
                 .listName(listDTO.getListName())
+                .sortedCount(listDTO.getSortedCount())
 //                .user(listDTO.getUser())
                 .build();
 

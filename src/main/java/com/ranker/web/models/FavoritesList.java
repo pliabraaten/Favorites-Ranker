@@ -25,6 +25,7 @@ public class FavoritesList {
     private UserEntity user;
 
     private String listName;
+
     private boolean isRanked = false;
 
     // Items that have been pairwise ranked
