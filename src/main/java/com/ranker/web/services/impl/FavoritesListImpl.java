@@ -121,6 +121,4 @@ public class FavoritesListImpl implements FavoritesListService {
         list.setSortedCount(sortedCount);
         favoritesListRepository.save(list);
     }
-
-
 }

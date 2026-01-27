@@ -29,9 +29,6 @@
 // -----------------------------
 // START WHEN PAGE LOADS
 // -----------------------------
-// TODO:
-//let sortedItemIndex = 1;  // Tracks which items have been sorted -> skips first item already sorted
-
 document.addEventListener('DOMContentLoaded', function() {
 
     if (items.length === 0) {  // If no items in the list

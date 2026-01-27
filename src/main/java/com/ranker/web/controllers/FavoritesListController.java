@@ -54,7 +54,6 @@ public class FavoritesListController {
     }
 
 
-
     @GetMapping("/lists")
     public String listLists(Model model) {
 
@@ -147,6 +146,17 @@ public class FavoritesListController {
         FavoritesListDTO listDTO = favoritesListService.findListById(listId);  // Pull list via services and set it to DTO
         List<ItemDTO> itemsDTO = itemService.getItemsByListId(listId);  // Sorted by position at Repository
 
+        // Check if list is empty
+        if (listDTO.getItems().isEmpty()) {
+            return "redirect:/lists/" + listId + "?noItems=true";
+        }
+
+        // Check if all items are already ranked
+        if (listDTO.getSortedCount() >= listDTO.getItems().size()) {
+            // Redirect back to list details with a message
+            return "redirect:/lists/" + listId + "?alreadyRanked=true";
+        }
+
         // Pass items to the view via model.addAttribute
         model.addAttribute("list", listDTO);
         model.addAttribute("items", itemsDTO);
@@ -154,4 +164,15 @@ public class FavoritesListController {
         return "pairwise-comparison";
     }
 
+
+    // IF USER WANTS TO RERANK ITEMS IN LIST -> RESET SORTED ITEM COUNT AND RANK
+    @GetMapping("/lists/{listId}/rank/reset")
+    public String resetRanking(@PathVariable Long listId) {
+
+        // Reset the sorted count to 0
+        favoritesListService.updateSortedCount(listId, 0);
+
+        // Redirect to ranking page
+        return "redirect:/lists/" + listId + "/rank";
+    }
 }
