@@ -64,7 +64,7 @@
                     <div class="card-body">
                         <h2 class="card-title h4 mb-3" th:text="${list.listName}">List Name</h2>
                         <p class="card-text text-muted mb-4">
-                            Manage your ranked items below. Add new items, rename existing ones, or delete items.
+                            Add items to your list, click <strong>Rank Items</strong> to compare them head-to-head, then fine-tune your ranking manually.
                         </p>
                         <!-- Bottom Action Row: Add Item + Back to Lists -->
                         <div class="d-flex justify-content-between">
@@ -121,6 +121,7 @@
 
                                 <!-- Position Arrow Buttons -->
                                 <form method="post"
+                                      th:if="${list.sortedCount == 0 || list.sortedCount == list.items.size()}"
                                       th:action="@{/items/{itemId}/reposition(itemId=${item.id})}"
                                       class="d-flex gap-1">
 
