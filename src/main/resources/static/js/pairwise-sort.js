@@ -29,9 +29,15 @@
 // -----------------------------
 // START WHEN PAGE LOADS
 // -----------------------------
-document.addEventListener('DOMContentLoaded', function() {
+let progressElement;  // Used to track the number of items ranked for progress text
 
-    if (items.length === 0) {  // If no items in the list
+document.addEventListener('DOMContentLoaded', function() {
+   progressElement = document.getElementById('sorted-count');  // Initialize the progress element reference
+
+   console.log('Page Load - sortedItemIndex:', sortedItemIndex);
+   console.log('Page Load - Progress Element Text:', progressElement?.textContent);
+
+   if (items.length === 0) {  // If no items in the list
         alert('No items to rank!');
         return;
     }
@@ -60,6 +66,14 @@ function rankItem() {
     let L = 0;  // Left boundary
     let R = sortedItemIndex - 1;  // Right boundary is index prior to selected item
 
+    // THIS IS FOR THE PROGRESS COUNT TO BE INTUITIVE FOR THE USER AND START AT 0 EVEN THOUGH THE FIRST ITEM IS CONSIDERED SORTED
+    if (sortedItemIndex === 0) {  // If no items have been sorted
+        sortedItemIndex = 1;  // Move to item index 1 for pairwise comparison
+        // DON'T update progressElement
+        rankItem();  // Continue with ranking logic
+        return;
+    }
+
     binarySearch(sortedItemIndex, L, R, selectedItem);  // Find position with binary search method
 }
 
@@ -68,6 +82,8 @@ function rankItem() {
 // BINARY SEARCH
 // -----------------------------
 function binarySearch(i, L, R, selectedItem) {
+
+    console.log('binarySearch() triggered')
 
   // Base case: search range exhausted, position found
   if (L > R || R < 0) {
@@ -137,9 +153,21 @@ function insertItem(insertPosition, i, selectedItem) {
 // NEXT ITEM
 // -----------------------------
 function moveToNextItem() {
-    sortedItemIndex++;
-    updateListSortedCount(sortedItemIndex);  // Save updated sortedCount to db
+    sortedItemIndex++;  // Move to next item
+
+    updateProgress(sortedItemIndex);  // Update UI
+    updateListSortedCount(sortedItemIndex);  // Save to DB
     rankItem();
+}
+
+
+// -----------------------------
+// UPDATE SORTED COUNT ON HTML
+// -----------------------------
+function updateProgress(current) {
+    if (progressElement) {
+        progressElement.textContent = current;
+    }
 }
 
 

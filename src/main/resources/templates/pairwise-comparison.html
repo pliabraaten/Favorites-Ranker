@@ -44,7 +44,11 @@
                     <div class="text-center text-muted small">
                         <p class="mb-1">Progress</p>
                         <p class="mb-2">
-                            <strong th:text="${list.sortedCount} + ' / ' + ${list.items.size()}">0 / 0</strong>
+                            <strong>
+                                <span id="sorted-count" th:text="${list.sortedCount}">0</span>
+                                /
+                                <span th:text="${list.items.size()}">0</span>
+                            </strong>
                             Items Ranked
                         </p>
                     </div>
@@ -52,9 +56,10 @@
 
                 <!-- Cancel Button -->
                 <div class="text-center mt-4">
-                    <a th:href="@{/lists/{listId}(listId=${list.id})}"
-                       class="btn btn-outline-secondary">
-                        <i class="bi bi-x-circle"></i> Cancel Ranking
+                    <a th:href="@{/lists/{listId}/rank/reset(listId=${list.id}, returnTo='list')}"
+                       class="btn btn-outline-secondary"
+                       onclick="return confirm('Cancel ranking? Your progress will be lost.')">
+                       <i class="bi bi-x-circle"></i> Cancel Ranking
                     </a>
                 </div>
             </div>

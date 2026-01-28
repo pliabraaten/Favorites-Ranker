@@ -27,6 +27,8 @@ public interface FavoritesListService {
 
     void updateSortedCount(Long listId, @Min(0) int sortedCount);
 
+    void setRankedFlag(Long listId, boolean b);
+
 //    Optional<FavoritesList> getListById(Long );
 }
 

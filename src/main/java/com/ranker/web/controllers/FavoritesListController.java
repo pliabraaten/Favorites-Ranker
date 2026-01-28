@@ -167,12 +167,22 @@ public class FavoritesListController {
 
     // IF USER WANTS TO RERANK ITEMS IN LIST -> RESET SORTED ITEM COUNT AND RANK
     @GetMapping("/lists/{listId}/rank/reset")
-    public String resetRanking(@PathVariable Long listId) {
+    public String resetRanking(
+            @PathVariable Long listId,
+            @RequestParam(required = false) String returnTo) {
 
         // Reset the sorted count to 0
         favoritesListService.updateSortedCount(listId, 0);
 
-        // Redirect to ranking page
+        // Flip Ranked flag to false
+        favoritesListService.setRankedFlag(listId, false);
+
+        // If cancelled rankings, reset and go back to the list-details
+        if ("list".equals(returnTo)) {
+            return "redirect:/lists/" + listId;  // Go to list details
+        }
+
+        // Redirect to ranking page to rerank
         return "redirect:/lists/" + listId + "/rank";
     }
 }

@@ -121,4 +121,16 @@ public class FavoritesListImpl implements FavoritesListService {
         list.setSortedCount(sortedCount);
         favoritesListRepository.save(list);
     }
+
+
+    @Override
+    @Transactional
+    public void setRankedFlag(Long listId, boolean isRanked) {
+
+        FavoritesList list = favoritesListRepository.findById(listId)
+                .orElseThrow(() -> new EntityNotFoundException("List not found"));
+
+        list.setRanked(isRanked);
+        favoritesListRepository.save(list);
+    }
 }
