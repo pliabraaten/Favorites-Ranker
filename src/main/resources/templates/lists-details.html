@@ -216,19 +216,33 @@
                 <div class="d-none d-lg-block mb-4">  <!-- d-none d-lg-block = show only on large screens -->
                     <div class="card shadow mb-4">
                         <div class="card-body text-center">
-                            <!-- If not all items are ranked -->
-                            <a th:if="${list.sortedCount > 0 && list.sortedCount < list.items.size()}"
+                            <!-- If 0 items -->
+                            <a th:if="${list.items.size == 0}"
+                               th:href="@{/lists/{listId}/rank(listId=${list.id})}"
+                               class="btn btn-outline-success btn-lg"
+                               style="min-width: 80%;">
+                                <i class="bi bi-sort-down me-1"></i> <strong>Rank Items</strong>
+                            </a>
+                            <!-- If item's haven't been ranked -->
+                            <a th:if="${list.sortedCount == 0 && list.items.size > 0}"
                                th:href="@{/lists/{listId}/rank(listId=${list.id})}"
                                class="btn btn-success btn-lg"
                                style="min-width: 80%;">
                                 <i class="bi bi-sort-down me-1"></i> <strong>Rank Items</strong>
                             </a>
-                            <!-- If all items have already been ranked or 0 items -->
-                            <a th:if="${list.sortedCount == 0 || list.sortedCount == list.items.size()}"
+                            <!-- If there are new items were added -->
+                            <a th:if="${list.sortedCount > 0 && list.sortedCount < list.items.size()}"
+                               th:href="@{/lists/{listId}/rank(listId=${list.id})}"
+                               class="btn btn-success btn-lg"
+                               style="min-width: 80%;">
+                                <i class="bi bi-sort-down me-1"></i> <strong>Rank New Items</strong>
+                            </a>
+                            <!-- If all items have already been ranked -->
+                            <a th:if="${list.sortedCount == list.items.size() && list.items.size > 0}"
                                th:href="@{/lists/{listId}/rank(listId=${list.id})}"
                                class="btn btn-outline-success btn-lg"
                                style="min-width: 80%;">
-                                <i class="bi bi-sort-down me-1"></i> <strong>Rank Items</strong>
+                                <i class="bi bi-sort-down me-1"></i> <strong>Re-Rank Items</strong>
                             </a>
                         </div>
                     </div>
