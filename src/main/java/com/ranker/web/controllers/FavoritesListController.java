@@ -84,13 +84,12 @@ public class FavoritesListController {
     }
 
 
-    // TODO: UNDERSTAND ALL THE AUTHENTICATION PROCESS HERE AND ON UPDATELIST
     // CREATE NEW LIST WITH POST METHOD
     @PostMapping("/lists/new")
     public String saveList(@AuthenticationPrincipal UserDetails userDetails,
                            @Valid @ModelAttribute("list") FavoritesListDTO listDTO,
                            BindingResult result,
-                           Model model) {  // TODO: ADD EXPLANATION ON BINDING RESULT
+                           Model model) {
 
         if(result.hasErrors()) {  // Return to page if there is an error creating the list
             model.addAttribute("list", listDTO);  // Re-render the form with previously inputted values
@@ -126,7 +125,7 @@ public class FavoritesListController {
     }
 
 
-    // TODO: ADD EXPLANATIONS HERE
+    // SEARCH LISTS
     @GetMapping("/lists/search")
     public String searchList(@RequestParam(value = "query") String query, Model model) {
 

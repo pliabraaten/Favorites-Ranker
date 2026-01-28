@@ -149,7 +149,7 @@
 
                                 <!-- Position Arrow Buttons -->
                                 <form method="post"
-                                      th:if="${list.sortedCount == 0 || list.sortedCount == list.items.size()}"
+                                      th:if="${list.sortedCount == 0 || list.sortedCount == list.items.size() }"
                                       th:action="@{/items/{itemId}/reposition(itemId=${item.id})}"
                                       class="d-flex gap-1">
 

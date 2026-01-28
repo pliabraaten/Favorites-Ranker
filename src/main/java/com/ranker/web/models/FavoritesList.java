@@ -29,7 +29,7 @@ public class FavoritesList {
     private boolean isRanked = false;
 
     // Items that have been pairwise ranked
-    private int sortedCount = 0;  // Used to track new added items that haven't been ranked yet
+    private Integer sortedCount = 0;  // Used to track new added items that haven't been ranked yet
 
     @OneToMany(mappedBy = "favoritesList", cascade = CascadeType.REMOVE)
     @OrderBy("position ASC")  // Sorts by the position value in the DB

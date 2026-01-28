@@ -18,7 +18,7 @@ public class FavoritesListDTO {
     @NotEmpty(message = "List name should not be empty")  // Input validation
     private String listName;
 
-    private int sortedCount;
+    private Integer sortedCount;  // Can be null
 
     private UserEntity user;
 

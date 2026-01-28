@@ -61,6 +61,7 @@ public class FavoritesListImpl implements FavoritesListService {
 
         // Converts the DTO to a DB entity
         FavoritesList listEntity = mapToListEntity(listDTO);  // Mapper method below: DTO -> Entity
+        listEntity.setSortedCount(listDTO.getSortedCount() != null ? listDTO.getSortedCount() : 0);  // Set sortedCount to 0 if null
         listEntity.setRanked(false); // Internal flag, default to false when saved
 
         // Tie user to the list
