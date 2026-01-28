@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.ranker.web.mappers.FavoritesListMapper.mapToFavoritesListDTO;
@@ -93,7 +92,7 @@ public class FavoritesListImpl implements FavoritesListService {
                 .orElseThrow(() -> new RuntimeException("List not found"));
 
         list.setListName(newName);
-        favoritesListRepository.save(list);
+        favoritesListRepository.save(list);  // FIXME: is this redundant?
     }
 
 
@@ -120,9 +119,22 @@ public class FavoritesListImpl implements FavoritesListService {
                 .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
         list.setSortedCount(sortedCount);
-        favoritesListRepository.save(list);
+        favoritesListRepository.save(list);  // FIXME: is this redundant?
     }
 
+
+    @Transactional
+    @Override
+    public void decrementSortedCount(Long listId) {
+        FavoritesList list = favoritesListRepository.findById(listId)
+                .orElseThrow(() -> new EntityNotFoundException("List not found"));
+
+        int currentCount = list.getSortedCount();
+
+        if (currentCount > 0) {
+            list.setSortedCount(currentCount - 1);
+        }
+    }
 
     @Override
     @Transactional
@@ -132,6 +144,6 @@ public class FavoritesListImpl implements FavoritesListService {
                 .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
         list.setRanked(isRanked);
-        favoritesListRepository.save(list);
+        favoritesListRepository.save(list);  // FIXME: is this redundant?
     }
 }

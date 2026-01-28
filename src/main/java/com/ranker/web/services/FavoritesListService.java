@@ -1,12 +1,10 @@
 package com.ranker.web.services;
 
 import com.ranker.web.dto.FavoritesListDTO;
-import com.ranker.web.models.FavoritesList;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Min;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface FavoritesListService {
@@ -26,6 +24,8 @@ public interface FavoritesListService {
     List<FavoritesListDTO> searchLists(String query);
 
     void updateSortedCount(Long listId, @Min(0) int sortedCount);
+
+    void decrementSortedCount(Long listId);
 
     void setRankedFlag(Long listId, boolean b);
 

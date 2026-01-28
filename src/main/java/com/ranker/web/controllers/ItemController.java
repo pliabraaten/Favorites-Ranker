@@ -86,6 +86,8 @@ public class ItemController {
 
         itemService.deleteItem(itemId);
 
+        favoritesListService.decrementSortedCount(listId);
+
         return "redirect:/lists/" + listId;
     }
 }
