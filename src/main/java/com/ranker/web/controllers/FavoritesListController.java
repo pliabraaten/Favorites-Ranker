@@ -1,18 +1,18 @@
 package com.ranker.web.controllers;
 
-
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
-import com.ranker.web.dto.RankRequestDTO;
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.UserEntity;
 import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
 import com.ranker.web.services.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 
 // TODO: REORGANIZE THESE MAPPINGS
@@ -183,5 +184,29 @@ public class FavoritesListController {
 
         // Redirect to ranking page to rerank
         return "redirect:/lists/" + listId + "/rank";
+    }
+
+
+    // EXPORT LIST AS CSV
+    @GetMapping("/lists/{listId}/export")
+    public void exportListToCsv(@PathVariable Long listId, HttpServletResponse response) throws IOException {
+        FavoritesListDTO list = favoritesListService.findListById(listId);
+
+        // Set response headers for file download
+        response.setContentType("text/csv");
+        String filename = list.getListName().replaceAll("[^a-zA-Z0-9]", "_") + ".csv";
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+        // Write CSV
+        try (PrintWriter writer = response.getWriter()) {
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("Ranked Position", "Item Name"));
+
+            for (ItemDTO item : list.getItems()) {
+                csvPrinter.printRecord(item.getPosition(), item.getName());
+            }
+
+            csvPrinter.flush();
+        }
     }
 }

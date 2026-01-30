@@ -265,6 +265,17 @@
                     </div>
                 </div>
 
+                <!-- Export Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-body text-center">
+                        <a th:href="@{/lists/{listId}/export(listId=${list.id})}"
+                           class="btn btn-outline-info"
+                           style="min-width: 80%;">
+                           <i class="bi bi-download"></i> Export to CSV
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Help Card -->
                 <div class="card shadow mb-4">
                     <div class="card-header">
