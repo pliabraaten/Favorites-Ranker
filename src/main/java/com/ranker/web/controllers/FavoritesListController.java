@@ -209,4 +209,29 @@ public class FavoritesListController {
             csvPrinter.flush();
         }
     }
+
+
+    // EXPORT ALL LISTS AS CSV
+    @GetMapping("/lists/export-all")
+    public void exportAllListsToCsv(@AuthenticationPrincipal UserDetails userDetails,
+                                    HttpServletResponse response) throws IOException {
+        String username = userDetails.getUsername();
+        List<FavoritesListDTO> allLists = favoritesListService.findUserLists();
+
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=\"all_lists.csv\"");
+
+        try (PrintWriter writer = response.getWriter()) {
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("List Name", "Position", "Item Name"));
+
+            for (FavoritesListDTO list : allLists) {
+                for (ItemDTO item : list.getItems()) {
+                    csvPrinter.printRecord(list.getListName(), item.getPosition(), item.getName());
+                }
+            }
+
+            csvPrinter.flush();
+        }
+    }
 }

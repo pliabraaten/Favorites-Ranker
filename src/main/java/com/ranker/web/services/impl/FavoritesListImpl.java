@@ -5,7 +5,6 @@ import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.UserEntity;
 import com.ranker.web.repository.FavoritesListRepository;
 import com.ranker.web.repository.UserRepository;
-//import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.security.SecurityUtil;
 import com.ranker.web.services.FavoritesListService;
 import jakarta.persistence.EntityNotFoundException;
@@ -135,6 +134,7 @@ public class FavoritesListImpl implements FavoritesListService {
             list.setSortedCount(currentCount - 1);
         }
     }
+
 
     @Override
     @Transactional

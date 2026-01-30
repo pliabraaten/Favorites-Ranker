@@ -1,7 +1,6 @@
 package com.ranker.web.services;
 
 import com.ranker.web.dto.FavoritesListDTO;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Min;
 
 import java.util.List;
