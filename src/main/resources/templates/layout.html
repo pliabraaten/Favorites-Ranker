@@ -31,77 +31,81 @@
 <!--Template placeholder for content of page-->
 <body class="d-flex flex-column" style="min-height: 100vh;">
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container px-5">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
 
-        <!-- Brand -->
-        <a class="navbar-brand me-3" th:href="@{/}">Favorites Ranker</a>
+            <!-- Brand -->
+            <a class="navbar-brand me-3" th:href="@{/}">Favorites Ranker</a>
 
-        <!-- Toggler for mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <!-- Navbar links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
 
-                <!-- Authenticated user links -->
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" th:href="@{/lists}">My Lists</a>
-                </li>
+                    <!-- Authenticated user links -->
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" th:href="@{/lists}">My Lists</a>
+                    </li>
 
-                <!-- Public links -->
-                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                    <!-- Public links -->
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
 
-                <!-- Non-authenticated links -->
-                <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
-                <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/register}">Create Account</a></li>
+                    <!-- Non-authenticated links -->
+                    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                    <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/register}">Create Account</a></li>
 
-                <!-- User dropdown -->
-                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Account
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAccount">
-                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
-                    </ul>
-                </li>
+                    <!-- User dropdown -->
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAccount">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                        </ul>
+                    </li>
 
-                <!-- Dark Mode Toggle -->
-                <li class="nav-item">
-                    <a href="#" id="dark-mode-toggle"
-                       class="nav-link d-flex align-items-center ms-lg-3">
-                        <i class="bi bi-moon me-1"></i> Dark Mode
-                    </a>
-                </li>
-            </ul>
+                    <!-- Dark Mode Toggle -->
+                    <li class="nav-item">
+                        <a href="#" id="dark-mode-toggle"
+                           class="nav-link d-flex align-items-center ms-lg-3">
+                            <i class="bi bi-moon me-1"></i> Dark Mode
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<main class="flex-fill">
-        <!-- This is where page content gets inserted -->
-        <div layout:fragment="body"></div>
-</main>
+    <main class="flex-fill">
+            <!-- This is where page content gets inserted -->
+            <div layout:fragment="body"></div>
+    </main>
 
     <!-- Footer-->
     <footer class="bg-dark py-4 mt-auto">
         <div class="container px-5">
             <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2025</div></div>
                 <div class="col-auto">
-                    <a class="link-light small" href="#!">Privacy</a>
+                    <div class="small m-0 text-white">
+                        Copyright &copy; <span th:text="${T(java.time.Year).now().getValue()}"></span> Favorites Ranker
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" th:href="@{/privacy}">Privacy</a>
                     <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="#!">Terms</a>
+                    <a class="link-light small" th:href="@{/terms}">Terms</a>
                     <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="#!">Contact</a>
+                    <a class="link-light small" th:href="@{/contact}">Contact</a>
                 </div>
             </div>
         </div>

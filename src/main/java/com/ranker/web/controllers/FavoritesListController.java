@@ -234,4 +234,20 @@ public class FavoritesListController {
             csvPrinter.flush();
         }
     }
+
+
+    @GetMapping("/privacy")
+    public String privacyPage() {
+        return "privacy";
+    }
+
+    @GetMapping("/terms")
+    public String termsPage() {
+        return "terms";
+    }
+
+    @GetMapping("/contact")
+    public String contactPage() {
+        return "contact";
+    }
 }
