@@ -54,10 +54,6 @@
                         <a class="nav-link" th:href="@{/lists}">My Lists</a>
                     </li>
 
-                    <!-- Public links -->
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-
                     <!-- Non-authenticated links -->
                     <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
                     <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/register}">Create Account</a></li>
@@ -73,6 +69,9 @@
                             <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                         </ul>
                     </li>
+
+                    <!-- Public links -->
+                    <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
 
                     <!-- Dark Mode Toggle -->
                     <li class="nav-item">
@@ -104,8 +103,8 @@
                     <a class="link-light small" th:href="@{/privacy}">Privacy</a>
                     <span class="text-white mx-1">&middot;</span>
                     <a class="link-light small" th:href="@{/terms}">Terms</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" th:href="@{/contact}">Contact</a>
+<!--                    <span class="text-white mx-1">&middot;</span>-->
+<!--                    <a class="link-light small" th:href="@{/contact}">Contact</a>-->
                 </div>
             </div>
         </div>
