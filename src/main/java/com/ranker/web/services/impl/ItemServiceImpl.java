@@ -65,13 +65,6 @@ public class ItemServiceImpl implements ItemService {
         return mapToItemDTO(itemEntity);
     }
 
-    @Override
-    public void updateItem(ItemDTO itemDTO) {
-
-        Item itemEntity = mapToItemEntity(itemDTO);
-
-        itemRepository.save(itemEntity);
-    }
 
     @Override
     @Transactional

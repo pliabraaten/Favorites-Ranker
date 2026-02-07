@@ -13,8 +13,6 @@ public interface ItemService {
 
     ItemDTO findItemById(long itemId);
 
-    void updateItem(ItemDTO itemDTO);
-
     void deleteItem(Long itemId);
 
     void repositionItem(Long itemId, String direction);
