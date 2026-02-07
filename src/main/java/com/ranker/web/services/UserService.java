@@ -13,6 +13,4 @@ public interface UserService {
 
     UserEntity findByUsername(@NotEmpty String username);
 
-    // FIXME: DO I NEED TO FIND ALL USERS??
-//    List<RegistrationDTO> findAllUsers();
 }

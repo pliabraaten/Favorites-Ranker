@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Favorites Ranker</title>
+</head>
+
+<body>
+<section layout:fragment="body" class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+
+                        <!-- Success Alert -->
+                        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle me-2"></i>
+                            <span th:text="${successMessage}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Hero Section -->
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bold mb-3">Welcome to Favorites Ranker!</h1>
+                            <p class="lead text-muted">Rank items with pairwise comparisons</p>
+                        </div>
+
+                        <hr class="mb-5">
+
+                        <!-- What It Is -->
+                        <h5 class="fw-bold mb-3 text-center">What is Favorites Ranker?</h5>
+                        <p class="mb-4">Favorites Ranker is a web application that helps you create, organize, and rank your favorite items. Whether it's TV shows, movies, books, or anything else—simply add your items and let our pairwise comparison algorithm help you discover your true favorites.</p>
+
+                        <!-- How It Works -->
+                        <h5 class="fw-bold mb-4 text-center">How Does It Work?</h5>
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-4 text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-plus-circle fs-1 text-primary"></i>
+                                </div>
+                                <h6 class="fw-bold">1. Add Items</h6>
+                                <p class="text-muted small mb-0">Create a list and add your items</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-arrow-left-right fs-1 text-success"></i>
+                                </div>
+                                <h6 class="fw-bold">2. Compare</h6>
+                                <p class="text-muted small mb-0">Answer head-to-head comparisons</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="mb-3">
+                                    <i class="bi bi-trophy fs-1 text-warning"></i>
+                                </div>
+                                <h6 class="fw-bold">3. See Results</h6>
+                                <p class="text-muted small mb-0">View your ranking and fine-tune</p>
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="text-center">
+                            <a th:href="@{/lists/new}" class="btn btn-primary btn-lg px-5">
+                                <i class="bi bi-plus-circle me-2"></i>Create Your First List
+                            </a>
+                        </div>
+
+                        <!-- Optional: Dismissible Option -->
+                        <div class="text-center mt-4">
+                            <a th:href="@{/lists}" class="text-muted text-decoration-none">Skip and go to My Lists →</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
