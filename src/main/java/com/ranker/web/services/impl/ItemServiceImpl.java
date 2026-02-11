@@ -132,7 +132,6 @@ public class ItemServiceImpl implements ItemService {
             }
 
             item.setPosition(dto.getPosition());  // Update item's position to with the DTO position
-            itemRepository.save(item);
         }
     }
 

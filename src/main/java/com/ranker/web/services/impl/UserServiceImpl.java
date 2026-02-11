@@ -50,6 +50,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
 
         user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));  // Encrypts user password
+
+        userRepository.save(user);  // @Transactional only updates exiting entities but doesn't create new
     }
 
 
