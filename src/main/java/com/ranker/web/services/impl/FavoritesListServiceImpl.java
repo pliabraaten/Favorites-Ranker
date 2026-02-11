@@ -21,14 +21,14 @@ import static com.ranker.web.mappers.FavoritesListMapper.mapToListEntity;
 
 // Implements actions defined in the Service
 @Service
-public class FavoritesListImpl implements FavoritesListService {
+public class FavoritesListServiceImpl implements FavoritesListService {
 
     private FavoritesListRepository favoritesListRepository;
     private UserRepository userRepository;
 
 
     @Autowired
-    public FavoritesListImpl(FavoritesListRepository favoritesListRepository, UserRepository userRepository) {
+    public FavoritesListServiceImpl(FavoritesListRepository favoritesListRepository, UserRepository userRepository) {
         this.favoritesListRepository = favoritesListRepository;
         this.userRepository = userRepository;
     }

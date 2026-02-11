@@ -58,6 +58,9 @@ public class SecurityConfig {
                             "/welcome",
                             "/lists",
                             "/register/**",
+                            "/forgot-password",
+                            "/reset-password",
+                            "/reset-password-error",
                             "/css/**",
                             "/js/**",
                             "/h2-console/**"  // to access the DB

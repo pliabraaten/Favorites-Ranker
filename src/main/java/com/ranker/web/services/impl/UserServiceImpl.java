@@ -54,6 +54,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);  // @Transactional only updates exiting entities but doesn't create new
     }
 
+    @Override
+    @Transactional
+    public void updatePassword(UserEntity user, String newPassword) {
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
 
     @Override
     public UserEntity findByEmail(String email) {

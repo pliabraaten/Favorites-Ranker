@@ -13,4 +13,6 @@ public interface UserService {
 
     UserEntity findByUsername(@NotEmpty String username);
 
+    void updatePassword(UserEntity user, String newPassword);
+
 }
