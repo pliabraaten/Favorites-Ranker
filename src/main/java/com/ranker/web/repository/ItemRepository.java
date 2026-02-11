@@ -1,6 +1,5 @@
 package com.ranker.web.repository;
 
-import com.ranker.web.dto.ItemDTO;
 import com.ranker.web.models.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

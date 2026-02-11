@@ -51,6 +51,7 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     @Override
+    @Transactional
     public Long saveList(FavoritesListDTO listDTO) {
 
         // Get logged-in user from session
@@ -85,17 +86,18 @@ public class FavoritesListImpl implements FavoritesListService {
 
 
     @Override
+    @Transactional
     public void updateListName(Long listId, String newName) {
 
         FavoritesList list = favoritesListRepository.findById(listId)
                 .orElseThrow(() -> new RuntimeException("List not found"));
 
         list.setListName(newName);
-        favoritesListRepository.save(list);  // FIXME: is this redundant?
     }
 
 
     @Override
+    @Transactional
     public void delete(long listId) {
 
         favoritesListRepository.deleteById(listId);
@@ -118,7 +120,6 @@ public class FavoritesListImpl implements FavoritesListService {
                 .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
         list.setSortedCount(sortedCount);
-        favoritesListRepository.save(list);  // FIXME: is this redundant?
     }
 
 
@@ -144,6 +145,5 @@ public class FavoritesListImpl implements FavoritesListService {
                 .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
         list.setRanked(isRanked);
-        favoritesListRepository.save(list);  // FIXME: is this redundant?
     }
 }

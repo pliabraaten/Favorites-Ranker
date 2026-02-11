@@ -1,7 +1,6 @@
 package com.ranker.web.controllers;
 
 import com.ranker.web.dto.UpdateItemNameRequestDTO;
-import com.ranker.web.dto.UpdateListNameRequestDTO;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;

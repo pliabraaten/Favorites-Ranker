@@ -33,7 +33,6 @@ public class FavoritesListMapper {
                 .id(listDTO.getId())
                 .listName(listDTO.getListName())
                 .sortedCount(listDTO.getSortedCount())
-//                .user(listDTO.getUser())
                 .build();
 
         return listEntity;

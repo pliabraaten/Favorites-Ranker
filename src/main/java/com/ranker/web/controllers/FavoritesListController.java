@@ -25,7 +25,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 
-// TODO: REORGANIZE THESE MAPPINGS
 @Controller
 public class FavoritesListController {
 

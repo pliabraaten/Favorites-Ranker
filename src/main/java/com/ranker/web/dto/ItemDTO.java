@@ -1,7 +1,6 @@
 package com.ranker.web.dto;
 
 
-import com.ranker.web.models.FavoritesList;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

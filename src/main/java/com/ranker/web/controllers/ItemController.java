@@ -3,7 +3,6 @@ package com.ranker.web.controllers;
 
 import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
-import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
 import com.ranker.web.services.FavoritesListService;
 import com.ranker.web.services.ItemService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -48,8 +46,7 @@ public class ItemController {
     @PostMapping("/items/{listId}")
     public String createItem(@PathVariable("listId") Long listId,
                            @Valid @ModelAttribute("item")ItemDTO itemDTO,
-                           BindingResult result,
-                           RedirectAttributes redirectAttributes) {
+                           BindingResult result) {
 
         if (result.hasErrors()) {
             return "items-create";

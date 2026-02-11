@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-// TODO: add ability for user to have multiple lists
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,12 +28,12 @@ public class UserEntity {
     private String username;
 
     @NotEmpty(message = "Email cannot be empty")
-//    @Email(message = "Please provide a valid email")  // FIXME: ADD REQUIREMENTS
+    @Email(message = "Please provide a valid email")
     @Column(unique = true)
     private String email;
 
     @NotEmpty(message = "Password cannot be empty")
-//    @Size(min = 6, message = "Password must be at least 6 characters long")  // FIXME: ADD REQUIREMENTS
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
 }

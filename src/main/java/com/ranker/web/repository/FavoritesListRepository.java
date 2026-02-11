@@ -2,7 +2,6 @@ package com.ranker.web.repository;
 
 
 import com.ranker.web.models.FavoritesList;
-import com.ranker.web.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -8,6 +8,7 @@ import com.ranker.web.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void saveUser(RegistrationDTO registrationDTO) {
 
         // Normalize email/username
@@ -48,8 +50,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
 
         user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));  // Encrypts user password
-
-        userRepository.save(user);  // Save to DB
     }
 
 

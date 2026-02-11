@@ -41,8 +41,7 @@ public class AuthController {
     public String register(@Valid @ModelAttribute("user") RegistrationDTO registrationDTO,
                            BindingResult result,
                            Model model,
-                           HttpServletRequest request,
-                           RedirectAttributes redirectAttributes) {
+                           HttpServletRequest request) {
 
         UserEntity existingUserEmail = userService.findByEmail(registrationDTO.getEmail()); // Try to find existing user first
 

@@ -10,7 +10,6 @@ import com.ranker.web.repository.FavoritesListRepository;
 import com.ranker.web.repository.ItemRepository;
 import com.ranker.web.services.ItemService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +37,7 @@ public class ItemServiceImpl implements ItemService {
 
     // Create new item(s) and tie it to a list
     @Override
+    @Transactional
     public int saveItem(Long listId, String itemNamesInput) {  // ItemDTO is created by user -> mapped to DB entity for saving
 
         FavoritesList foundList = listRepository.findById(listId)  // Find list id
@@ -138,13 +138,13 @@ public class ItemServiceImpl implements ItemService {
 
     // UPDATE ITEM NAME INLINE
     @Override
+    @Transactional
     public void updateItemName(Long itemId, String newName) {
 
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("List not found"));
 
         item.setName(newName);
-        itemRepository.save(item);
     }
 
 
@@ -171,6 +171,7 @@ public class ItemServiceImpl implements ItemService {
 
 
     // Swap item's position with the higher ranked item
+    @Override
     @Transactional
     public void moveItemUp(Long itemId) {
 

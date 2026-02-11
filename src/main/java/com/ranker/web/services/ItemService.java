@@ -24,4 +24,6 @@ public interface ItemService {
     void updateItemName(Long itemId, String trim);
 
     Long getListIdByItemId(Long itemId);
+
+    void moveItemUp(Long itemId);
 }

@@ -6,11 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 
-// TODO: UNDERSTAND THIS -> IS THIS THE BEST WAY FOR SESSION USER MANAGEMENT? ESP SINCE USERS ONLY SEE THEIR OWN LISTS?
-
-// IS THIS NEEDED NOW THAT THE USER USERNAME IS PASSED IN WHEN SAVING A NEW LIST?
-
-//
+// Retrieve currently logged in user
 public class SecurityUtil {
     public static String getSessionUser() {
 

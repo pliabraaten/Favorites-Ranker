@@ -1,11 +1,8 @@
 package com.ranker.web.mappers;
 
-import com.ranker.web.dto.FavoritesListDTO;
 import com.ranker.web.dto.ItemDTO;
-import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.Item;
 
-import java.util.stream.Collectors;
 
 public class ItemMapper {
 
