@@ -36,21 +36,37 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-    // Create new item and tie it to a list
+    // Create new item(s) and tie it to a list
     @Override
-    public void saveItem(Long listId, ItemDTO itemDTO) {  // ItemDTO is created by user -> mapped to DB entity for saving
+    public int saveItem(Long listId, String itemNamesInput) {  // ItemDTO is created by user -> mapped to DB entity for saving
 
         FavoritesList foundList = listRepository.findById(listId)  // Find list id
             .orElseThrow(() -> new EntityNotFoundException("List not found"));
 
-        Item item = mapToItemEntity(itemDTO);  // Map DTO to entity
-        item.setFavoritesList(foundList);  // Set list object to the list found by ID
-
-        // Count existing items +1 and set position in the list
+        String[] itemNames = itemNamesInput.split(",");  // Parse input into array based on comma
         int nextPosition = itemRepository.countByFavoritesListId(listId) + 1;  // COUNT # of items WHERE FavoritesListId = listId
-        item.setPosition(nextPosition);
+        int count = 0;  // Count of items parsed and saved
 
-        itemRepository.save(item);
+        for (String itemName : itemNames) {
+            String trimmedName = itemName.trim();  // Trim white space for each item
+
+            // If item exists and is not empty, then create DTO and save to DB
+            if (!trimmedName.isEmpty()) {
+                ItemDTO itemDTO = new ItemDTO();
+                itemDTO.setName(trimmedName);
+
+                Item item = mapToItemEntity(itemDTO);  // Map DTO to entity
+                item.setFavoritesList(foundList);  // Set list object to the list found by ID
+                item.setPosition(nextPosition);
+
+                itemRepository.save(item);
+
+                // Count existing items +1 and set position in the list
+                nextPosition++;
+                count++;
+            }
+        }
+        return count;
     }
 
 

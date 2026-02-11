@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    void saveItem(Long itemId, ItemDTO itemDTO);
+    int saveItem(Long itemId, String itemNamesInput);
 
     ItemDTO findItemById(long itemId);
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -45,18 +46,16 @@ public class ItemController {
 
     // CREATE NEW ITEM
     @PostMapping("/items/{listId}")
-    public String saveItem(@PathVariable("listId") Long listId,
+    public String createItem(@PathVariable("listId") Long listId,
                            @Valid @ModelAttribute("item")ItemDTO itemDTO,
                            BindingResult result,
-                           Model model) {
+                           RedirectAttributes redirectAttributes) {
 
-//        if (result.hasErrors()) {
-//            // Stay on the same page and show validation errors
-//            model.addAttribute("list", favoritesListService.findListById(listId));
-//            return "items-create";
-//        }
+        if (result.hasErrors()) {
+            return "items-create";
+        }
 
-        itemService.saveItem(listId, itemDTO);
+        itemService.saveItem(listId, itemDTO.getName());  // Service handles comma parsing
 
         return "redirect:/items/" + listId + "/new";  // Refresh page for the user to add more items
     }
