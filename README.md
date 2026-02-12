@@ -6,20 +6,6 @@ A full-stack web application that enables users to create custom lists and rank 
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Algorithm Deep Dive](#algorithm-deep-dive)
-- [Tech Stack](#tech-stack)
-- [Screenshots](#screenshots)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Learning Outcomes](#learning-outcomes)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Overview
 
 Favorites Ranker is a web-based ranking application built with Spring Boot and Thymeleaf. Users can create personalized lists (favorite movies, TV shows, books, etc.) and rank items using two methods:
@@ -43,6 +29,15 @@ The application demonstrates modern full-stack development practices including R
 ### Overview
 
 The ranking system implements a **Binary Insertion Sort** algorithm optimized for user-driven pairwise comparisons. This approach minimizes the number of comparisons needed while providing an intuitive, interactive ranking experience.
+
+## Screenshots
+
+> *Add screenshots here showing:*
+> - Login page
+> - List overview
+> - Pairwise comparison interface
+> - List details with inline editing
+> - Manual repositioning with arrows
 
 ### Implementation
 ```javascript
@@ -146,23 +141,15 @@ Planned improvements tracked in the roadmap:
 - **Git** - Version control with feature branch workflow
 - **GitHub Projects** - Issue tracking and project management
 
-## Screenshots
-
-> *Add screenshots here showing:*
-> - Login page
-> - List overview
-> - Pairwise comparison interface
-> - List details with inline editing
-> - Manual repositioning with arrows
-
 ## Installation
 
-### Prerequisites
-- Java 17 or higher
-- Maven 3.6+
-- Git
+### Docker
 
-### Setup Instructions
-
-1. **Clone the repository**
+**Prerequisites:** Docker and Docker Compose
 ```bash
+# Clone and run
+git clone https://github.com/pliabraaten/Favorites-Ranker.git
+cd Favorites-Ranker
+docker-compose up
+# Access at http://localhost:8080
+```
