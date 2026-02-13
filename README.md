@@ -133,13 +133,8 @@ Planned improvements tracked in the roadmap:
 ### Frontend
 - **Thymeleaf** - Server-side template engine
 - **Bootstrap 5** - Responsive CSS framework
-- **JavaScript (ES6+)** - Client-side interactivity
+- **JavaScript** - Client-side interactivity
 - **Bootstrap Icons** - UI iconography
-
-### Development Tools
-- **Maven** - Dependency management and build automation
-- **Git** - Version control with feature branch workflow
-- **GitHub Projects** - Issue tracking and project management
 
 ## Installation
 
