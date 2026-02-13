@@ -87,7 +87,7 @@ git clone https://github.com/pliabraaten/Favorites-Ranker.git
 cd Favorites-Ranker
 docker-compose up
 # Access at http://localhost:8080
-# Data Persistence: Your lists and rankings automatically save to the `./data` folder and persist between restarts.
+# Data Persistence: lists and rankings save to the `./data` folder
 ```
 
 
