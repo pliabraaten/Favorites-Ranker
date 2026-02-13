@@ -39,13 +39,13 @@ The application demonstrates modern full-stack development practices including R
 
 ## Demo
 
-> - *Registering a user and logging in*
+> *Registering a user and logging in*
 > ![Demo](docs/demos/registerUser.gif)
-> - *Adding items to a list individually and in batch*
+> *Adding items to a list individually and in batch*
 > ![Demo](docs/demos/createItems.gif)
-> - *User prompted with pairwise comparisons*
+> *User prompted with pairwise comparisons*
 > ![Demo](docs/demos/pairwiseComparisons.gif)
-> - *User making inline edits to the list and manually reranking an item*
+> *User making inline edits to the list and manually reranking an item*
 > ![Demo](docs/demos/inlineEdits.gif)
 
 
