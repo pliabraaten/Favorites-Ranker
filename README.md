@@ -41,10 +41,9 @@ The application demonstrates modern full-stack development practices including R
 
 > *Add screenshots here showing:*
 > - ![Demo](docs/demos/registerUser.gif)
-> - List overview
-> - Pairwise comparison interface
-> - List details with inline editing
-> - Manual repositioning with arrows
+> - ![Demo](docs/demos/createItems.gif)
+> - ![Demo](docs/demos/pairwiseComparisons.gif)
+> - ![Demo](docs/demos/inlineEdits.gif)
 
 
 ##  Tech Stack
@@ -66,18 +65,17 @@ The application demonstrates modern full-stack development practices including R
 
 ## Installation
 Pre-built images are available on the project’s [GitHub Packages page](https://github.com/pliabraaten/Favorites-Ranker/pkgs/container/favorites-ranker). 
-These images contain everything needed to run the application.
+These images contain everything needed to run the application .
 
 ### Run instantly with Docker:
-**Run with no data persistence:**
 ```bash
+# Run with no data persistence:
 docker run -p 8080:8080 ghcr.io/pliabraaten/favorites-ranker:latest
 ```
-**Run with data persistence:**
 ```bash
+# Run with data persistence:
 docker run -p 8080:8080 -v ./data:/app/data ghcr.io/pliabraaten/favorites-ranker:latest
 ```
-Access at http://localhost:8080
 
 ### Run Locally with Docker Compose
 ```bash
@@ -85,9 +83,9 @@ Access at http://localhost:8080
 git clone https://github.com/pliabraaten/Favorites-Ranker.git
 cd Favorites-Ranker
 docker-compose up
+# Access at http://localhost:8080
+# Data Persistence: Your lists and rankings automatically save to the `./data` folder and persist between restarts.
 ```
-Access at http://localhost:8080
-**Data Persistence:** Your lists and rankings automatically save to the `./data` folder and persist between restarts.
 
 
 ## Algorithm Design
@@ -163,6 +161,6 @@ function binarySearch(i, L, R, selectedItem) {
 
 ## Future Optimizations
 
-Planned improvements tracked in the roadmap:
-- **ELO Rating System**: Assign dynamic scores for faster insertions
+Potential improvements:
+- **ELO Rating System**: Assign dynamic scores for few comparisons
 - **List Sharing**: Send lists to friends and compare rankings
