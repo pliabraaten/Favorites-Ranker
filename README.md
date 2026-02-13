@@ -1,6 +1,6 @@
 # Favorites Ranker
 
-A full-stack web application that enables users to create custom lists and rank items through a pairwise comparison algorithm and manual positioning controls.
+Rank anything using pairwise comparisons.
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
@@ -8,7 +8,8 @@ A full-stack web application that enables users to create custom lists and rank 
 
 ## Overview
 
-Favorites Ranker is a web-based ranking application built with Spring Boot and Thymeleaf. Users can create personalized lists (favorite movies, TV shows, books, etc.) and rank items using two methods:
+Favorites Ranker is a full-stack web application built with Spring Boot and Thymeleaf. Users can create personalized lists (favorite movies, TV shows, books, etc.) and rank items interactively.
+Instead of users sorting the items of their lists manually, it uses a guided comparison system that determines optimal rankings using two methods:
 - **Pairwise Comparison Algorithm**: Make head-to-head comparisons to generate an optimized ranking
 - **Manual Positioning**: Use inline editing to adjust rankings manually
 
@@ -24,20 +25,61 @@ The application demonstrates modern full-stack development practices including R
 -  **Manual Repositioning** - Adjust item positions with up/down arrow buttons
 -  **Cascade Deletion** - Automatic position reindexing when items are removed
 
-## Algorithm Deep Dive: Binary Insertion Sort with Pairwise Comparisons
+##  Tech Stack
 
-### Overview
+### Backend Development
+-  Building RESTful APIs with Spring Boot
+-  Implementing authentication/authorization with Spring Security
+-  **Designing and implementing sorting algorithms for user-driven data**
+-  **Analyzing time/space complexity and optimizing for real-world performance**
+-  Database design and JPA relationship mapping
+-  Transaction management and data integrity
+-  Service layer architecture and dependency injection
 
-The ranking system implements a **Binary Insertion Sort** algorithm optimized for user-driven pairwise comparisons. This approach minimizes the number of comparisons needed while providing an intuitive, interactive ranking experience.
+### Frontend
+- **Thymeleaf** - Server-side template engine
+- **Bootstrap 5** - Responsive CSS framework
+- **JavaScript** - Client-side interactivity
+- **Bootstrap Icons** - UI iconography
+
+## Quick Start
+
+### Run instantly with Docker (no data persistence):
+```bash
+docker run -p 8080:8080 ghcr.io/pliabraaten/favorites-ranker:latest
+```
+**Run ith data persistence:**
+```bash
+docker run -p 8080:8080 -v ./data:/app/data ghcr.io/pliabraaten/favorites-ranker:latest
+```
+# Access at http://localhost:8080
+
+### Run Locally with Docker Compose
+```bash
+# Clone and run
+git clone https://github.com/pliabraaten/Favorites-Ranker.git
+cd Favorites-Ranker
+docker-compose up
+# Access at http://localhost:8080
+```
+**Data Persistence:** Your lists and rankings automatically save to the `./data` folder and persist between restarts.
+
 
 ## Screenshots
 
 > *Add screenshots here showing:*
-> - Login page
+> - ![Demo](docs/images/registerUser.gif)
 > - List overview
 > - Pairwise comparison interface
 > - List details with inline editing
 > - Manual repositioning with arrows
+
+
+## Algorithm Design
+
+### Binary Insertion Ranking Strategy
+
+The ranking system implements a **Binary Insertion** algorithm designed for user-driven pairwise comparisons. This approach minimizes the number of comparisons needed while providing an intuitive, interactive ranking experience.
 
 ### Implementation
 ```javascript
@@ -81,7 +123,7 @@ function binarySearch(i, L, R, selectedItem) {
 - **Binary partitioning**: Eliminates half the search space with each comparison
 
 
-### Time Complexity Analysis
+### Complexity Analysis
 
 | Operation | Complexity | Explanation |
 |-----------|-----------|-------------|
@@ -106,45 +148,8 @@ function binarySearch(i, L, R, selectedItem) {
 - While binary search minimizes *comparisons*, array manipulation dominates runtime
 - **Trade-off**: Optimized for *user experience* (fewer questions) rather than *pure computational efficiency*
 
-#### Potential Optimizations
-
-Future improvements could reduce insertion complexity:
-
-- **Linked List Implementation**: O(n log n) total (O(1) insertion, O(n) traversal)
-- **Database-Direct Insertion**: Batch position updates with SQL
-- **Deferred Positioning**: Assign relative scores, sort once at end
-
 ### Future Optimizations
 
 Planned improvements tracked in the roadmap:
 - **ELO Rating System**: Assign dynamic scores for faster insertions
-
-##  Tech Stack
-
-### Backend Development
--  Building RESTful APIs with Spring Boot
--  Implementing authentication/authorization with Spring Security
--  **Designing and implementing sorting algorithms for user-driven data**
--  **Analyzing time/space complexity and optimizing for real-world performance**
--  Database design and JPA relationship mapping
--  Transaction management and data integrity
--  Service layer architecture and dependency injection
-
-### Frontend
-- **Thymeleaf** - Server-side template engine
-- **Bootstrap 5** - Responsive CSS framework
-- **JavaScript** - Client-side interactivity
-- **Bootstrap Icons** - UI iconography
-
-## Installation
-
-### Docker
-
-**Prerequisites:** Docker and Docker Compose
-```bash
-# Clone and run
-git clone https://github.com/pliabraaten/Favorites-Ranker.git
-cd Favorites-Ranker
-docker-compose up
-# Access at http://localhost:8080
-```
+- **List Sharing**: Send lists to friends and compare rankings
