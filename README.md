@@ -6,14 +6,25 @@ Rank anything using pairwise comparisons.
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Demo](#demo)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Algorithm Design](#algorithm-design)
+- [Future_Optimizations](#future-optimizations) 
+
+
 ## Overview
 
 Favorites Ranker is a full-stack web application built with Spring Boot and Thymeleaf. Users can create personalized lists (favorite movies, TV shows, books, etc.) and rank items interactively.
 Instead of users sorting the items of their lists manually, it uses a guided comparison system that determines optimal rankings using two methods:
-- **Pairwise Comparison Algorithm**: Make head-to-head comparisons to generate an optimized ranking
+- **Pairwise Comparison Algorithm**: Make head-to-head comparisons to generate rankings
 - **Manual Positioning**: Use inline editing to adjust rankings manually
 
-The application demonstrates modern full-stack development practices including RESTful API design, secure authentication, responsive UI, and database management.
+The application demonstrates modern full-stack development practices including RESTful API design, secure authentication, responsive UI, and CRUD functionality with relational persistence via JPA/Hibernate.
+
 
 ## Features
 
@@ -25,34 +36,48 @@ The application demonstrates modern full-stack development practices including R
 -  **Manual Repositioning** - Adjust item positions with up/down arrow buttons
 -  **Cascade Deletion** - Automatic position reindexing when items are removed
 
+
+## Demo
+
+> *Add screenshots here showing:*
+> - ![Demo](docs/demos/registerUser.gif)
+> - List overview
+> - Pairwise comparison interface
+> - List details with inline editing
+> - Manual repositioning with arrows
+
+
 ##  Tech Stack
 
 ### Backend Development
--  Building RESTful APIs with Spring Boot
--  Implementing authentication/authorization with Spring Security
--  **Designing and implementing sorting algorithms for user-driven data**
--  **Analyzing time/space complexity and optimizing for real-world performance**
--  Database design and JPA relationship mapping
--  Transaction management and data integrity
--  Service layer architecture and dependency injection
+- Spring Boot 3 + Java 17 — Application framework and runtime
+- Spring Security — Authentication, session handling, and route protection
+- Spring Data JPA (Hibernate) — Persistence layer and ORM mapping
+- Embedded H2 Database — Relational data storage for development/runtime
+- Service Layer Architecture — Separation of controller, service, and repository concerns
+- Transactional Data Handling — Ensures integrity during list updates and ranking operations
 
 ### Frontend
-- **Thymeleaf** - Server-side template engine
-- **Bootstrap 5** - Responsive CSS framework
-- **JavaScript** - Client-side interactivity
-- **Bootstrap Icons** - UI iconography
+- **Thymeleaf** - Server-side rendering and template composition
+- **Bootstrap 5** - Responsive layout and UI components
+- **JavaScript** - Client-side interaction logic and ranking algorithm execution
+- **Bootstrap Icons** - UI visuals and controls
 
-## Quick Start
 
-### Run instantly with Docker (no data persistence):
+## Installation
+Pre-built images are available on the project’s [GitHub Packages page](https://github.com/pliabraaten/Favorites-Ranker/pkgs/container/favorites-ranker). 
+These images contain everything needed to run the application.
+
+### Run instantly with Docker:
+**Run with no data persistence:**
 ```bash
 docker run -p 8080:8080 ghcr.io/pliabraaten/favorites-ranker:latest
 ```
-**Run ith data persistence:**
+**Run with data persistence:**
 ```bash
 docker run -p 8080:8080 -v ./data:/app/data ghcr.io/pliabraaten/favorites-ranker:latest
 ```
-# Access at http://localhost:8080
+Access at http://localhost:8080
 
 ### Run Locally with Docker Compose
 ```bash
@@ -60,19 +85,9 @@ docker run -p 8080:8080 -v ./data:/app/data ghcr.io/pliabraaten/favorites-ranker
 git clone https://github.com/pliabraaten/Favorites-Ranker.git
 cd Favorites-Ranker
 docker-compose up
-# Access at http://localhost:8080
 ```
+Access at http://localhost:8080
 **Data Persistence:** Your lists and rankings automatically save to the `./data` folder and persist between restarts.
-
-
-## Screenshots
-
-> *Add screenshots here showing:*
-> - ![Demo](docs/images/registerUser.gif)
-> - List overview
-> - Pairwise comparison interface
-> - List details with inline editing
-> - Manual repositioning with arrows
 
 
 ## Algorithm Design
@@ -122,7 +137,6 @@ function binarySearch(i, L, R, selectedItem) {
 - **Overflow prevention**: Uses `L + Math.floor((R - L) / 2)` instead of `(L + R) / 2`
 - **Binary partitioning**: Eliminates half the search space with each comparison
 
-
 ### Complexity Analysis
 
 | Operation | Complexity | Explanation |
@@ -137,7 +151,6 @@ function binarySearch(i, L, R, selectedItem) {
 **Comparison Phase: O(n log n)**
 - Binary search finds the optimal position in **O(log n)** comparisons per item
 - Ranking **n items** requires **O(n log n)** total user comparisons
-- This is **optimal** for comparison-based sorting (theoretical lower bound)
 
 **Insertion Phase: O(n²)**
 - After finding position, must **shift array elements** to make space
@@ -148,7 +161,7 @@ function binarySearch(i, L, R, selectedItem) {
 - While binary search minimizes *comparisons*, array manipulation dominates runtime
 - **Trade-off**: Optimized for *user experience* (fewer questions) rather than *pure computational efficiency*
 
-### Future Optimizations
+## Future Optimizations
 
 Planned improvements tracked in the roadmap:
 - **ELO Rating System**: Assign dynamic scores for faster insertions
