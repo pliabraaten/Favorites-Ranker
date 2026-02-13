@@ -9,9 +9,7 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
-    build:
-      context: .
-    image: pliabraaten/favorites-ranker
+    image: ghcr.io/pliabraaten/favorites-ranker:latest
     ports:
       - 8080:8080
     volumes:
