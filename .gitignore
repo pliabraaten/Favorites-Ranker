@@ -20,8 +20,7 @@ target/
 *.ipr
 
 # H2 database files
-/data/*.mv.db
-/data/*.trace.db
+data/
 
 ### NetBeans ###
 /nbproject/private/
