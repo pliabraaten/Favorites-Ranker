@@ -2,44 +2,36 @@ package com.ranker.web.repository;
 
 import com.ranker.web.models.FavoritesList;
 import com.ranker.web.models.UserEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest  // Sets up in-memory database for testing
+@DataJpaTest
 class FavoritesListRepositoryTest {
-
-    @Autowired
-    private TestEntityManager entityManager;
 
     @Autowired
     private FavoritesListRepository favoritesListRepository;
 
-    private UserEntity testUser;
-
-    @BeforeEach
-    void setUp() {
-        // Create a test user
-        testUser = new UserEntity();
-        testUser.setUsername("testuser");
-        testUser.setEmail("test@example.com");
-        testUser.setPassword("password123");
-        entityManager.persist(testUser);
-        entityManager.flush();
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void shouldSaveFavoritesList() {
         // Given
+        UserEntity testUser = new UserEntity();
+        testUser.setUsername("testuser");
+        testUser.setEmail("test@example.com");
+        testUser.setPassword("password123");
+        UserEntity savedUser = userRepository.save(testUser);
+
         FavoritesList list = new FavoritesList();
         list.setListName("My Movies");
-        list.setUser(testUser);
+        list.setUser(savedUser);
         list.setSortedCount(0);
         list.setRanked(false);
 
@@ -49,30 +41,21 @@ class FavoritesListRepositoryTest {
         // Then
         assertThat(savedList.getId()).isNotNull();
         assertThat(savedList.getListName()).isEqualTo("My Movies");
-        assertThat(savedList.getUser().getUsername()).isEqualTo("testuser");
     }
 
     @Test
     void shouldFindListsByUserId() {
         // Given
-        FavoritesList list1 = new FavoritesList();
-        list1.setListName("Movies");
-        list1.setUser(testUser);
-        list1.setSortedCount(0);
-        list1.setRanked(false);
+        UserEntity user = createTestUser("user1", "user1@test.com");
 
-        FavoritesList list2 = new FavoritesList();
-        list2.setListName("Books");
-        list2.setUser(testUser);
-        list2.setSortedCount(0);
-        list2.setRanked(false);
+        FavoritesList list1 = createTestList("Movies", user);
+        FavoritesList list2 = createTestList("Books", user);
 
-        entityManager.persist(list1);
-        entityManager.persist(list2);
-        entityManager.flush();
+        favoritesListRepository.save(list1);
+        favoritesListRepository.save(list2);
 
         // When
-        List<FavoritesList> foundLists = favoritesListRepository.findByUserId(testUser.getId());
+        List<FavoritesList> foundLists = favoritesListRepository.findByUserId(user.getId());
 
         // Then
         assertThat(foundLists).hasSize(2);
@@ -83,21 +66,65 @@ class FavoritesListRepositoryTest {
     @Test
     void shouldDeleteFavoritesList() {
         // Given
-        FavoritesList list = new FavoritesList();
-        list.setListName("Temp List");
-        list.setUser(testUser);
-        list.setSortedCount(0);
-        list.setRanked(false);
-
-        FavoritesList savedList = entityManager.persist(list);
-        entityManager.flush();
+        UserEntity user = createTestUser("user2", "user2@test.com");
+        FavoritesList list = createTestList("Temp List", user);
+        FavoritesList savedList = favoritesListRepository.save(list);
         Long listId = savedList.getId();
 
         // When
         favoritesListRepository.deleteById(listId);
 
         // Then
-        FavoritesList deletedList = entityManager.find(FavoritesList.class, listId);
-        assertThat(deletedList).isNull();
+        Optional<FavoritesList> deletedList = favoritesListRepository.findById(listId);
+        assertThat(deletedList).isEmpty();
+    }
+
+    @Test
+    void shouldUpdateListName() {
+        // Given
+        UserEntity user = createTestUser("user3", "user3@test.com");
+        FavoritesList list = createTestList("Old Name", user);
+        FavoritesList savedList = favoritesListRepository.save(list);
+
+        // When
+        savedList.setListName("New Name");
+        FavoritesList updatedList = favoritesListRepository.save(savedList);
+
+        // Then
+        assertThat(updatedList.getListName()).isEqualTo("New Name");
+    }
+
+    @Test
+    void shouldFindListById() {
+        // Given
+        UserEntity user = createTestUser("user4", "user4@test.com");
+        FavoritesList list = createTestList("Test List", user);
+        FavoritesList savedList = favoritesListRepository.save(list);
+
+        // When
+        Optional<FavoritesList> foundList = favoritesListRepository.findById(savedList.getId());
+
+        // Then
+        assertThat(foundList).isPresent();
+        assertThat(foundList.get().getListName()).isEqualTo("Test List");
+        assertThat(foundList.get().getUser().getUsername()).isEqualTo("user4");
+    }
+
+    // Helper methods
+    private UserEntity createTestUser(String username, String email) {
+        UserEntity user = new UserEntity();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword("password123");
+        return userRepository.save(user);
+    }
+
+    private FavoritesList createTestList(String name, UserEntity user) {
+        FavoritesList list = new FavoritesList();
+        list.setListName(name);
+        list.setUser(user);
+        list.setSortedCount(0);
+        list.setRanked(false);
+        return list;
     }
 }
