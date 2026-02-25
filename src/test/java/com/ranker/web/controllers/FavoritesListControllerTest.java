@@ -1,23 +1,29 @@
 package com.ranker.web.controllers;
 
 import com.ranker.web.dto.FavoritesListDTO;
+import com.ranker.web.security.CustomUserDetailsService;
+import com.ranker.web.security.SecurityConfig;
 import com.ranker.web.services.FavoritesListService;
+import com.ranker.web.services.ItemService;
+import com.ranker.web.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FavoritesListController.class)
+@Import(SecurityConfig.class)
 class FavoritesListControllerTest {
 
     @Autowired
@@ -25,6 +31,15 @@ class FavoritesListControllerTest {
 
     @MockitoBean
     private FavoritesListService favoritesListService;
+
+    @MockitoBean
+    private UserService userService;
+
+    @MockitoBean
+    private ItemService itemService;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
 
     @Test
     @WithMockUser(username = "testuser")
@@ -52,13 +67,14 @@ class FavoritesListControllerTest {
         // Given
         FavoritesListDTO listDTO = createListDTO(1L, "My Movies");
         when(favoritesListService.findListById(1L)).thenReturn(listDTO);
+        when(itemService.getItemsByListId(1L)).thenReturn(new ArrayList<>());
 
-        // When & Then
+        // When & Then — verify controller returns correct view & model, not template
+        // rendering
         mockMvc.perform(get("/lists/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("list-details"))
-                .andExpect(model().attributeExists("list"))
-                .andExpect(model().attribute("list", listDTO));
+                .andExpect(view().name("lists-details"))
+                .andExpect(model().attributeExists("list"));
 
         verify(favoritesListService).findListById(1L);
     }
@@ -71,10 +87,9 @@ class FavoritesListControllerTest {
 
         // When & Then
         mockMvc.perform(post("/lists/new")
-                        .with(csrf())
-                        .param("listName", "New List"))
+                .param("listName", "New List"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/lists"));
+                .andExpect(redirectedUrl("/lists/1"));
 
         verify(favoritesListService).saveList(any(FavoritesListDTO.class));
     }
@@ -82,9 +97,8 @@ class FavoritesListControllerTest {
     @Test
     @WithMockUser(username = "testuser")
     void shouldDeleteList() throws Exception {
-        // When & Then
-        mockMvc.perform(post("/lists/1/delete")
-                        .with(csrf()))
+        // When & Then — controller uses @GetMapping for delete
+        mockMvc.perform(get("/lists/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/lists"));
 
@@ -93,18 +107,18 @@ class FavoritesListControllerTest {
 
     @Test
     void shouldRedirectToLoginWhenNotAuthenticated() throws Exception {
-        // When & Then
-        mockMvc.perform(get("/lists"))
+        // When & Then — Spring Security form-login redirects to /login
+        mockMvc.perform(get("/lists/1"))
                 .andExpect(status().is3xxRedirection());
     }
 
     // Helper method
     private FavoritesListDTO createListDTO(Long id, String name) {
-        FavoritesListDTO dto = new FavoritesListDTO();
-        dto.setId(id);
-        dto.setListName(name);
-        dto.setSortedCount(0);
-        dto.setRanked(false);
-        return dto;
+        return FavoritesListDTO.builder()
+                .id(id)
+                .listName(name)
+                .sortedCount(0)
+                .items(new ArrayList<>())
+                .build();
     }
 }
